@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- 访问者信息 -->
+  <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+  <script type="module" src="/src/main.ts"></script>
+  <!-- cdn引入动态线条背景特效 -->
+  <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  <!-- 阿里图标引入 -->
+  <script src="//at.alicdn.com/t/font_3120938_3tvq472c58d.js"></script>
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_3120938_3tvq472c58d.css">
+
+  <!-- <script>
+    L2Dwidget.init({
+      "model": {
+        jsonPath: "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
+        "scale": 1
+      },
+      "display": {
+        "position": "left", //看板娘的表现位置
+        "width": 150, //小萝莉的宽度
+        "height": 300, //小萝莉的高度
+        "hOffset": 0, //小萝莉的X偏移量
+        "vOffset": -20 //小萝莉的Y偏移量
+      },
+      "mobile": {
+        "show": true,
+        "scale": 0.5
+      },
+      "react": {
+        "opacityDefault": 0.7, //小萝莉的透明度
+        "opacityOnHover": 0.2
+      }
+    });
+  </script>　 -->
+  <script>
+    window.onblur = function () {
+      document.title = "客官请留步(●￣(ｴ)￣●)";
+    };
+    window.onfocus = function () {
+      document.title = "欢迎你回来呀ρ（^ o ^）♪";
+      setTimeout(()=>{
+          document.title = 'Liuzepeng的个人博客'
+        },3000)
+    };
+    document.title = 'Liuzepeng的个人博客'
+  </script>
+ 
+</body>
+
+</html>

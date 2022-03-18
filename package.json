@@ -1,0 +1,28 @@
+{
+  "name": "myblog-vue",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --port 8989",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^1.1.1",
+    "@kangc/v-md-editor": "^2.3.14",
+    "Progress-catalog": "^1.0.7",
+    "axios": "^0.19.0",
+    "element-plus": "^1.3.0-beta.1",
+    "pinia": "^2.0.11",
+    "prismjs": "^1.27.0",
+    "qs": "^6.10.3",
+    "vue": "^3.2.4",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.4",
+    "sass": "^1.45.2",
+    "sass-loader": "^12.4.0",
+    "unplugin-auto-import": "^0.5.5",
+    "unplugin-vue-components": "^0.17.11",
+    "vite": "^1.0.0-rc.13"
+  }
+}

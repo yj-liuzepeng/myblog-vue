@@ -1,0 +1,163 @@
+<template>
+  <div class="author-box">
+    <el-avatar id="avatarimg" :size="100" :src="avatarImg" @mouseenter="mouseEnterAvatar"></el-avatar>
+    <div class="myname" :style="{ color: authorstyle.namecolor }">Liuzepeng</div>
+    <div class="myintroduction">软件工程</div>
+    <div class="myintroduction">2015-2019级</div>
+    <div class="myintroduction">
+      <span class="iconfont icon-didian"></span>中国-北京
+    </div>
+    <div class="myintroduction">前端：Vue3 + element-plus</div>
+    <div class="myintroduction">后端：Node + Mysql</div>
+    <div class="myintroduction">
+      <span class="iconfont icon-youxiang"></span>liuzepeng0200@163.com
+    </div>
+    <div id="mymotto"></div>
+    <el-divider>社交账号</el-divider>
+    <div class="mycontacts">
+      <el-tooltip effect="light" placement="top">
+        <template #content>
+          <img style="width: 5rem;" src="../assets/author/myqq.jpeg" alt="我的qq" />
+        </template>
+        <span class="contact iconfont icon-qq"></span>
+      </el-tooltip>
+      <el-tooltip effect="light" placement="top">
+        <template #content>
+          <img style="width: 5rem;" src="../assets/author/mywx.jpeg" alt="我的微信" />
+        </template>
+        <span class="contact iconfont icon-sign_wechat"></span>
+      </el-tooltip>
+      <el-tooltip effect="light" placement="top">
+        <template #content>
+          <a href="https://github.com/yj-liuzepeng" target="_blank">GITHUB</a>
+        </template>
+        <span class="contact iconfont icon-github-fill"></span>
+      </el-tooltip>
+      <el-tooltip effect="light" placement="top">
+        <template #content>
+          <a href="https://blog.csdn.net/m0_49159526?spm=1000.2115.3001.5343" target="_blank">CSDN</a>
+        </template>
+        <span class="contact iconfont icon-lianjie1"></span>
+      </el-tooltip>
+    </div>
+  </div>
+</template>
+
+<script lang='ts' setup>
+import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia'
+import bdd from '../assets/author/bdd.jpeg'
+import { useMainStore } from "../store";
+import { styleone, styletwo } from '../styles/skinstyles/styles'
+const mainStore = useMainStore();
+const { authorstyle } = storeToRefs(mainStore)
+
+// 动态字体
+let componentDidMount = () => {
+  let str = "逃避永远无法解决问题";
+  let i = 0;
+  let divTyping = document.getElementById("mymotto");
+  function reduce() {
+    if (i > 0) {
+      divTyping.innerHTML = str.slice(0, i--);
+      setTimeout(() => {
+        reduce();
+      }, 300);
+    } else {
+      i = 1;
+      divTyping.innerHTML = "_";
+      setTimeout(() => {
+        typing();
+      }, 300);
+    }
+  }
+  function typing() {
+    if (i <= str.length) {
+      divTyping.innerHTML = str.slice(0, i++) + "_";
+      setTimeout(() => {
+        typing();
+      }, 300);
+    } else {
+      i = str.length;
+      setTimeout(() => {
+        reduce();
+      }, 1000);
+    }
+  }
+  typing();
+}
+let avatarImg = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
+// 头像旋转，主题改变
+let mouseEnterAvatar = () => {
+  let deg = 0
+  let img = document.getElementById("avatarimg");
+  if (avatarImg.value === 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png') {
+    deg -= 360;
+    img.style.transform = "rotate(" + deg + "deg)";
+    setTimeout(() => {
+      avatarImg.value = bdd
+      mainStore.changeStyle(styletwo)
+      document.querySelector('body').classList.toggle('red-theme')
+    }, 300);
+  } else {
+    deg += 360;
+    img.style.transform = "rotate(" + deg + "deg)";
+    setTimeout(() => {
+      avatarImg.value = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      mainStore.changeStyle(styleone)
+      document.querySelector('body').classList.toggle('red-theme')
+    }, 300);
+  }
+}
+onMounted(() => [
+  componentDidMount()
+])
+</script>
+
+<style lang='scss' scoped>
+.author-box {
+  padding: 1rem;
+  text-align: center;
+  #avatarimg {
+    animation: light 2s linear both infinite;
+    transition: all 0.5s;
+  }
+  @keyframes light {
+    from {
+      box-shadow: 0 0 1px white, 0 0 5px white, 0 0 10px white, 0 0 20px purple,
+        0 0 5px purple, 0 0 11px pink;
+    }
+
+    to {
+      box-shadow: 0 0 5px white, 0 0 10px yellow, 0 0 15px yellow,
+        0 0 8px #bfd1c0, 0 0 10px #bfd1c0, 0 0 12px blue;
+    }
+  }
+  .myname {
+    font-size: large;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .myintroduction {
+    font-size: 0.8rem;
+    color: v-bind("authorstyle.textcolor");
+    margin-bottom: 0.5rem;
+  }
+  #mymotto {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    color: #209d7b;
+  }
+  .mycontacts {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    .contact {
+      font-size: 28px;
+      color: #4c9b7d;
+      cursor: pointer;
+    }
+  }
+}
+</style>
