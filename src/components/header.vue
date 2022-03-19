@@ -3,7 +3,7 @@
     <div class="header">
       <el-row :gutter="20">
         <el-col :span="10">
-          <span class="header-logo">Liuzepeng</span>
+          <span class="header-logo" @click="hClickLogo">Liuzepeng</span>
           <span class="header-slogan">{{ headerState.slogan }}</span>
         </el-col>
         <el-col :span="14">
@@ -120,7 +120,12 @@ const scrollBody = () => {
     }
   }
 }
-
+// 点击logo
+const hClickLogo =()=> {
+   router.push('./home')
+   headerState.activeIndex = 'home'
+  // headerState.changeTab({ name: '首页', code: 'home', icon: 'icon-shouye', path: './home', slogan: '唯有热爱，可抵岁月漫长' })
+}
 onBeforeMount(() => {
   scrollBody()
   let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
