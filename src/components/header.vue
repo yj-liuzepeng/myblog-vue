@@ -34,14 +34,15 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, reactive, onBeforeMount, watch } from 'vue';
+import { ref, reactive, onBeforeMount, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 import { useMainStore } from "../store";
 import { ElMessageBox, ElMessage } from 'element-plus'
 import Login from '../views/login.vue'
 
 const router = useRouter()
+const route = useRoute()
 // header皮肤
 const mainStore = useMainStore();
 const { headerstyle, userInfo } = storeToRefs(mainStore)
@@ -58,7 +59,7 @@ const headerState = reactive({
   ],
 
   slogan: '唯有热爱，可抵岁月漫长',
-  activeIndex: 'home',
+  activeIndex: '',
   changeTab: (item) => {
     if (item.code == 'login') {
       showLogin.value = true
@@ -142,6 +143,12 @@ watch(() => userInfo.value, (newval) => {
   loginMsg.name = '退出  [' + newval.username + ']'
   loginMsg.code = 'out'
   loginMsg.icon = 'icon-tuichu'
+})
+watch(()=>route.name, (newval)=> {
+headerState.activeIndex = newval as string
+})
+onMounted(()=> {
+  headerState.activeIndex = route.name as string
 })
 </script>
 

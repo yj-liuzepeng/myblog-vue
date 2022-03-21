@@ -13,7 +13,10 @@ import {
   ElPagination,
   ElIcon,
   ElBacktop,
-  ElAffix
+  ElAffix,
+  ElProgress,
+  ElTimeline,
+  ElCard
 } from "element-plus";
 export default (app) => {
   app
@@ -32,4 +35,7 @@ export default (app) => {
   .use(ElIcon)
   .use(ElBacktop)
   .use(ElAffix)
+  .use(ElProgress)
+  .use(ElTimeline)
+  .use(ElCard)
 };

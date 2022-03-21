@@ -1,12 +1,98 @@
 <template>
-record
+  <div class="record">
+    <el-row :gutter="10">
+      <el-col :span="18">
+        <div class="left-content">
+          <div class="timeline-box">
+            <a-timeline mode="alternate">
+              <a-timeline-item v-for="item in timelineList">
+                <template #dot>
+                  <span
+                    :class="['iconfont', item.icon]"
+                    :style="[{ 'fontSize': '16px' }, { 'color': item.color }]"
+                  ></span>
+                </template>
+                <div>
+                  <div v-if="item.title && item.title!='无'" class="timeline-title">{{ item.title }}</div>
+                  <div class="timeline-des" :style="{ 'color': item.color }">{{ item.description }}</div>
+                  <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'http://localhost:8088/' + item.pic" :alt="item.title" />
+                  <div class="timeline-time">{{ UnixToDate(new Date(item.dotime), 6) }}</div>
+                  <el-divider border-style="dashed" />
+                </div>
+              </a-timeline-item>
+            </a-timeline>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div class="right-content">
+          <Author />
+          <your-info />
+          <!-- <tag-list /> -->
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script lang='ts' setup>
-  import { } from 'vue';
-  
+import { ref, onMounted } from 'vue';
+import Author from '../components/author.vue'
+import yourInfo from '../components/your-info.vue'
+import { MoreFilled } from '@element-plus/icons-vue'
+import { ClockCircleOutlined } from '@ant-design/icons-vue';
+import { queryTimelineList } from '../apis/timeline'
+import { UnixToDate } from '../utils/datetime'
+let timelineList = ref([])
+const getTimeline = () => {
+  queryTimelineList({ pageSize: 9999, pageNo: 1 }).then((res: any) => {
+    console.log('时间线', res)
+    if (res.code == 200) {
+      timelineList.value = res.data.data
+    }
+  })
+}
+onMounted(() => {
+  getTimeline()
+})
 </script>
 
 <style lang='scss' scoped>
-
+.record {
+  padding-top: 3.2rem;
+  .timeline-box {
+    margin-top: 25px;
+    .timeline-title {
+      font-size: 1.5rem;
+      color: coral;
+    }
+    .timeline-title {
+      margin-top: 15px;
+    }
+    .timeline-time {
+      margin-top: 15px;
+      color: #6ca189;
+    }
+  }
+}
+.el-divider--horizontal {
+  margin: 0;
+}
+</style>
+<style>
+.el-timeline-item__timestamp.is-bottom {
+  position: absolute;
+  left: -147px;
+  top: -3px;
+  color: #333333;
+}
+.el-timeline {
+  padding-left: 300px;
+}
+</style>
+<style>
+.ant-timeline.ant-timeline-alternate .ant-timeline-item-head-custom,
+.ant-timeline.ant-timeline-right .ant-timeline-item-head-custom {
+  background: transparent !important;
+}
 </style>

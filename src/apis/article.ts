@@ -2,7 +2,7 @@
 
 import axios from '../utils/axios'
 
-// 活动信息登记
+// 活动列表查询
 export const queryArticleList = (params: any) => {
   return axios.post('/api/queryArticleList', params)
 }
