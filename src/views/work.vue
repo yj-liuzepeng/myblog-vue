@@ -29,14 +29,14 @@
           </div>
           <div class="left-content-items" v-if="total">
             <div
-              class="left-content-item cssnicehover"
+              class="left-content-item cssnicehover cssnice1"
               v-for="item in workList"
               :key="item.id"
               @click="openUrl(item.url)"
             >
               <div
                 class="item-top"
-                :style="{ 'backgroundImage': 'url(http://localhost:8088/' + item.pic + ')' }"
+                :style="{ 'backgroundImage': 'url(http://120.53.244.178:8088/' + item.pic + ')' }"
               >
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
@@ -75,13 +75,13 @@
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
-            <img style="width: 150px;height: 150px;" src="../assets/nodata.png" alt="暂无数据" />
-            <div style="color: #bbbbbb;font-size: 14px;">暂无数据</div>
+            <img style="width: 120px;height: 120px;" src="../assets/nodata.png" alt="暂无数据" />
+            <div style="color: #bbbbbb;font-size: 14px;margin-top: 10px;">暂无数据</div>
           </div>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content">
+        <div class="right-content cssnice2">
           <Author />
           <your-info />
           <!-- <tag-list /> -->

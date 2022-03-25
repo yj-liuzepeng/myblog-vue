@@ -2,7 +2,7 @@
   "name": "myblog-vue",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port 8989",
+    "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "pinia": "^2.0.11",
     "prismjs": "^1.27.0",
     "qs": "^6.10.3",
+    "simple-weather-vue": "0.0.2",
     "vue": "^3.2.4",
     "vue-router": "^4.0.12"
   },

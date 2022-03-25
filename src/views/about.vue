@@ -4,7 +4,7 @@
       <el-col :span="18">
         <div class="left-content">
           <div class="about-header">
-            <div class="kb-img">
+            <div class="kb-img cssnice0" >
               <img src="../assets/kb2.png" alt="kb" />
             </div>
             <div class="self-info">
@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-          <div class="clock">
+          <div class="clock cssnice3">
             <h1>时间不等人</h1>
             <time-clock :ringcolor="authorstyle.namecolor"></time-clock>
           </div>
@@ -75,7 +75,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content">
+        <div class="right-content cssnice2">
           <Author />
           <your-info />
           <Skills></Skills>

@@ -2,6 +2,7 @@
   <div class="author-box">
     <el-avatar id="avatarimg" :size="100" :src="avatarImg" @mouseenter="mouseEnterAvatar"></el-avatar>
     <div class="myname" :style="{ color: authorstyle.namecolor }">Liuzepeng</div>
+  
     <div class="myintroduction">软件工程</div>
     <div class="myintroduction">2015-2019级</div>
     <div class="myintroduction">
@@ -44,7 +45,7 @@
 </template>
 
 <script lang='ts' setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,Transition } from 'vue';
 import { storeToRefs } from 'pinia'
 import bdd from '../assets/author/bdd.jpeg'
 import { useMainStore } from "../store";
@@ -97,7 +98,7 @@ let mouseEnterAvatar = () => {
     setTimeout(() => {
       avatarImg.value = bdd
       mainStore.changeStyle(styletwo)
-      document.querySelector('body').classList.toggle('red-theme')
+      document.querySelector('body').classList.add('red-theme')
     }, 300);
   } else {
     deg += 360;
@@ -105,7 +106,7 @@ let mouseEnterAvatar = () => {
     setTimeout(() => {
       avatarImg.value = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
       mainStore.changeStyle(styleone)
-      document.querySelector('body').classList.toggle('red-theme')
+      document.querySelector('body').classList.remove('red-theme')
     }, 300);
   }
 }

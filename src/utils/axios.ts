@@ -4,7 +4,8 @@ import {
   ElMessageBox
 } from 'element-plus'
 
-axios.defaults.baseURL = 'http://localhost:8088' // 本地
+axios.defaults.baseURL = 'http://120.53.244.178:8088' // 本地
+// axios.defaults.baseURL = 'http://localhost:8088' // 本地
 
 
 

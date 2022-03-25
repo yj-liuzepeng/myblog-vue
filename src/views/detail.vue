@@ -2,7 +2,7 @@
   <div class="detail">
     <el-row :gutter="10">
       <el-col :span="18">
-        <div class="left-content">
+        <div class="left-content cssnice1">
           <div class="detail-header">
             <div class="to-home" @click="toHome">首页</div>
             <div>/ {{ articleState.title }}</div>
@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="detail-img">
-              <img :src="'http://localhost:8088/' + articleState.pic" :alt="articleState.title" />
+              <img :src="'http://120.53.244.178:8088/' + articleState.pic" :alt="articleState.title" />
             </div>
           </div>
           <el-divider content-position="center">
@@ -39,7 +39,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content">
+        <div class="right-content cssnice2">
           <Author />
           <your-info />
           <!-- <el-affix> -->

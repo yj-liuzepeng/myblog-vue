@@ -1,8 +1,13 @@
+<!--
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+-->
 <template>
   <div class="record">
     <el-row :gutter="10">
       <el-col :span="18">
-        <div class="left-content">
+        <div class="left-content cssnice1">
           <div class="timeline-box">
             <a-timeline mode="alternate">
               <a-timeline-item v-for="item in timelineList">
@@ -15,7 +20,7 @@
                 <div>
                   <div v-if="item.title && item.title!='无'" class="timeline-title">{{ item.title }}</div>
                   <div class="timeline-des" :style="{ 'color': item.color }">{{ item.description }}</div>
-                  <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'http://localhost:8088/' + item.pic" :alt="item.title" />
+                  <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'http://120.53.244.178:8088/' + item.pic" :alt="item.title" />
                   <div class="timeline-time">{{ UnixToDate(new Date(item.dotime), 6) }}</div>
                   <el-divider border-style="dashed" />
                 </div>
@@ -25,7 +30,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content">
+        <div class="right-content cssnice2">
           <Author />
           <your-info />
           <!-- <tag-list /> -->
@@ -46,9 +51,9 @@ import { UnixToDate } from '../utils/datetime'
 let timelineList = ref([])
 const getTimeline = () => {
   queryTimelineList({ pageSize: 9999, pageNo: 1 }).then((res: any) => {
-    console.log('时间线', res)
+
     if (res.code == 200) {
-      timelineList.value = res.data.data
+      timelineList.value =  res.data.data.reverse() // 翻转新增的在下面
     }
   })
 }

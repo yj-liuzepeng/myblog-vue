@@ -28,7 +28,7 @@
             </el-row>
           </div>
           <div class="left-content-items" v-if="total">
-            <div class="left-content-item cssnicehover" v-for="item in articleList" :key="item.id">
+            <div class="left-content-item cssnicehover cssnice1" v-for="item in articleList" :key="item.id">
               <div class="item-title" @click="toDetail(item)">{{ item.title }}</div>
               <div class="item-tags">
                 <el-tag class="item-tags-top" v-if="item.top == '是'" type="danger">置顶</el-tag>
@@ -46,13 +46,9 @@
                 </div>
               </div>
               <div class="item-img" @click="toDetail(item)">
-                <img :src="'http://localhost:8088/' + item.pic" :alt="item.title" />
-                <!-- <img src="https://www.jsfan.net/upload/~`VI[[3~)FP68MI)}QHJ9[V.png" /> -->
+                <img :src="'http://120.53.244.178:8088/' + item.pic" :alt="item.title" />
               </div>
               <div class="item-txt">{{ item.description }}</div>
-              <!-- <div class="item-more" @click="toDetail(item)">
-                <span class="iconfont icon-fangda"></span> 查看全文 》
-              </div>-->
             </div>
             <div class="pagination">
               <el-pagination
@@ -71,19 +67,19 @@
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
-            <img style="width: 150px;height: 150px;" src="../assets/nodata.png" alt="暂无数据" />
-            <div style="color: #bbbbbb;font-size: 14px;">暂无数据</div>
+            <img style="width: 120px;height: 120px;" src="../assets/nodata.png" alt="暂无数据" />
+            <div style="color: #bbbbbb;font-size: 14px;margin-top: 10px;">暂无数据</div>
           </div>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content">
+        <div class="right-content cssnice2">
+          <!-- <simple-weather  width="230px" height="100px"></simple-weather> -->
           <Author />
 
           <your-info />
 
           <tag-list @clickTag="hClickTag" />
-        
         </div>
       </el-col>
     </el-row>
@@ -97,6 +93,7 @@ import { Search } from '@element-plus/icons-vue'
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import tagList from '../components/tag-list.vue'
+
 import { UnixToDate } from '../utils/datetime'
 import { useRouter } from 'vue-router'
 import { queryArticleList, likeQueryArticle, queryArticleByTag } from '../apis/article'
@@ -233,14 +230,7 @@ onMounted(() => {
 </script>
 
 <style lang='scss' scoped>
-.cssnicehover {
-  transition: all linear 0.7s;
-}
-.cssnicehover:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  transform: translate3d(0, -2px, 0);
-  background-color: rgba(255, 255, 255, 0.5);
-}
+
 .home {
   padding-top: 3.2rem;
 }
@@ -288,6 +278,7 @@ onMounted(() => {
       height: 300px;
       cursor: pointer;
       overflow: hidden;
+      margin-top: 20px;
       img {
         width: 100%;
         height: 100%;
@@ -327,236 +318,5 @@ onMounted(() => {
 }
 .el-pagination {
   justify-content: center;
-}
-</style>
-<style>
-/* 过度动画 */
-/* 过度动画 */
-.cssnice {
-  animation: cssnice 1s both;
-}
-@keyframes cssnice {
-  0% {
-    opacity: 0;
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-/* 过度动画 */
-.cssnice1 {
-  animation: cssnice1 1s both;
-}
-@keyframes cssnice1 {
-  0% {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-  50% {
-    opacity: 1;
-    transform: translate3d(3%, 0, 0);
-  }
-  65% {
-    opacity: 1;
-    transform: translate3d(-2.5%, 0, 0);
-  }
-  80% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-  90% {
-    opacity: 1;
-    transform: translate3d(-1%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-/* 过度动画 */
-.cssnice0 {
-  animation: cssnice0 1s both;
-}
-@keyframes cssnice0 {
-  0% {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-/* 过度动画 */
-.cssnice2 {
-  animation: cssnice2 1s both;
-}
-@keyframes cssnice2 {
-  0% {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-.cssnicehover {
-  transition: all linear 0.5s;
-}
-.cssnicehover:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  transform: translate3d(0, -2px, 0);
-  background-color: rgba(255, 255, 255, 0.5);
-}
-/* .cssnicehover:hover .img{
-  transform:scale(1.1,1.2);
-} */
-.cssnice3 {
-  /* 分页动画 */
-  animation: cssnice3 1s both;
-}
-@keyframes cssnice3 {
-  20% {
-    transform: rotate3d(0, 0, 1, 25deg);
-  }
-  40% {
-    transform: rotate3d(0, 0, 1, -20deg);
-  }
-  60% {
-    transform: rotate3d(0, 0, 1, 15deg);
-  }
-  80% {
-    transform: rotate3d(0, 0, 1, -10deg);
-  }
-  100% {
-    transform: rotate3d(0, 0, 1, 0deg);
-  }
-}
-.cssnice4 {
-  animation: cssnice4 1s both;
-}
-@keyframes cssnice4 {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
-  50% {
-    opacity: 1;
-    transform: translate3d(0, -3%, 0);
-  }
-  65% {
-    opacity: 1;
-    transform: translate3d(0, 2.5%, 0);
-  }
-  80% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-  90% {
-    opacity: 1;
-    transform: translate3d(0, 1%, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-/* 过度动画 */
-.cssniceright {
-  animation: cssniceright 1.2s both;
-}
-@keyframes cssniceright {
-  0% {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-  50% {
-    opacity: 1;
-    transform: translate3d(-3%, 0, 0);
-  }
-  65% {
-    opacity: 1;
-    transform: translate3d(2.5%, 0, 0);
-  }
-  80% {
-    opacity: 1;
-    transform: translate3d(-2%, 0, 0);
-  }
-  90% {
-    opacity: 1;
-    transform: translate3d(-1%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-.ant-comment-inner img {
-  /* 旋转头像 */
-  transition: all 1s;
-}
-.ant-comment-inner:hover img {
-  transform: rotate(360deg);
-}
-.ant-back-top-inner:hover {
-  /* 置顶特效 */
-  animation: btn-pudding 2s linear;
-}
-@keyframes btn-pudding {
-  12%,
-  15% {
-    transform: scale(0.93, 1.07);
-  }
-
-  16%,
-  17% {
-    transform: scale(0.94, 1.06);
-  }
-  10%,
-  18% {
-    transform: scale(0.95, 1.05);
-  }
-  19% {
-    transform: scale(0.96, 1.04);
-  }
-  20% {
-    transform: scale(0.98, 1.02);
-  }
-  21%,
-  40%,
-  48% {
-    transform: scale(0.99, 1.01);
-  }
-  22%,
-  23%,
-  37%,
-  39%,
-  49% {
-    transform: scale(1, 1);
-  }
-  7%,
-  24%,
-  34%,
-  36% {
-    transform: scale(1.01, 0.99);
-  }
-  25%,
-  27%,
-  30%,
-  33% {
-    transform: scale(1.02, 0.98);
-  }
-  28%,
-  29% {
-    transform: scale(1.03, 0.97);
-  }
-  2% {
-    transform: scale(1.16, 0.84);
-  }
-  0% {
-    transform: scale(1.2, 0.8);
-  }
 }
 </style>
