@@ -38,7 +38,8 @@ import { ref, reactive, onBeforeMount, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
 import { useRouter,useRoute } from 'vue-router'
 import { useMainStore } from "../store";
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
+import  ElMessage  from '../utils/resetMessage'
 import Login from '../views/login.vue'
 
 const router = useRouter()
@@ -52,7 +53,7 @@ const headerState = reactive({
     { name: '首页', code: 'home', icon: 'icon-shouye', path: './home', slogan: '唯有热爱，可抵岁月漫长' },
     { name: '实战', code: 'work', icon: 'icon-gongzuotai', path: './work', slogan: '不要为平庸找借口！' },
     { name: '记录', code: 'record', icon: 'icon-bijijilu', path: './record', slogan: '多总结，多归纳，多学习' },
-    { name: '生活', code: 'life', icon: 'icon-xiaolian2', path: './life', slogan: '热爱生活，积极向上每一天' },
+    // { name: '生活', code: 'life', icon: 'icon-xiaolian2', path: './life', slogan: '热爱生活，积极向上每一天' },
     { name: '互动', code: 'interaction', icon: 'icon-hudong', path: './interaction', slogan: '我爱你中国 🇨🇳🇨🇳🇨🇳' },
     { name: '关于', code: 'about', icon: 'icon-guanyuwo', path: './about', slogan: '唯有热爱，可抵岁月漫长' },
     { name: '登录', code: 'login', icon: 'icon-denglu', path: './login', slogan: '不要为平庸找借口！' }

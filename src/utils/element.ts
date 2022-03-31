@@ -1,4 +1,10 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+ */
 import "element-plus/dist/index.css";
+// import ElMessage from './resetMessage'
 import { 
   ElButton,
   ElHeader, 
@@ -38,4 +44,5 @@ export default (app) => {
   .use(ElProgress)
   .use(ElTimeline)
   .use(ElCard)
+  // .use(ElMessage)
 };

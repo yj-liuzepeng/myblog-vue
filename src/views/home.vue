@@ -46,7 +46,9 @@
                 </div>
               </div>
               <div class="item-img" @click="toDetail(item)">
-                <img :src="'http://120.53.244.178:8088/' + item.pic" :alt="item.title" />
+
+                <img :src="'http://r9fow69yb.hb-bkt.clouddn.com/' + item.pic" :alt="item.title" />
+
               </div>
               <div class="item-txt">{{ item.description }}</div>
             </div>
@@ -93,10 +95,11 @@ import { Search } from '@element-plus/icons-vue'
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import tagList from '../components/tag-list.vue'
+// import simpleWeather from '../components/weather.vue'
 
 import { UnixToDate } from '../utils/datetime'
 import { useRouter } from 'vue-router'
-import { queryArticleList, likeQueryArticle, queryArticleByTag } from '../apis/article'
+import { queryArticleList, likeQueryArticle, queryArticleByTag,addArticleHot } from '../apis/article'
 const router = useRouter()
 const toDetail = (item) => {
   router.push({
@@ -105,7 +108,12 @@ const toDetail = (item) => {
       id: item.id
     }
   })
-  // router.push({ name: 'detail', params: { html: item.html, article:JSON.stringify(item) } })
+  addArticleHot({
+    id:item.id,
+    hot:item.hot
+  }).then(res=> {
+    console.log(res)
+  })
 }
 let searchIpt = ref('')
 const pageNo = ref(1)

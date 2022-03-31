@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+ */
 // 活动管理接口
 
 import axios from '../utils/axios'
@@ -21,5 +26,13 @@ export const queryArticleByTag = (params) => {
 // 根据id查询文章
 export const queryArticleById = (params) => {
   return axios.post('/api/queryArticleById', params)
+}
+// 文章热度+1
+export const addArticleHot = (params) => {
+  return axios.post('/api/addArticleHot', params)
+}
+// 文章热度排行
+export const queryArticleByHot = (params) => {
+  return axios.post('/api/queryArticleByHot', params)
 }
 

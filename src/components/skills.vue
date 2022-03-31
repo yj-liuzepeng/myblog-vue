@@ -1,8 +1,13 @@
+<!--
+ * @Author: lzp
+ * @Date: 2022-03-18 18:07:22
+ * @Description: file content
+-->
 <template>
-  <div class="skill-box">
+  <div class="skill-box cssnice4">
     <div class="skill-box-title" :style="{ color: authorstyle.namecolor }">
       博主Skills
-      <span class="iconfont icon-zhuanyezhishijineng"></span>
+      <span class="iconfont icon-zhiyejinengjianding"></span>
     </div>
     <div class="skill-box-content">
       <div class="skill-item">
@@ -15,23 +20,23 @@
       </div>
       <div class="skill-item">
         <span class="skill-name">JavaScript</span>
-        <el-progress :percentage="60" :indeterminate="true" />
+        <el-progress :percentage="60" :indeterminate="true" color="#daabea" />
       </div>
       <div class="skill-item">
         <span class="skill-name">Vue.js</span>
-        <el-progress :percentage="60" :indeterminate="true" />
+        <el-progress :percentage="60" :indeterminate="true" color="#dbfbdf"/>
       </div>
       <div class="skill-item">
         <span class="skill-name">React.js</span>
-        <el-progress :percentage="30" :indeterminate="true" />
+        <el-progress :percentage="30" :indeterminate="true" color="#f4c04e"/>
       </div>
       <div class="skill-item">
         <span class="skill-name">Node.js</span>
-        <el-progress :percentage="30" :indeterminate="true" />
+        <el-progress :percentage="30" :indeterminate="true" color="#957b47" />
       </div>
       <div class="skill-item">
         <span class="skill-name">MySql</span>
-        <el-progress :percentage="20" :indeterminate="true" />
+        <el-progress :percentage="20" :indeterminate="true"  color="#f7ce46"/>
       </div>
     </div>
   </div>

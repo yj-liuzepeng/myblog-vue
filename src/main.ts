@@ -1,39 +1,52 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-18 11:36:06
- * @Description: file content
+ * @Description: 入口文件
  */
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router/index'
-import { createPinia } from "pinia"
-import '../src/styles/index.scss'
-import elementPlus from '../element'
+
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router/index";
+import { createPinia } from "pinia";
+import "../src/styles/index.scss";
+import elementPlus from "./utils/element";
 // import SimpleWeather from 'simple-weather-vue'
 // import 'simple-weather-vue/dist/style.css'
-import clickstyle from './styles/coolstyles/clickstyle' // 全局鼠标点击动效
+import clickstyle from "./styles/coolstyles/clickstyle"; // 全局鼠标点击动效
 // 引入了ant的timeline，后面去掉这部分，使用element处理
-import { Timeline } from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css'; // or 'ant-design-vue/dist/antd.less'
+import { Timeline } from "ant-design-vue";
+import "ant-design-vue/dist/antd.css"; // or 'ant-design-vue/dist/antd.less'
 // 预览组件以及样式
-import VMdPreviewHtml from '@kangc/v-md-editor/lib/preview-html';
-import '@kangc/v-md-editor/lib/style/preview-html.css';
-
+import VMdPreviewHtml from "@kangc/v-md-editor/lib/preview-html";
+import "@kangc/v-md-editor/lib/style/preview-html.css";
 
 // 主题样式
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
+// 监听进入之前
+router.afterEach((to, from) => {
+  // console.log('前to',to)
+  // console.log('前from',from)
+  if (from.name) {
+    // 判断是否为初始页面 如果为初始页面不需要发送(刷新当前页面不记录)
+    let toRouter = {
+      // 记录上一个页面名
+      routerName: to.meta.title,
+      routerUrl: to.name,
+    };
+    console.log(toRouter)
+  }
+  
+});
 
 
-
-
-const app = createApp(App)
+const app = createApp(App);
 // 按需引入element-plus
-elementPlus(app)
-clickstyle()
+elementPlus(app);
+clickstyle();
 // app.use(SimpleWeather)
-app.use(router)
-app.use(createPinia())
+app.use(router);
+app.use(createPinia());
 // 引入v-md-editor预览组件
 app.use(VMdPreviewHtml);
 app.use(Timeline);
-app.mount('#app')
+app.mount("#app");

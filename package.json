@@ -17,6 +17,7 @@
     "qs": "^6.10.3",
     "simple-weather-vue": "0.0.2",
     "vue": "^3.2.4",
+    "vue-matomo": "^4.1.0",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

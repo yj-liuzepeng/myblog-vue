@@ -20,22 +20,34 @@
               </div>
             </div>
             <div class="detail-img">
-              <img :src="'http://120.53.244.178:8088/' + articleState.pic" :alt="articleState.title" />
+              <img
+                :src="'http://r9fow69yb.hb-bkt.clouddn.com/' + articleState.pic"
+                :alt="articleState.title"
+              />
             </div>
           </div>
           <el-divider content-position="center">
             <span style="color: #5e8ed3;font-size: 16px;">description</span>
           </el-divider>
           <div class="detail-des">{{ articleState.description }}</div>
-           
-            <el-divider content-position="center">
-              <span style="color: #5e8ed3;font-size: 16px;">正文</span>
-            </el-divider>
-          
+
+          <el-divider content-position="center">
+            <span style="color: #5e8ed3;font-size: 16px;">正文</span>
+          </el-divider>
           <div id="preview-box">
             <v-md-preview-html :html="articleState.html" preview-class="vuepress-markdown-body"></v-md-preview-html>
           </div>
-          
+          <div class="tag-box">
+            <div class="tag-list">
+              <span class="iconfont icon-24gf-tags3"></span>
+              <el-tag class="tag-item" v-for="item  in  articleState.taglist"
+                      :style="[{ 'background-color': item.color }, { 'color': '#fff' }]"
+              >{{ item.name }}</el-tag>
+            </div>
+            <div class="last-time">最后修改于{{articleState.updatetime}}</div>
+          </div>
+          <el-divider></el-divider>
+          <comment-box />
         </div>
       </el-col>
       <el-col :span="6">
@@ -47,7 +59,7 @@
             <div class="catalog-title">文章标题</div>
             <div id="right-catalog"></div>
           </div>
-   
+
           <!-- </el-affix> -->
         </div>
       </el-col>
@@ -59,10 +71,11 @@
 import { nextTick, onMounted, reactive, ref } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
+import commentBox from '../components/comment.vue'
 // import tagList from '../components/tag-list.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UnixToDate } from '../utils/datetime'
-import { queryArticleById } from '../apis/article'
+import { queryArticleById, queryTagList } from '../apis/article'
 // 引入
 import Catalog from 'Progress-catalog'
 import 'progress-catalog/src/progress-catalog.css'
@@ -73,9 +86,11 @@ const articleState = reactive({
   html: null,
   title: '',
   createtime: '',
+  updatetime:"",
   hot: '',
   pic: '',
-  description: ''
+  description: '',
+  taglist: []
 })
 let hTreeData = ref([]) // 保存h标签为树形结构
 const getArticle = async (id) => {
@@ -84,9 +99,17 @@ const getArticle = async (id) => {
       articleState.html = res.data.data.html
       articleState.title = res.data.data.title
       articleState.createtime = UnixToDate(new Date(res.data.data.create_time), 3)
+      articleState.updatetime = UnixToDate(new Date(res.data.data.update_time), 3)
       articleState.hot = res.data.data.hot
       articleState.pic = res.data.data.pic
       articleState.description = res.data.data.description
+      articleState.taglist = 
+    
+    tagLists.value.filter(item => {
+        return res.data.data.tag.split(',').indexOf(item.name) != -1
+
+      })
+
     }
   })
   // 侧边分页
@@ -97,7 +120,20 @@ const getArticle = async (id) => {
     // selector: ['h2', 'h3']
   })
 }
+let tagLists = ref([])
+const getTagList = async () => {
 
+  let params = {
+    pageSize: 999,
+    pageNo: 1
+  }
+  await queryTagList(params).then((res: any) => {
+    getArticle(route.query.id)
+    if (res.code === 200) {
+      tagLists.value.push(...res.data.data)
+    }
+  })
+}
 const boxScroll = (obj) => {
   console.log(obj.scrollTop, obj.fixed)
 }
@@ -105,7 +141,8 @@ const toHome = () => {
   router.push({ name: 'home' })
 }
 onMounted(() => {
-  getArticle(route.query.id)
+  getTagList()
+
 
 
 })
@@ -159,6 +196,21 @@ onMounted(() => {
     .detail-des {
       color: rgb(107, 106, 106);
       padding: 10px;
+    }
+    .tag-box {
+      background-color: rgba(230, 234, 240, 0.4);
+      width: 100%;
+      padding: 10px;
+      .tag-list {
+        .tag-item {
+          margin-left: 10px;
+        }
+      }
+      .last-time {
+        display: flex;
+        justify-content: right;
+        color:rgb(204, 204, 204);
+      }
     }
   }
   .right-content {

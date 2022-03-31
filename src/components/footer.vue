@@ -1,9 +1,14 @@
+<!--
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+-->
 <template>
   <el-row>
     <div class="footer">
       <div>本网站由Vue3+Node+Element-plus联合驱动</div>
       <div>
-        <el-tag class="tag-item" type="danger">百度统计</el-tag>
+        <el-tag class="tag-item" type="danger">对象存储kodo</el-tag>
         <span class="beian">京ICP备2021039823号</span>
         <el-tag class="tag-item">腾讯云</el-tag>
       </div>
@@ -18,7 +23,7 @@
 
 <script lang='ts' setup>
 import {ref, onMounted, onUnmounted } from 'vue';
-let startDate = new Date('2020/02/24 18:00')
+let startDate = new Date('2021/11/24 18:00')
 let s1 = startDate.getTime()
 let timer, s2, total, day, afterDay, hour, afterHour, min, afterMin
 let showTime = ref('')

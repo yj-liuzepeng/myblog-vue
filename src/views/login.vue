@@ -1,34 +1,37 @@
 <template>
-  <div class="login-box" v-if="props.show">
-    <div class="title">欢迎登录本网站</div>
-    <div class="input">
-      <div class="ipt">
-        <el-input v-model="account" placeholder="请输入账号" :suffix-icon="Calendar" />
+  <div class="mask-layer" v-if="props.show">
+    <div class="login-box">
+      <div class="title">欢迎登录本网站</div>
+      <div class="input">
+        <div class="ipt">
+          <el-input v-model="account" placeholder="请输入账号" :suffix-icon="Calendar" />
+        </div>
+        <div class="ipt">
+          <el-input v-model="password" type="password" placeholder="请输入密码" show-password />
+        </div>
       </div>
-      <div class="ipt">
-        <el-input v-model="password" type="password" placeholder="请输入密码" show-password />
+      <div class="ways" v-show="isLogin">
+        <span style="font-size: 12px;">其他登录方式：</span>
+        <span class="iconfont icon-QQ-circle-fill icon" @click="loginQq"></span>
+        <span class="iconfont icon-weixin-copy icon" @click="loginWx"></span>
+        <span class="register" @click="toRegister">注册一个账号</span>
       </div>
-    </div>
-    <div class="ways" v-show="isLogin">
-      <span style="font-size: 12px;">其他登录方式：</span>
-      <span class="iconfont icon-QQ-circle-fill icon" @click="loginQq"></span>
-      <span class="iconfont icon-weixin-copy icon" @click="loginWx"></span>
-      <span class="register" @click="toRegister">注册一个账号</span>
-    </div>
 
-    <div class="btns">
-      <el-button size="small" @click="cancel" v-show="isLogin">取消</el-button>
-      <el-button size="small" @click="backLogin" v-show="!isLogin">返回</el-button>
-      <el-button type="primary" size="small" @click="hLogin" v-show="isLogin">登录</el-button>
-      <el-button type="primary" size="small" @click="hRegister" v-show="!isLogin">注册</el-button>
+      <div class="btns">
+        <el-button size="small" @click="cancel" v-show="isLogin">取消</el-button>
+        <el-button size="small" @click="backLogin" v-show="!isLogin">返回</el-button>
+        <el-button type="primary" size="small" @click="hLogin" v-show="isLogin">登录</el-button>
+        <el-button type="primary" size="small" @click="hRegister" v-show="!isLogin">注册</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang='ts' setup>
-import { ref, watch } from 'vue';
-import { Calendar, Lock } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
+import { onMounted, ref, watch } from 'vue';
+import { Calendar, DocumentRemove, Lock } from '@element-plus/icons-vue'
+
+import ElMessage from '../utils/resetMessage'
 import { register, login } from '../apis/user'
 // import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store/index";
@@ -61,7 +64,7 @@ const toRegister = () => {
   password.value = ''
 }
 // 注册账号
-const hRegister = async() => {
+const hRegister = async () => {
   if (!account.value || !password.value) {
     ElMessage({
       message: '请输入用户名和密码',
@@ -70,12 +73,14 @@ const hRegister = async() => {
     return
   }
   let params = {
+    role: 'user',// 用户权限
+    loginway: '账号登录',
     username: account.value,
     password: password.value,
     loginip: returnCitySN["cip"],
     logincity: returnCitySN["cname"],
   }
- await register(params).then((res: any) => {
+  await register(params).then((res: any) => {
     if (res.code == 200) {
       isLogin.value = true
       ElMessage({
@@ -91,8 +96,8 @@ const hRegister = async() => {
   })
 }
 // 登录网站
-const hLogin = async() => {
-   if (!account.value || !password.value) {
+const hLogin = async () => {
+  if (!account.value || !password.value) {
     ElMessage({
       message: '请输入用户名和密码',
       type: 'warning',
@@ -103,7 +108,7 @@ const hLogin = async() => {
     username: account.value,
     password: password.value
   }
- await login(params).then((res: any) => {
+  await login(params).then((res: any) => {
     if (res.code == 200) {
       emit('close')
       mainStore.saveUserInfo(res.data.userData)
@@ -133,13 +138,54 @@ const loginWx = () => {
   })
 }
 
-watch(() => props.show, () => {
+watch(() => props.show, (newval) => {
   account.value = ''
   password.value = ''
+
+  if (newval) {
+    // 监听点击非登录框事件，关闭弹窗
+    document.addEventListener('click', (e: any) => {
+      if (e.target.className == 'mask-layer') {
+        cancel()
+      }
+    })
+    // 监听按钮ese退出，关闭弹窗
+    document.addEventListener('keyup', function (e: any) {
+      if (e.keyCode == 27) {
+        cancel()
+      }
+    })
+    // 监听回车事件，注册+登录
+    // document.addEventListener('keyup', function (e: any) {
+    //   if (e.keyCode == 13) {
+    //     if (isLogin.value) {
+    //       // 登录
+    //       hLogin()
+    //     } else {
+    //       // 注册
+    //       hRegister()
+    //     }
+    //   }
+    // })
+  }
+})
+onMounted(() => {
 })
 </script>
 
 <style lang='scss' scoped>
+.mask-layer {
+  width: 100%;
+  height: 100%;
+  // 遮罩层的实现方法
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(36, 36, 36, 0.5);
+  z-index: 99;
+}
 .login-box {
   width: 35%;
   height: 40%;
