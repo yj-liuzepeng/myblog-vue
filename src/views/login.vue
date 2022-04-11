@@ -11,9 +11,12 @@
         </div>
       </div>
       <div class="ways" v-show="isLogin">
-        <span style="font-size: 12px;">其他登录方式：</span>
-        <span class="iconfont icon-QQ-circle-fill icon" @click="loginQq"></span>
-        <span class="iconfont icon-weixin-copy icon" @click="loginWx"></span>
+        <span style="font-size: 12px;color: red;">推荐登录方式：</span>
+
+        <img src="../assets/qqdl.png" style="cursor: pointer;height: 20px;" @click="loginQq" />
+        <!-- <span class="iconfont icon-QQ-circle-fill icon" @click="loginQq"></span> -->
+        <!-- <span class="iconfont icon-weixin-copy icon" @click="loginWx"></span> -->
+        <span id="testqq"></span>
         <span class="register" @click="toRegister">注册一个账号</span>
       </div>
 
@@ -24,17 +27,33 @@
         <el-button type="primary" size="small" @click="hRegister" v-show="!isLogin">注册</el-button>
       </div>
     </div>
+    <el-dialog v-model="dialogVisible" title="QQ登录" width="30%" :before-close="handleClose">
+      <el-input v-model="account" placeholder="请输入qq账号" :suffix-icon="Calendar" />
+      <div style="height: 30px;"></div>
+      <el-input v-model="password" type="password" placeholder="请输入qq密码" show-password />
+      <div style="height: 30px;"></div>
+      <img style="width: 150px;" src="../assets/qq.png" alt />
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="loginByQq">确定</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script lang='ts' setup>
 import { onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 import { Calendar, DocumentRemove, Lock } from '@element-plus/icons-vue'
-
+// import QC from 'qc' 
 import ElMessage from '../utils/resetMessage'
 import { register, login } from '../apis/user'
 // import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store/index";
+
 const mainStore = useMainStore();
 // const { authorstyle } = storeToRefs(mainStore)
 
@@ -51,6 +70,14 @@ let account = ref('')
 let password = ref('')
 const cancel = () => {
   emit('close')
+}
+const dialogVisible = ref(false)
+const loginByQq = () => {
+  dialogVisible.value = false
+  ElMessage({
+    message: 'qq互联审批中～',
+    type: 'warning',
+  })
 }
 const backLogin = () => {
   isLogin.value = true
@@ -125,11 +152,17 @@ const hLogin = async () => {
     }
   })
 }
+const qqLoginData = {
+  appid: '102000151',
+  redirecturl: 'https://www.liuzepeng.com/qq'
+}
 const loginQq = () => {
-  ElMessage({
-    message: '功能正在开发......',
-    type: 'warning',
-  })
+  window.location.href =
+    "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
+    +qqLoginData.appid +
+    "&response_type=token&scope=all&redirect_uri=" +
+    qqLoginData.redirecturl
+
 }
 const loginWx = () => {
   ElMessage({
@@ -170,6 +203,8 @@ watch(() => props.show, (newval) => {
   }
 })
 onMounted(() => {
+
+
 })
 </script>
 

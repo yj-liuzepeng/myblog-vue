@@ -33,7 +33,7 @@ router.afterEach((to, from) => {
       routerName: to.meta.title,
       routerUrl: to.name,
     };
-    console.log(toRouter)
+    // console.log(toRouter)
   }
   
 });

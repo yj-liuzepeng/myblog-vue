@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+ */
 // 用户管理接口
 
 import axios from '../utils/axios'
@@ -10,4 +15,9 @@ export const register = (params: any) => {
 export const login = (params) => {
   return axios.post('/api/login', params)
 }
+// qq登录
+export const qqLogin = (params) => {
+  return axios.post('/api/qqLogin', params)
+}
+
 

@@ -1,4 +1,8 @@
-// store/index.ts
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+ */
 import { defineStore } from "pinia";
 import {styleone} from '../styles/skinstyles/styles'
 // interface MainState {
@@ -30,6 +34,14 @@ export const useMainStore = defineStore("main", {
     saveToken(token) {
       this.token = token
       localStorage.setItem("BLOGTOKEN", JSON.stringify(this.token));
+    },
+    clearUserInfo() {
+      this.userInfo = {}
+      localStorage.removeItem('BLOGUSERINFO')
+    },
+    clearToken() {
+      this.token = ''
+      localStorage.removeItem('BLOGTOKEN')
     }
   },
 });

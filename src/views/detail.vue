@@ -20,10 +20,7 @@
               </div>
             </div>
             <div class="detail-img">
-              <img
-                :src="'http://r9fow69yb.hb-bkt.clouddn.com/' + articleState.pic"
-                :alt="articleState.title"
-              />
+              <img :src="'https://liuzepeng.com/' + articleState.pic" :alt="articleState.title" />
             </div>
           </div>
           <el-divider content-position="center">
@@ -40,14 +37,16 @@
           <div class="tag-box">
             <div class="tag-list">
               <span class="iconfont icon-24gf-tags3"></span>
-              <el-tag class="tag-item" v-for="item  in  articleState.taglist"
-                      :style="[{ 'background-color': item.color }, { 'color': '#fff' }]"
+              <el-tag
+                class="tag-item"
+                v-for="item  in  articleState.taglist"
+                :style="[{ 'background-color': item.color }, { 'color': '#fff' }]"
               >{{ item.name }}</el-tag>
             </div>
-            <div class="last-time">最后修改于{{articleState.updatetime}}</div>
+            <div class="last-time">最后修改于{{ articleState.updatetime }}</div>
           </div>
           <el-divider></el-divider>
-          <comment-box />
+          <comment-box type="1" :targetId="articleId" :targetName="articleState.title" />
         </div>
       </el-col>
       <el-col :span="6">
@@ -68,10 +67,10 @@
 </template>
 
 <script lang='ts' setup>
-import { nextTick, onMounted, reactive, ref } from 'vue';
+import { nextTick,onBeforeMount, onMounted, reactive, ref } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
-import commentBox from '../components/comment.vue'
+import commentBox from '../components/comment/index.vue'
 // import tagList from '../components/tag-list.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UnixToDate } from '../utils/datetime'
@@ -82,17 +81,18 @@ import 'progress-catalog/src/progress-catalog.css'
 const route = useRoute()
 
 const router = useRouter()
+const articleId = ref()
 const articleState = reactive({
   html: null,
   title: '',
   createtime: '',
-  updatetime:"",
+  updatetime: "",
   hot: '',
   pic: '',
   description: '',
   taglist: []
 })
-let hTreeData = ref([]) // 保存h标签为树形结构
+
 const getArticle = async (id) => {
   await queryArticleById({ id }).then((res: any) => {
     if (res.code == 200) {
@@ -103,12 +103,12 @@ const getArticle = async (id) => {
       articleState.hot = res.data.data.hot
       articleState.pic = res.data.data.pic
       articleState.description = res.data.data.description
-      articleState.taglist = 
-    
-    tagLists.value.filter(item => {
-        return res.data.data.tag.split(',').indexOf(item.name) != -1
+      articleState.taglist =
 
-      })
+        tagLists.value.filter(item => {
+          return res.data.data.tag.split(',').indexOf(item.name) != -1
+
+        })
 
     }
   })
@@ -135,12 +135,16 @@ const getTagList = async () => {
   })
 }
 const boxScroll = (obj) => {
-  console.log(obj.scrollTop, obj.fixed)
+  // console.log(obj.scrollTop, obj.fixed)
 }
 const toHome = () => {
   router.push({ name: 'home' })
 }
+onBeforeMount(()=> {
+ articleId.value = route.query.id
+})
 onMounted(() => {
+ 
   getTagList()
 
 
@@ -209,7 +213,7 @@ onMounted(() => {
       .last-time {
         display: flex;
         justify-content: right;
-        color:rgb(204, 204, 204);
+        color: rgb(204, 204, 204);
       }
     }
   }

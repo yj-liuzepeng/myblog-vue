@@ -22,7 +22,8 @@ import {
   ElAffix,
   ElProgress,
   ElTimeline,
-  ElCard
+  ElCard,
+  ElDialog
 } from "element-plus";
 export default (app) => {
   app
@@ -44,5 +45,6 @@ export default (app) => {
   .use(ElProgress)
   .use(ElTimeline)
   .use(ElCard)
+  .use(ElDialog)
   // .use(ElMessage)
 };

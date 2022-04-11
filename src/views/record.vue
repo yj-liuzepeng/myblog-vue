@@ -20,7 +20,7 @@
                 <div>
                   <div v-if="item.title && item.title!='无'" class="timeline-title">{{ item.title }}</div>
                   <div class="timeline-des" :style="{ 'color': item.color }">{{ item.description }}</div>
-                  <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'http://r9fow69yb.hb-bkt.clouddn.com/' + item.pic" :alt="item.title" />
+                  <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" />
 
                   <div class="timeline-time">{{ UnixToDate(new Date(item.dotime), 6) }}</div>
                   <el-divider border-style="dashed" />

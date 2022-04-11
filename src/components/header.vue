@@ -24,6 +24,13 @@
             >
               <span :class="['tab-icon', 'iconfont', item.icon]"></span>
               {{ item.name }}
+              <span v-if="item.code == 'out' && userInfoData?.avator">
+                <el-avatar
+                  style="margin-left: 8px; vertical-align: middle"
+                  :size="30"
+                  :src="userInfoData.avator"
+                ></el-avatar>
+              </span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -36,10 +43,10 @@
 <script lang='ts' setup>
 import { ref, reactive, onBeforeMount, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
-import { useRouter,useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useMainStore } from "../store";
 import { ElMessageBox } from 'element-plus'
-import  ElMessage  from '../utils/resetMessage'
+import ElMessage from '../utils/resetMessage'
 import Login from '../views/login.vue'
 
 const router = useRouter()
@@ -54,8 +61,8 @@ const headerState = reactive({
     { name: '实战', code: 'work', icon: 'icon-gongzuotai', path: './work', slogan: '不要为平庸找借口！' },
     { name: '记录', code: 'record', icon: 'icon-bijijilu', path: './record', slogan: '多总结，多归纳，多学习' },
     // { name: '生活', code: 'life', icon: 'icon-xiaolian2', path: './life', slogan: '热爱生活，积极向上每一天' },
-    { name: '互动', code: 'interaction', icon: 'icon-hudong', path: './interaction', slogan: '我爱你中国 🇨🇳🇨🇳🇨🇳' },
-    { name: '关于', code: 'about', icon: 'icon-guanyuwo', path: './about', slogan: '唯有热爱，可抵岁月漫长' },
+    // { name: '互动', code: 'interaction', icon: 'icon-hudong', path: './interaction', slogan: '我爱你中国 🇨🇳🇨🇳🇨🇳' },
+    { name: '关于', code: 'about', icon: 'icon-guanyuwo', path: './about', slogan: '采得百花成蜜后，为谁辛苦为谁甜' },
     { name: '登录', code: 'login', icon: 'icon-denglu', path: './login', slogan: '不要为平庸找借口！' }
   ],
 
@@ -78,8 +85,8 @@ const headerState = reactive({
         }
       )
         .then(() => {
-          localStorage.removeItem('BLOGUSERINFO')
-          localStorage.removeItem('BLOGTOKEN')
+          mainStore.clearUserInfo()
+          mainStore.clearToken()
           let loginMsg = headerState.menuList[headerState.menuList.length - 1]
           loginMsg.name = '登录'
           loginMsg.code = 'login'
@@ -123,15 +130,17 @@ const scrollBody = () => {
   }
 }
 // 点击logo
-const hClickLogo =()=> {
-   router.push('./home')
-   headerState.activeIndex = 'home'
+const hClickLogo = () => {
+  router.push('./home')
+  headerState.activeIndex = 'home'
   // headerState.changeTab({ name: '首页', code: 'home', icon: 'icon-shouye', path: './home', slogan: '唯有热爱，可抵岁月漫长' })
 }
+const userInfoData = ref()
 onBeforeMount(() => {
   scrollBody()
+
   let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
-  if (localUserInfo) {
+  if (!!localUserInfo) {
     let loginMsg = headerState.menuList[headerState.menuList.length - 1]
     loginMsg.name = '退出  [' + localUserInfo.username + ']'
     loginMsg.code = 'out'
@@ -140,16 +149,21 @@ onBeforeMount(() => {
 
 })
 watch(() => userInfo.value, (newval) => {
-  let loginMsg = headerState.menuList[headerState.menuList.length - 1]
-  loginMsg.name = '退出  [' + newval.username + ']'
-  loginMsg.code = 'out'
-  loginMsg.icon = 'icon-tuichu'
+  if (newval && newval.username) {
+    userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
+    let loginMsg = headerState.menuList[headerState.menuList.length - 1]
+    loginMsg.name = '退出  [' + newval.username + ']'
+    loginMsg.code = 'out'
+    loginMsg.icon = 'icon-tuichu'
+  }
+
 })
-watch(()=>route.name, (newval)=> {
-headerState.activeIndex = newval as string
+watch(() => route.name, (newval) => {
+  headerState.activeIndex = newval as string
 })
-onMounted(()=> {
+onMounted(() => {
   headerState.activeIndex = route.name as string
+  userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
 })
 </script>
 

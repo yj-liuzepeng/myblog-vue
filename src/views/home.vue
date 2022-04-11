@@ -28,7 +28,11 @@
             </el-row>
           </div>
           <div class="left-content-items" v-if="total">
-            <div class="left-content-item cssnicehover cssnice1" v-for="item in articleList" :key="item.id">
+            <div
+              class="left-content-item cssnicehover cssnice1"
+              v-for="item in articleList"
+              :key="item.id"
+            >
               <div class="item-title" @click="toDetail(item)">{{ item.title }}</div>
               <div class="item-tags">
                 <el-tag class="item-tags-top" v-if="item.top == '是'" type="danger">置顶</el-tag>
@@ -46,9 +50,7 @@
                 </div>
               </div>
               <div class="item-img" @click="toDetail(item)">
-
-                <img :src="'http://r9fow69yb.hb-bkt.clouddn.com/' + item.pic" :alt="item.title" />
-
+                <img :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" />
               </div>
               <div class="item-txt">{{ item.description }}</div>
             </div>
@@ -85,7 +87,6 @@
         </div>
       </el-col>
     </el-row>
-    <el-backtop />
   </div>
 </template>
 
@@ -99,7 +100,7 @@ import tagList from '../components/tag-list.vue'
 
 import { UnixToDate } from '../utils/datetime'
 import { useRouter } from 'vue-router'
-import { queryArticleList, likeQueryArticle, queryArticleByTag,addArticleHot } from '../apis/article'
+import { queryArticleList, likeQueryArticle, queryArticleByTag, addArticleHot } from '../apis/article'
 const router = useRouter()
 const toDetail = (item) => {
   router.push({
@@ -109,10 +110,10 @@ const toDetail = (item) => {
     }
   })
   addArticleHot({
-    id:item.id,
-    hot:item.hot
-  }).then(res=> {
-    console.log(res)
+    id: item.id,
+    hot: item.hot
+  }).then(res => {
+    // console.log(res)
   })
 }
 let searchIpt = ref('')
@@ -234,11 +235,11 @@ const hClickTag = (tag) => {
 }
 onMounted(() => {
   getArticleList()
+  
 })
 </script>
 
 <style lang='scss' scoped>
-
 .home {
   padding-top: 3.2rem;
 }

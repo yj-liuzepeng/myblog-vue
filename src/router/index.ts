@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+ */
 import { createRouter, createWebHistory,createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Layout from "../layout/index.vue";
 
@@ -13,6 +18,15 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/home.vue"),
         meta: {
           title: "首页",
+        },
+      },
+
+      {
+        path: "/qq",
+        name: "qq",
+        component: () => import("../views/oauth.vue"),
+        meta: {
+          title: "qq登录",
         },
       },
       {
@@ -67,8 +81,8 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 const router = createRouter({
-  // history: createWebHistory(),
-  history: createWebHashHistory(),
+  history: createWebHistory(),
+  // history: createWebHashHistory(),
   routes,
 });
 

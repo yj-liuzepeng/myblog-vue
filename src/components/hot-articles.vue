@@ -33,7 +33,7 @@ const { authorstyle } = storeToRefs(mainStore)
 const hotArticleList = ref([])
 const getHotArticle = (n) => {
   queryArticleByHot({ n }).then((res: any) => {
-    console.log(res)
+  
     if (res.code == 200) {
       hotArticleList.value = res.data.data
     }

@@ -34,12 +34,10 @@
               :key="item.id"
               @click="openUrl(item.url)"
             >
-            
               <div
                 class="item-top"
-                :style="{ 'backgroundImage': 'url(http://r9fow69yb.hb-bkt.clouddn.com/' + item.pic + ')' }"
+                :style="{ 'backgroundImage': 'url(https://liuzepeng.com/' + item.pic + ')' }"
               >
-        
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
                   <div class="des">{{ item.description }}</div>
