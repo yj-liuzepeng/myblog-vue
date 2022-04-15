@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.4",
+    "lib-flexible": "^0.3.2",
+    "postcss-pxtorem": "^6.0.0",
     "sass": "^1.45.2",
     "sass-loader": "^12.4.0",
     "unplugin-auto-import": "^0.5.5",

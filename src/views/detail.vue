@@ -49,19 +49,13 @@
         </div>
       </el-col>
       <el-col :span="6">
-
-        <!-- <div class="right-content cssnice2"> -->
         <div class="right-content">
           <Author />
           <your-info />
-      
             <div class="catalog-content sticky-top">
               <div class="catalog-title">文章标题</div>
               <div id="right-catalog"></div>
             </div>
-   
-
-
         </div>
       </el-col>
     </el-row>
@@ -69,11 +63,10 @@
 </template>
 
 <script lang='ts' setup>
-import { nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import commentBox from '../components/comment/index.vue'
-// import tagList from '../components/tag-list.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UnixToDate } from '../utils/datetime'
 import { queryArticleById, queryTagList } from '../apis/article'
@@ -139,9 +132,6 @@ const getTagList = async () => {
       tagLists.value.push(...res.data.data)
     }
   })
-}
-const boxScroll = (obj) => {
-  // console.log(obj.scrollTop, obj.fixed)
 }
 const toHome = () => {
   router.push({ name: 'home' })

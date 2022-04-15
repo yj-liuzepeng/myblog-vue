@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: 皮肤管理
+ */
 export const styleone = {
   headerstyle: {
     bgc: "#2b3645",

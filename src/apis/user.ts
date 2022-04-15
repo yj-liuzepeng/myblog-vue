@@ -1,9 +1,8 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-18 11:36:06
- * @Description: file content
+ * @Description: 用户相关接口
  */
-// 用户管理接口
 
 import axios from '../utils/axios'
 

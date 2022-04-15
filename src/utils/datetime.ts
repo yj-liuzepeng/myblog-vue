@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: 时间日期处理函数
+ */
 
 /**
  * 将时间转换成时间戳
@@ -95,38 +100,5 @@ function NumBerToHanZi(Numbers) {
   }
   return chnStr;
 }
-// // 计算时间差
-// function DownTime(EndTime) {
-//   //如果为时间戳
-//   var EndTimes = new Date(EndTime).getTime();//结束时间
 
-//   var NowTime = new Date().getTime();//当前时间
-
-//   var DeltaT = EndTimes - NowTime;
-//   //计算出相差天数
-//   var days = Math.floor(DeltaT / (24 * 3600 * 1000));
-
-//   //计算出小时数
-
-//   var leave1 = DeltaT % (24 * 3600 * 1000);
-//   var H = Math.floor(leave1 / (3600 * 1000));
-//   //计算相差分钟数
-//   var leave2 = leave1 % (3600 * 1000);
-//   var M = Math.floor(leave2 / (60 * 1000));
-//   //计算相差秒数
-//   var leave3 = leave2 % (60 * 1000);
-//   var S = Math.round(leave3 / 1000);
-//   var reminder;
-//   if (DeltaT > 0) {
-//     if (days != "") {
-//       reminder = days + "天 " + H + "小时 " + M + " 分钟" + S + " 秒";
-//     } else if (days == "" || H != "") {
-//       reminder = H + "小时 " + M + " 分钟" + S + " 秒";
-//     }
-//   } else {
-//     reminder = "请注意！时间到了！";
-//   }
-//   return reminder;
-
-// }
 export {UnixToDate}

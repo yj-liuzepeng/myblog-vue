@@ -11,6 +11,8 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
+import postCssPxToRem from "postcss-pxtorem"
+
 function pathResolve(dir) {
   return resolve(__dirname, ".", dir);
 }
@@ -40,6 +42,15 @@ export default {
     //     additionalData: '@import "./src/styles/index.scss";',
     //   },
     // },
+    // 此代码为适配移动端px2rem
+    // postcss: {
+    //   // plugins: [
+    //   //   postCssPxToRem({
+    //   //     rootValue: 1, // 1rem的大小
+    //   //     propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
+    //   //   })
+    //   // ]
+    // }
   },
   optimizeDeps: {
     include: [

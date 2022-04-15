@@ -45,17 +45,12 @@
 
 <script lang='ts' setup>
 import { onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router'
-const router = useRouter()
-import { Calendar, DocumentRemove, Lock } from '@element-plus/icons-vue'
-// import QC from 'qc' 
+import { Calendar} from '@element-plus/icons-vue'
 import ElMessage from '../utils/resetMessage'
 import { register, login } from '../apis/user'
-// import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store/index";
 
 const mainStore = useMainStore();
-// const { authorstyle } = storeToRefs(mainStore)
 
 const props = defineProps({
   show: {

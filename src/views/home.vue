@@ -89,8 +89,6 @@ const toDetail = (item) => {
   addArticleHot({
     id: item.id,
     hot: item.hot
-  }).then(res => {
-    // console.log(res)
   })
 }
 let searchIpt = ref('')

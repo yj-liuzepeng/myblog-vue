@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-26 11:02:59
- * @Description: file content
+ * @Description: ElMessage封装，防止重复弹出
  */
 import { ElMessage } from 'element-plus';
 let messageInstance = null;

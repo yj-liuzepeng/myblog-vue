@@ -21,7 +21,7 @@
       </div>
       <div>
         您的浏览器:
-        <span :style="{ color: authorstyle.namecolor }">{{ yourInfo.browser }}</span>
+        <span :style="{ color: authorstyle.namecolor }">{{ yourInfo.browser.type }}</span>
       </div>
       <div>
         您好，您在:
@@ -39,7 +39,7 @@
 import {reactive, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store";
-import { getBrowserInfo } from '../utils/visitor'
+import { getBrowser } from '../utils/getInfo'
 import { UnixToDate } from '../utils/datetime'
 const mainStore = useMainStore();
 const { authorstyle } = storeToRefs(mainStore)
@@ -47,7 +47,7 @@ const { authorstyle } = storeToRefs(mainStore)
 const yourInfo = reactive({
   ip: returnCitySN["cip"],
   city: returnCitySN["cname"],
-  browser: getBrowserInfo(),
+  browser: getBrowser(),
   time: UnixToDate(new Date(), 2),
   tip: ''
 })

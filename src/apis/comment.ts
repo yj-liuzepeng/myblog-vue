@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-04-02 09:53:34
- * @Description: file content
+ * @Description: 评论相关接口
  */
 import axios from '../utils/axios'
 

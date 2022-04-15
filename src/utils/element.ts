@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-18 11:36:06
- * @Description: file content
+ * @Description: element-plus按需引入
  */
 import "element-plus/dist/index.css";
 // import ElMessage from './resetMessage'

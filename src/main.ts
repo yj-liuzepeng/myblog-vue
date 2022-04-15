@@ -10,6 +10,7 @@ import router from "./router/index";
 import { createPinia } from "pinia";
 import "../src/styles/index.scss";
 import elementPlus from "./utils/element";
+
 // import SimpleWeather from 'simple-weather-vue'
 // import 'simple-weather-vue/dist/style.css'
 import clickstyle from "./styles/coolstyles/clickstyle"; // 全局鼠标点击动效
@@ -22,21 +23,7 @@ import "@kangc/v-md-editor/lib/style/preview-html.css";
 
 // 主题样式
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
-// 监听进入之前
-router.afterEach((to, from) => {
-  // console.log('前to',to)
-  // console.log('前from',from)
-  if (from.name) {
-    // 判断是否为初始页面 如果为初始页面不需要发送(刷新当前页面不记录)
-    let toRouter = {
-      // 记录上一个页面名
-      routerName: to.meta.title,
-      routerUrl: to.name,
-    };
-    // console.log(toRouter)
-  }
-  
-});
+
 
 
 const app = createApp(App);

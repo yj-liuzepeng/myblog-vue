@@ -19,11 +19,6 @@
                   :suffix-icon="Search"
                   placeholder="搜索实战内容"
                 />
-                <!-- <template #suffix>
-                  <el-icon class="el-input__icon">
-                    <search />
-                  </el-icon>
-                </template>-->
               </el-col>
             </el-row>
           </div>
@@ -84,7 +79,6 @@
         <div class="right-content cssnice2">
           <Author />
           <your-info />
-          <!-- <tag-list /> -->
         </div>
       </el-col>
     </el-row>

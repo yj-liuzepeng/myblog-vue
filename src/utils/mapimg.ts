@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-26 08:52:03
- * @Description: file content
+ * @Description: 天气组件图片
  */
 import weather01 from "../assets/weather01.png";
 import weather02 from "../assets/weather02.png";

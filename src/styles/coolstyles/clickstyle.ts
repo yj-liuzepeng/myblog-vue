@@ -1,5 +1,7 @@
-/**
- * 鼠标点击动效
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: 鼠标点击动态效果（冒泡，炫彩背景）
  */
 
 const clickstyle = () => {
@@ -57,6 +59,7 @@ const clickstyle = () => {
       ")"
     );
   }
+
   // 炫彩形状背景
   function attr(node, attr, default_value) {
     return Number(node.getAttribute(attr)) || default_value;

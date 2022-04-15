@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-03-18 11:36:06
- * @Description: file content
+ * @Description: 路由管理
  */
 import { createRouter, createWebHistory,createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Layout from "../layout/index.vue";

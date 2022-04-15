@@ -1,7 +1,7 @@
 /*
  * @Author: lzp
  * @Date: 2022-04-14 11:48:45
- * @Description: 友情链接
+ * @Description: 友情链接接口
  */
 
 import axios from '../utils/axios'

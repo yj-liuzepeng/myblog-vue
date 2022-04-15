@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-18 11:36:06
- * @Description: file content
--->
 <template>
   <div class="record">
     <el-row :gutter="10">
@@ -47,8 +42,6 @@ import { ref, onMounted } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import hotArticles from '../components/hot-articles.vue'
-import { MoreFilled } from '@element-plus/icons-vue'
-import { ClockCircleOutlined } from '@ant-design/icons-vue';
 import { queryTimelineList } from '../apis/timeline'
 import { UnixToDate } from '../utils/datetime'
 let timelineList = ref([])

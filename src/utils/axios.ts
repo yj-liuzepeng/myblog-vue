@@ -1,3 +1,8 @@
+/*
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: axios封装
+ */
 import axios from 'axios'
 import qs from 'qs'
 import {
@@ -11,26 +16,8 @@ axios.defaults.baseURL = 'https://www.liuzepeng.com/api' // 线上
 
 // post请求头  formdata 方式
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-// post请求头  json    方式
-// axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 设置超时
 axios.defaults.timeout = 30000
-
-// axios.interceptors.request.use(
-//   (config) => {
-//     config.headers["X-Requested-With"] = "XMLHttpRequest";
-//     config.headers.post["Content-Type"] = "application/json";
-//     // 设置token
-//     if (localGet("ADMINBLOGTOKEN")) {
-//       config.headers["authorization"] = localGet("ADMINBLOGTOKEN");
-//     }
-
-//     return config;
-//   },
-//   (error) => {
-//     Promise.reject(error);
-//   }
-// );
 axios.interceptors.request.use(
   config => {
     return config
@@ -52,7 +39,6 @@ axios.interceptors.response.use(
     console.log(error)
     ElMessageBox.alert(JSON.stringify(error), '请求异常', {
       confirmButtonText: '确定'
-      // callback: action => {}
     })
   }
 )
@@ -63,22 +49,6 @@ export default {
         method: 'post',
         url,
         data: qs.stringify(data)
-      })
-        .then(res => {
-          resolve(res.data)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  },
-  postjson(url, data) {
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'post',
-        url,
-        headers: { 'Content-Type': 'application/json' },
-        data: data
       })
         .then(res => {
           resolve(res.data)
