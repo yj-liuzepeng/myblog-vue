@@ -1,8 +1,8 @@
 <template>
-  <div class="detail">
+  <div class="detail" >
     <el-row :gutter="10">
       <el-col :span="18">
-        <div class="left-content cssnice1">
+        <div class="left-content cssnice1" >
           <div class="detail-header">
             <div class="to-home" @click="toHome">首页</div>
             <div>/ {{ articleState.title }}</div>
@@ -37,29 +37,31 @@
           <div class="tag-box">
             <div class="tag-list">
               <span class="iconfont icon-24gf-tags3"></span>
-              <el-tag
-                class="tag-item"
-                v-for="item  in  articleState.taglist"
-                :style="[{ 'background-color': item.color }, { 'color': '#fff' }]"
-              >{{ item.name }}</el-tag>
+              <el-tag class="tag-item" v-for="item  in  articleState.taglist"
+                :style="[{ 'background-color': item.color }, { 'color': '#fff' }]">{{ item.name }}</el-tag>
             </div>
             <div class="last-time">最后修改于{{ articleState.updatetime }}</div>
           </div>
           <el-divider></el-divider>
-          <comment-box type="1" :targetId="articleId" :targetName="articleState.title" />
+
+          <comment-box :can="articleState.comment" type="1" :targetId="articleId" :targetName="articleState.title" />
+
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="right-content cssnice2">
+
+        <!-- <div class="right-content cssnice2"> -->
+        <div class="right-content">
           <Author />
           <your-info />
-          <!-- <el-affix> -->
-          <div class="catalog-content sticky-top">
-            <div class="catalog-title">文章标题</div>
-            <div id="right-catalog"></div>
-          </div>
+      
+            <div class="catalog-content sticky-top">
+              <div class="catalog-title">文章标题</div>
+              <div id="right-catalog"></div>
+            </div>
+   
 
-          <!-- </el-affix> -->
+
         </div>
       </el-col>
     </el-row>
@@ -67,7 +69,7 @@
 </template>
 
 <script lang='ts' setup>
-import { nextTick,onBeforeMount, onMounted, reactive, ref } from 'vue';
+import { nextTick, onBeforeMount, onMounted, reactive, ref } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import commentBox from '../components/comment/index.vue'
@@ -81,10 +83,12 @@ import 'progress-catalog/src/progress-catalog.css'
 const route = useRoute()
 
 const router = useRouter()
+
 const articleId = ref()
 const articleState = reactive({
   html: null,
   title: '',
+  comment: "",
   createtime: '',
   updatetime: "",
   hot: '',
@@ -98,6 +102,7 @@ const getArticle = async (id) => {
     if (res.code == 200) {
       articleState.html = res.data.data.html
       articleState.title = res.data.data.title
+      articleState.comment = res.data.data.comment
       articleState.createtime = UnixToDate(new Date(res.data.data.create_time), 3)
       articleState.updatetime = UnixToDate(new Date(res.data.data.update_time), 3)
       articleState.hot = res.data.data.hot
@@ -114,8 +119,9 @@ const getArticle = async (id) => {
   })
   // 侧边分页
   new Catalog({
-    contentEl: 'preview-box',
-    catalogEl: 'right-catalog',
+    contentEl: 'preview-box', // 需要检索生成目录的内容区的id选择器
+    catalogEl: 'right-catalog',// 将生成的目录append进的目录容器的id选择器
+    // scrollWrapper:'artdetail' // 监听scroll事件的内容区容器的id选择器，不需要加#，如果不填则默认是 contentEl 的父元素
     // cool: false
     // selector: ['h2', 'h3']
   })
@@ -140,11 +146,11 @@ const boxScroll = (obj) => {
 const toHome = () => {
   router.push({ name: 'home' })
 }
-onBeforeMount(()=> {
- articleId.value = route.query.id
+onBeforeMount(() => {
+  articleId.value = route.query.id
 })
 onMounted(() => {
- 
+
   getTagList()
 
 
@@ -155,17 +161,20 @@ onMounted(() => {
 <style lang='scss' scoped>
 .detail {
   padding-top: 3.2rem;
+
   .left-content {
     border: 1px solid rgb(242, 235, 235);
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 5px;
     margin-right: 10px;
+
     .detail-header {
       background-color: rgb(225, 240, 255);
       padding: 10px 0px 10px 5px;
       display: flex;
       color: rgb(0, 121, 136);
       font-size: 16px;
+
       .to-home {
         color: rgb(32, 157, 123);
         cursor: pointer;
@@ -173,43 +182,57 @@ onMounted(() => {
         font-weight: 600;
       }
     }
+
     .detail-all-info {
       text-align: center;
       width: 100%;
+
       .detail-title {
+        width: 60%;
+        margin: auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 28px;
         font-weight: 600;
         color: rgb(32, 157, 123);
       }
+
       .detail-info {
         display: flex;
         padding: 20px 0px;
         -webkit-box-pack: center;
         justify-content: center;
         font-size: 14px;
+
         .time {
           padding: 0 10px;
         }
       }
+
       .detail-img {
         img {
           width: 100%;
         }
       }
     }
+
     .detail-des {
       color: rgb(107, 106, 106);
       padding: 10px;
     }
+
     .tag-box {
       background-color: rgba(230, 234, 240, 0.4);
       width: 100%;
       padding: 10px;
+
       .tag-list {
         .tag-item {
           margin-left: 10px;
         }
       }
+
       .last-time {
         display: flex;
         justify-content: right;
@@ -217,6 +240,7 @@ onMounted(() => {
       }
     }
   }
+
   .right-content {
     .catalog-title {
       padding-bottom: 5px;
@@ -226,14 +250,16 @@ onMounted(() => {
       text-align: center;
       margin-bottom: 15px;
     }
+
     #right-catalog {
       margin-bottom: 15px;
     }
   }
+
   .sticky-top {
     // position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
+    // position: fixed;
+    // top: 20px;
   }
 }
 </style>

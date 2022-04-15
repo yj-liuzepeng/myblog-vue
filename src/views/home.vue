@@ -8,31 +8,17 @@
               <el-col :span="18">
                 博客日志
                 <span class="color-danger">{{ total || 0 }}</span> 篇
-                <el-tag
-                  class="tag-item"
-                  v-if="curTag"
-                  :style="[{ 'background-color': curTag.color }, { 'color': '#fff' }]"
-                >{{ curTag.name }}</el-tag>
+                <el-tag class="tag-item" v-if="curTag"
+                  :style="[{ 'background-color': curTag.color }, { 'color': '#fff' }]">{{ curTag.name }}</el-tag>
               </el-col>
               <el-col :span="6">
-                <el-input
-                  class="w-50 m-2"
-                  v-model="searchIpt"
-                  @change="hSearch"
-                  @input="hIpt"
-                  @blur="hBlur"
-                  :suffix-icon="Search"
-                  placeholder="搜索首页内容"
-                />
+                <el-input class="w-50 m-2" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
+                  :suffix-icon="Search" placeholder="搜索首页内容" />
               </el-col>
             </el-row>
           </div>
           <div class="left-content-items" v-if="total">
-            <div
-              class="left-content-item cssnicehover cssnice1"
-              v-for="item in articleList"
-              :key="item.id"
-            >
+            <div class="left-content-item itemhover cssnice1" v-for="item in articleList" :key="item.id">
               <div class="item-title" @click="toDetail(item)">{{ item.title }}</div>
               <div class="item-tags">
                 <el-tag class="item-tags-top" v-if="item.top == '是'" type="danger">置顶</el-tag>
@@ -41,7 +27,7 @@
                   <span>{{ UnixToDate(new Date(item.create_time), 6) }}</span>
                 </div>
                 <div class="item-tags-type">
-                  <span style="color:#67c23a;" class="iconfont icon-fenlei mr-5px"></span>
+                  <span style="color:#67c23a;" class="iconfont icon-biaoqian1 mr-5px"></span>
                   <span style="margin-right: 10px;" v-for="tag in item.tag.split(',')">{{ tag }}</span>
                 </div>
                 <div class="item-tags-hot">
@@ -55,19 +41,10 @@
               <div class="item-txt">{{ item.description }}</div>
             </div>
             <div class="pagination">
-              <el-pagination
-                background
-                v-model:currentPage="pageNo"
-                v-model:page-size="pageSize"
-                :page-sizes="[3, 6, 9, 12]"
-                :small="small"
-                :disabled="disabled"
-                :background="background"
-                layout="sizes, prev, pager, next, jumper"
-                :total="total"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-              ></el-pagination>
+              <el-pagination background v-model:currentPage="pageNo" v-model:page-size="pageSize"
+                :page-sizes="[3, 6, 9, 12]" :small="small" :disabled="disabled" :background="background"
+                layout="sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"></el-pagination>
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
@@ -235,7 +212,7 @@ const hClickTag = (tag) => {
 }
 onMounted(() => {
   getArticleList()
-  
+
 })
 </script>
 
@@ -250,15 +227,20 @@ onMounted(() => {
   padding: 0 0.8rem;
   margin-bottom: 0.3rem;
 }
+
 .left-content-items {
   .left-content-item {
     padding: 0.75rem 0.3rem;
+
+
+
     .item-title {
       font-size: 1.3rem;
       color: #1e90ff;
       padding: 0 0.3rem;
       cursor: pointer;
     }
+
     .item-tags {
       display: flex;
       height: 1.5rem;
@@ -266,42 +248,51 @@ onMounted(() => {
       padding: 0.5rem 0;
       color: #aaa;
       font-size: 14px;
+
       .item-tags-top {
         padding: 0 0.5rem;
         margin-right: 0.8rem;
       }
+
       .item-tags-time {
         margin-right: 0.5rem;
       }
+
       .item-tags-type {
         margin-right: 0.5rem;
       }
-      .item-tags-hot {
-      }
+
+      .item-tags-hot {}
+
       .mr-5px {
         margin-right: 0.3125rem;
       }
     }
+
     .item-img {
       width: 100%;
       height: 300px;
       cursor: pointer;
       overflow: hidden;
       margin-top: 20px;
+
       img {
         width: 100%;
         height: 100%;
         transition: all 0.5s ease-out 0.1s;
       }
     }
+
     .item-img:hover img {
       transform: scale(1.1);
     }
+
     .item-txt {
       margin-top: 1rem;
       color: #777;
       font-size: 14px;
     }
+
     .item-more {
       text-align: right;
       margin-right: 20px;
@@ -310,21 +301,36 @@ onMounted(() => {
       cursor: pointer;
     }
   }
+
+  .itemhover {
+    transition: all linear .7s;
+  }
+
+  .itemhover:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+    transform: translate3d(0, -2px, 0);
+    background-color: rgb(253, 253, 253);
+  }
 }
+
 .nodata {
   height: 825px;
   text-align: center;
+
   img {
     margin-top: 100px;
   }
 }
+
 .right-content {
   width: 100%;
 }
+
 .pagination {
   margin: 25px 0 10px;
   text-align: center;
 }
+
 .el-pagination {
   justify-content: center;
 }

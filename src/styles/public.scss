@@ -9,10 +9,10 @@
   border: 1px solid #eee;
   border-radius: 0.3rem;
 }
-.cssnicehover{
+.itemhover{
   transition: all linear .7s;
 }
-.cssnicehover:hover{
+.itemhover:hover{
   box-shadow: 0 15px 30px rgba(0,0,0,.1);
   transform: translate3d(0,-2px,0);
   background-color: rgba(250, 244, 244, 0.979);

@@ -7,7 +7,15 @@
   <div class="comment-list">
     <div class="comment-item" v-for="item  in data">
       <div class="item-avatar">
-        <el-avatar :size="30" class="comment-avatar" :src="item.from_avatar" />
+        <span v-if="item.from_avatar">
+          <el-avatar :size="30" class="comment-avatar" :src="item.from_avatar" />
+        </span>
+        <span v-else>
+          <el-avatar :size="30" class="comment-avatar">
+            {{ item.from_name.substring(0, 3) || item.from_name }}
+          </el-avatar>
+        </span>
+
       </div>
       <div class="item-content">
         <div class="top">
@@ -21,17 +29,10 @@
         <div class="content">{{ item.content }}</div>
         <div class="bottom">
           <span class="like">
-            <span
-              v-if="item.like_num != 0"
-              class="icon iconfont icon-dianzan_kuai"
-              style="color: #8c8c8c;"
-            />
-            <span
-              v-else
-              class="icon iconfont icon-dianzan"
-              @click="addLike(item)"
-              style="color: #8c8c8c;"
-            />
+
+            <span v-if="userCommentLike.indexOf(String(item.id)) != -1" class="icon iconfont icon-dianzan_kuai"
+              style="color: #8c8c8c;" @click="addOrDelLike(item)" />
+            <span v-else class="icon iconfont icon-dianzan" @click="addOrDelLike(item)" style="color: #8c8c8c;" />
             {{ item.like_num }}
           </span>
           <span class="rep" @click="replyComment(item)">回复</span>
@@ -42,13 +43,7 @@
         </div>
         <!-- 回复输入框 -->
         <div class="reply-ipt" v-if="showReply && curReplyId == item.id">
-          <el-input
-            v-model="replyIpt"
-            :placeholder="'回复@' + item.from_name"
-            show-word-limit
-            type="textarea"
-            rows="2"
-          />
+          <el-input v-model="replyIpt" :placeholder="'回复@' + item.from_name" show-word-limit type="textarea" rows="2" />
           <div class="reply-ipt-btns">
             <el-button size="small" type="info" @click="cancel">取消</el-button>
             <el-button type="primary" size="small" @click="sendComment(item)">发送</el-button>
@@ -57,7 +52,15 @@
         <div v-if="item.children && item.children.length">
           <div class="children" v-for="child in item.children">
             <div class="children-avatar">
-              <el-avatar :size="30" class="comment-avatar" :src="child.from_avatar" />
+              <span v-if="child.from_avatar">
+                <el-avatar :size="30" class="comment-avatar" :src="child.from_avatar" />
+              </span>
+              <span v-else>
+                <el-avatar :size="30" class="comment-avatar">
+                  {{ child.from_name.substring(0, 3) || child.from_name }}
+                </el-avatar>
+              </span>
+
             </div>
 
             <div class="children-content">
@@ -73,17 +76,10 @@
               <div class="children-content">{{ child.content }}</div>
               <div class="children-bottom">
                 <span class="like">
-                  <span
-                    v-if="child.like_num != 0"
-                    class="icon iconfont icon-dianzan_kuai"
-                    style="color: #8c8c8c;"
-                  />
-                  <span
-                    v-else
-                    class="icon iconfont icon-dianzan"
-                    @click="addLike(child)"
-                    style="color: #8c8c8c;"
-                  />
+                  <span v-if="userCommentLike.indexOf(String(child.id)) != -1" class="icon iconfont icon-dianzan_kuai"
+                    style="color: #8c8c8c;" @click="addOrDelLike(child)" />
+                  <span v-else class="icon iconfont icon-dianzan" @click="addOrDelLike(child)"
+                    style="color: #8c8c8c;" />
                   {{ child.like_num }}
                 </span>
                 <span class="rep" @click="replyComment(child)">回复</span>
@@ -94,13 +90,8 @@
               </div>
               <!-- 回复输入框 -->
               <div class="reply-ipt" v-if="showReply && curReplyId == child.id">
-                <el-input
-                  v-model="replyIpt"
-                  :placeholder="'回复@' + child.from_name"
-                  show-word-limit
-                  type="textarea"
-                  rows="2"
-                />
+                <el-input v-model="replyIpt" :placeholder="'回复@' + child.from_name" show-word-limit type="textarea"
+                  rows="2" />
                 <div class="reply-ipt-btns">
                   <el-button size="small" type="info" @click="cancel">取消</el-button>
                   <el-button type="primary" size="small" @click="sendComment(child)">发送</el-button>
@@ -122,7 +113,7 @@ export default {
 import { onMounted, ref, watch } from 'vue';
 import ElMessage from '../../utils/resetMessage'
 import { UnixToDate } from '../../utils/datetime'
-import { addComment, deleteComment, addLikeNum } from '../../apis/comment'
+import { addComment, deleteComment, addorDelLikeNum, rfhUserCommentLike } from '../../apis/comment'
 import { storeToRefs } from 'pinia'
 import { useMainStore } from "../../store";
 
@@ -137,6 +128,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['reply', 'delete', 'refresh'])
 const userInfoData = ref()
+let userCommentLike = ref()
 const replyIpt = ref('')
 let showReply = ref(false)
 let curReplyId = ref('')
@@ -147,8 +139,8 @@ const showBefalse = (data) => {
   });
 
 }
-// 评论点赞
-const addLike = async (item) => {
+// 评论点赞或取消
+const addOrDelLike = async (item) => {
   if (!userInfoData.value) {
     ElMessage({
       message: '请登录后点赞',
@@ -156,9 +148,36 @@ const addLike = async (item) => {
     })
     return
   } else {
-    await addLikeNum({ id: item.id }).then((res: any) => {
+    let params;
+    if (userCommentLike.value.indexOf(String(item.id)) == -1) {
+      // 如果当前用户评论点赞中没有当前这一条，新增
+      params = {
+        id: item.id,
+        type: 'add'
+      }
+      userCommentLike.value.push(String(item.id))
+      userInfoData.value.comment_like = userCommentLike.value.join()
+      localStorage.setItem('BLOGUSERINFO', JSON.stringify(userInfoData.value))
+    } else {
+      // 如果有，取消
+      params = {
+        id: item.id,
+        type: 'del'
+      }
+      let idx = userCommentLike.value.indexOf(String(item.id))
+      userCommentLike.value.splice(idx, 1)
+      userInfoData.value.comment_like = userCommentLike.value.join()
+      localStorage.setItem('BLOGUSERINFO', JSON.stringify(userInfoData.value))
+
+    }
+    await addorDelLikeNum(params).then((res: any) => {
       if (res.code == 200) {
-        emit('refresh')
+        rfhUserCommentLike({ id: userInfoData.value.id, like: userInfoData.value.comment_like }).then(r => {
+          if (r.code == 200) {
+            emit('refresh')
+          }
+        })
+
       } else {
         ElMessage({
           message: res.msg,
@@ -242,10 +261,17 @@ const sendComment = (item) => {
             message: '评论成功！',
             type: 'success',
           })
-          replyIpt.value = ''
-          showReply.value = false
-          emit('refresh')
+
         }
+        else {
+          ElMessage({
+            message: res.msg,
+            type: 'warning',
+          })
+        }
+        replyIpt.value = ''
+        showReply.value = false
+        emit('refresh')
       })
     }
 
@@ -265,45 +291,55 @@ watch(() => showReply.value, (newval) => {
 })
 watch(() => userInfo.value, (newval) => {
   userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
+  userCommentLike.value = userInfoData.value?.comment_like ? userInfoData.value.comment_like.split(',') : []
 })
 onMounted(() => {
   userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
+  userCommentLike.value = userInfoData.value?.comment_like ? userInfoData.value.comment_like.split(',') : []
 })
 </script>
 
 <style lang='scss' scoped>
 .comment-list {
   margin-top: 30px;
+
   .comment-item {
     display: flex;
     padding: 16px 0;
+
     .item-avatar {
       position: relative;
       flex-shrink: 0;
       margin-right: 12px;
       cursor: pointer;
     }
+
     .item-content {
       position: relative;
       flex: 1 1 auto;
       min-width: 1px;
       font-size: 14px;
       word-wrap: break-word;
+
       .top {
         font-size: 12px;
+
         .username {
           padding-right: 8px;
           color: rgb(241, 62, 95);
         }
+
         .commenttime {
           padding-right: 8px;
           color: #ccc;
         }
+
         .area {
           padding-right: 8px;
           color: #ccc;
         }
       }
+
       .content {
         margin: 5px 10px;
         color: #24292e;
@@ -311,8 +347,10 @@ onMounted(() => {
         line-height: 1.5;
         word-wrap: break-word;
       }
+
       .bottom {
         font-size: 12px;
+
         .like {
           .icon {
             font-size: 13px;
@@ -320,15 +358,18 @@ onMounted(() => {
             cursor: pointer;
           }
         }
+
         .rep {
           margin-left: 10px;
           margin-right: 10px;
           color: rgb(24, 144, 255);
           cursor: pointer;
         }
+
         .del {
           color: rgb(24, 144, 255);
           cursor: pointer;
+
           .icon {
             font-size: 15px;
             margin-left: -3px;
@@ -336,41 +377,50 @@ onMounted(() => {
           }
         }
       }
+
       .children {
         display: flex;
         padding: 12px 0;
+
         .children-avatar {
           position: relative;
           flex-shrink: 0;
           margin-right: 12px;
           cursor: pointer;
         }
+
         .children-content {
           position: relative;
           flex: 1 1 auto;
           min-width: 1px;
           font-size: 14px;
           word-wrap: break-word;
+
           .children-top {
             font-size: 12px;
+
             .username {
               padding-right: 8px;
               color: rgb(241, 62, 95);
             }
+
             .commenttime {
               padding-right: 8px;
               color: #ccc;
             }
+
             .area {
               padding-right: 8px;
               color: #ccc;
             }
           }
+
           .reply-user {
             margin: 6px 0;
             font-size: 12px;
             color: rgb(111, 111, 231);
           }
+
           .children-content {
             margin: 10px 10px;
             color: #24292e;
@@ -378,8 +428,10 @@ onMounted(() => {
             line-height: 1.5;
             word-wrap: break-word;
           }
+
           .children-bottom {
             font-size: 12px;
+
             .like {
               .icon {
                 font-size: 13px;
@@ -387,15 +439,18 @@ onMounted(() => {
                 cursor: pointer;
               }
             }
+
             .rep {
               margin-left: 10px;
               margin-right: 10px;
               color: rgb(24, 144, 255);
               cursor: pointer;
             }
+
             .del {
               color: rgb(24, 144, 255);
               cursor: pointer;
+
               .icon {
                 font-size: 15px;
                 margin-left: -3px;
@@ -405,8 +460,10 @@ onMounted(() => {
           }
         }
       }
+
       .reply-ipt {
         margin-top: 10px;
+
         .reply-ipt-btns {
           margin-top: 10px;
           display: flex;
@@ -416,6 +473,7 @@ onMounted(() => {
     }
   }
 }
+
 .comment-avatar {
   transition: all 0.5s;
 }

@@ -9,7 +9,7 @@
       <div>本网站由Vue3+Node+Element-plus联合驱动</div>
       <div>
         <el-tag class="tag-item" type="danger">对象存储kodo</el-tag>
-        <span class="beian">京ICP备2021039823号</span>
+        <span class="beian">京ICP备2021039823号-1</span>
         <el-tag class="tag-item">腾讯云</el-tag>
       </div>
       <div>

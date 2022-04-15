@@ -29,7 +29,7 @@
           </div>
           <div class="left-content-items" v-if="total">
             <div
-              class="left-content-item cssnicehover cssnice1"
+              class="left-content-item itemhover cssnice1"
               v-for="item in workList"
               :key="item.id"
               @click="openUrl(item.url)"
@@ -251,6 +251,7 @@ onMounted(() => {
       display: flex;
       margin-top: 10px;
       margin-bottom: 10px;
+      padding-bottom: 10px;
       font-size: 14px;
       .date {
         margin-right: 12px;
@@ -261,6 +262,15 @@ onMounted(() => {
       .author {
       }
     }
+  }
+    .itemhover {
+    transition: all linear .7s;
+  }
+
+  .itemhover:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+    transform: translate3d(0, -2px, 0);
+    background-color: rgb(253, 253, 253);
   }
   .pagination {
     margin: 25px 0 10px;

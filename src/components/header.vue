@@ -7,30 +7,25 @@
           <span class="header-slogan">{{ headerState.slogan }}</span>
         </el-col>
         <el-col :span="14">
-          <el-menu
-            :default-active="headerState.activeIndex"
-            class="el-menu-demo"
-            mode="horizontal"
-            :background-color="headerstyle.bgc"
-            :text-color="headerstyle.textcolor"
-            :active-text-color="headerstyle.activetextcolor"
-          >
-            <el-menu-item
-              class="tab"
-              v-for="item in headerState.menuList"
-              :key="item.code"
-              :index="item.code"
-              @click="headerState.changeTab(item)"
-            >
+          <el-menu :default-active="headerState.activeIndex" class="el-menu-demo" mode="horizontal"
+            :background-color="headerstyle.bgc" :text-color="headerstyle.textcolor"
+            :active-text-color="headerstyle.activetextcolor">
+            <el-menu-item class="tab" v-for="item in headerState.menuList" :key="item.code" :index="item.code"
+              @click="headerState.changeTab(item)">
               <span :class="['tab-icon', 'iconfont', item.icon]"></span>
-              {{ item.name }}
-              <span v-if="item.code == 'out' && userInfoData?.avator">
-                <el-avatar
-                  style="margin-left: 8px; vertical-align: middle"
-                  :size="30"
-                  :src="userInfoData.avator"
-                ></el-avatar>
+              {{ item.name.length>15 ? (item.name.substring(0,8) + '...') : item.name }}
+              <span v-if="item.code == 'out'">
+                <span v-if="userInfoData?.avator">
+                  <el-avatar style="margin-left: 8px; vertical-align: middle" :size="30" :src="userInfoData.avator">
+                  </el-avatar>
+                </span>
+                <span v-else>
+                  <el-avatar style="margin-left: 8px; vertical-align: middle" :size="30">
+                    {{item.name.substring(5,8) || item.name || 'user'}}
+                  </el-avatar>
+                </span>
               </span>
+
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -61,7 +56,7 @@ const headerState = reactive({
     { name: '实战', code: 'work', icon: 'icon-gongzuotai', path: './work', slogan: '不要为平庸找借口！' },
     { name: '记录', code: 'record', icon: 'icon-bijijilu', path: './record', slogan: '多总结，多归纳，多学习' },
     // { name: '生活', code: 'life', icon: 'icon-xiaolian2', path: './life', slogan: '热爱生活，积极向上每一天' },
-    // { name: '互动', code: 'interaction', icon: 'icon-hudong', path: './interaction', slogan: '我爱你中国 🇨🇳🇨🇳🇨🇳' },
+    { name: '互动', code: 'interaction', icon: 'icon-hudong', path: './interaction', slogan: '我爱你中国 🇨🇳🇨🇳🇨🇳' },
     { name: '关于', code: 'about', icon: 'icon-guanyuwo', path: './about', slogan: '采得百花成蜜后，为谁辛苦为谁甜' },
     { name: '登录', code: 'login', icon: 'icon-denglu', path: './login', slogan: '不要为平庸找借口！' }
   ],
@@ -185,8 +180,10 @@ onMounted(() => {
   position: fixed;
   width: 100%;
   top: 0;
+
   .header {
     width: 73%;
+
     .header-logo {
       display: inline-block;
       cursor: pointer;
@@ -194,47 +191,50 @@ onMounted(() => {
       font-size: 1.4rem;
       text-align: left;
       line-height: 2.5rem;
-      background: -webkit-linear-gradient(
-        left,
-        #ffffff,
-        #ff0000 6.25%,
-        #ff7d00 12.5%,
-        #ffff00 18.75%,
-        #00ff00 25%,
-        #00ffff 31.25%,
-        #0000ff 37.5%,
-        #ff00ff 43.75%,
-        #ffff00 50%,
-        #ff0000 56.25%,
-        #ff7d00 62.5%,
-        #ffff00 68.75%,
-        #00ff00 75%,
-        #00ffff 81.25%,
-        #0000ff 87.5%,
-        #ff00ff 93.75%,
-        #ffff00 100%
-      );
+      background: -webkit-linear-gradient(left,
+          #ffffff,
+          #ff0000 6.25%,
+          #ff7d00 12.5%,
+          #ffff00 18.75%,
+          #00ff00 25%,
+          #00ffff 31.25%,
+          #0000ff 37.5%,
+          #ff00ff 43.75%,
+          #ffff00 50%,
+          #ff0000 56.25%,
+          #ff7d00 62.5%,
+          #ffff00 68.75%,
+          #00ff00 75%,
+          #00ffff 81.25%,
+          #0000ff 87.5%,
+          #ff00ff 93.75%,
+          #ffff00 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-size: 200% 100%;
       animation: masked-animation 2s infinite linear;
     }
+
     @keyframes masked-animation {
       0% {
         background-position: 0 0;
       }
+
       100% {
         background-position: -100%, 0;
       }
     }
+
     .header-slogan {
       padding-left: 0.5rem;
       font-size: 0.5rem;
       color: rgba(250, 245, 245, 0.65);
     }
+
     // element菜单menu样式修改
     .el-menu {
       border-bottom: 0;
+
       .el-menu-item {
         border-bottom: 0;
       }

@@ -12,7 +12,13 @@
     <div class="ipt-bottom">
       <el-button type="primary" @click="addCommentBtn">提交评论</el-button>
     </div>
-    <comment-list :data="data" @refresh="getCommentList()"></comment-list>
+    <div v-if="can == '1'">
+      <comment-list :data="data" @refresh="getCommentList()"></comment-list>
+    </div>
+    <div v-else class="close-comment">
+      <span class="iconfont icon-jinggao1"></span>
+      当前{{ type == '1' ? '文章' : '资源' }}关闭了评论权限
+    </div>
   </div>
 </template>
 
@@ -28,6 +34,11 @@ const mainStore = useMainStore();
 const { userInfo } = storeToRefs(mainStore)
 
 const props = defineProps({
+  // 是否允许评论
+  can: {
+    type: String,
+    default: '1'
+  },
   // 对什么评论
   type: {
     type: String,
@@ -88,7 +99,13 @@ const getCommentList = async () => {
 }
 // 新增评论
 const addCommentBtn = () => {
-
+  if (props.can != '1') {
+    ElMessage({
+      message: '当前' + (props.type == '1' ? '文章' : '页面') + '关闭了评论权限',
+      type: 'warning',
+    })
+    return
+  }
   if (!userInfoData.value) {
     ElMessage({
       message: '请登录后评论',
@@ -122,9 +139,14 @@ const addCommentBtn = () => {
             message: '评论成功！',
             type: 'success',
           })
-          textarea.value = ''
-          getCommentList()
+        } else {
+          ElMessage({
+            message: res.msg,
+            type: 'warning',
+          })
         }
+        textarea.value = ''
+        getCommentList()
       })
     }
   }
@@ -143,6 +165,7 @@ onMounted(() => {
 <style lang='scss' scoped>
 .comment-box {
   margin-bottom: 20px;
+
   .top-txt {
     padding: 15px 0px;
     text-align: center;
@@ -150,6 +173,7 @@ onMounted(() => {
     font-weight: 600;
     color: #4c9b7d;
   }
+
   .ipt-bottom {
     margin-top: 12px;
     display: flex;
@@ -159,11 +183,16 @@ onMounted(() => {
 </style>
 <style lang='scss' >
 .comment-ipt {
+
   .el-textarea__inner,
   .el-input__inner {
     // background: url(https://static.talkxj.com/config/commentBack.webp)
-    background: url(https://blog-1303885568.cos.ap-chengdu.myqcloud.com/useImg/comment.png)
-      right bottom no-repeat;
+    background: url(https://blog-1303885568.cos.ap-chengdu.myqcloud.com/useImg/comment.png) right bottom no-repeat;
   }
+}
+
+.close-comment {
+  font-size: 16px;
+  font-weight: 500;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="author-box">
+        
     <el-avatar id="avatarimg" :size="100" :src="avatarImg" @mouseenter="mouseEnterAvatar"></el-avatar>
     <div class="myname" :style="{ color: authorstyle.namecolor }">Liuzepeng</div>
   
@@ -48,6 +49,7 @@
 import { ref, onMounted,Transition } from 'vue';
 import { storeToRefs } from 'pinia'
 import bdd from '../assets/author/bdd.jpeg'
+import authorpic from '../assets/author/author.jpeg'
 import { useMainStore } from "../store";
 import { styleone, styletwo } from '../styles/skinstyles/styles'
 const mainStore = useMainStore();
@@ -87,12 +89,14 @@ let componentDidMount = () => {
   }
   typing();
 }
-let avatarImg = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
+let avatarImg = ref('https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500')
+
 // 头像旋转，主题改变
 let mouseEnterAvatar = () => {
   let deg = 0
   let img = document.getElementById("avatarimg");
-  if (avatarImg.value === 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png') {
+  if (avatarImg.value === 'https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500') {
+
     deg -= 360;
     img.style.transform = "rotate(" + deg + "deg)";
     setTimeout(() => {
@@ -104,7 +108,8 @@ let mouseEnterAvatar = () => {
     deg += 360;
     img.style.transform = "rotate(" + deg + "deg)";
     setTimeout(() => {
-      avatarImg.value = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+ 
+      avatarImg.value = "https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
       mainStore.changeStyle(styleone)
       document.querySelector('body').classList.remove('red-theme')
     }, 300);

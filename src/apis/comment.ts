@@ -17,7 +17,11 @@ export const addComment = (params: any) => {
 export const deleteComment = (params: any) => {
   return axios.post('/api/deleteComment', params)
 }
-// 点赞评论
-export const addLikeNum = (params: any) => {
-  return axios.post('/api/addLikeNum', params)
+// 点赞或取消
+export const addorDelLikeNum = (params: any) => {
+  return axios.post('/api/addorDelLikeNum', params)
+}
+// 更新用户评论点赞
+export const rfhUserCommentLike = (params: any) => {
+  return axios.post('/api/rfhUserCommentLike', params)
 }
