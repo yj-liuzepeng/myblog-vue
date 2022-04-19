@@ -1,7 +1,7 @@
 <template>
   <div class="detail" >
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18" >
         <div class="left-content cssnice1" >
           <div class="detail-header">
             <div class="to-home" @click="toHome">首页</div>
@@ -48,7 +48,7 @@
 
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="0" :sm="6" >
         <div class="right-content">
           <Author />
           <your-info />
@@ -73,6 +73,7 @@ import { queryArticleById, queryTagList } from '../apis/article'
 // 引入
 import Catalog from 'Progress-catalog'
 import 'progress-catalog/src/progress-catalog.css'
+import { goTop } from '../utils/pageEffect'
 const route = useRoute()
 
 const router = useRouter()
@@ -142,7 +143,7 @@ onBeforeMount(() => {
 onMounted(() => {
 
   getTagList()
-
+  goTop()
 
 
 })

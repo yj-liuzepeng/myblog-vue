@@ -1,25 +1,25 @@
 <template>
   <div class="home" id="home">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18" >
         <div class="left-content">
           <div class="left-content-header">
-            <el-row>
-              <el-col :span="18">
-                博客日志
-                <span class="color-danger">{{ total || 0 }}</span> 篇
-                <el-tag class="tag-item" v-if="curTag"
-                  :style="[{ 'background-color': curTag.color }, { 'color': '#fff' }]">{{ curTag.name }}</el-tag>
-              </el-col>
-              <el-col :span="6">
-                <el-input class="w-50 m-2" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
-                  :suffix-icon="Search" placeholder="搜索首页内容" />
-              </el-col>
-            </el-row>
+        
+            <span>
+              博客日志
+              <span class="color-danger">{{ total || 0 }}</span> 篇
+              <el-tag class="tag-item" v-if="curTag"
+                :style="[{ 'background-color': curTag.color }, { 'color': '#fff' }]">{{ curTag.name }}</el-tag>
+            </span>
+        
+            <el-input class="ipt-class" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
+              :suffix-icon="Search" placeholder="搜索首页内容" />
+           
           </div>
           <div class="left-content-items" v-if="total">
             <div class="left-content-item itemhover cssnice1" v-for="item in articleList" :key="item.id">
               <div class="item-title" @click="toDetail(item)">{{ item.title }}</div>
+
               <div class="item-tags">
                 <el-tag class="item-tags-top" v-if="item.top == '是'" type="danger">置顶</el-tag>
                 <div class="item-tags-time">
@@ -35,27 +35,28 @@
                   <span>{{ item.hot }}</span>
                 </div>
               </div>
+
               <div class="item-img" @click="toDetail(item)">
                 <img :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" />
               </div>
               <div class="item-txt">{{ item.description }}</div>
             </div>
             <div class="pagination">
-              <el-pagination background v-model:currentPage="pageNo" v-model:page-size="pageSize"
+              <el-pagination small background v-model:currentPage="pageNo" v-model:page-size="pageSize"
                 :page-sizes="[3, 6, 9, 12]" :small="small" :disabled="disabled" :background="background"
                 layout="sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"></el-pagination>
             </div>
           </div>
+
           <div class="left-content-items nodata" v-else>
             <img style="width: 120px;height: 120px;" src="../assets/nodata.png" alt="暂无数据" />
             <div style="color: #bbbbbb;font-size: 14px;margin-top: 10px;">暂无数据</div>
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="0" :sm="6" >
         <div class="right-content cssnice2">
-          <!-- <simple-weather  width="230px" height="100px"></simple-weather> -->
           <Author />
 
           <your-info />
@@ -74,7 +75,7 @@ import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import tagList from '../components/tag-list.vue'
 // import simpleWeather from '../components/weather.vue'
-
+import { goTop } from '../utils/pageEffect'
 import { UnixToDate } from '../utils/datetime'
 import { useRouter } from 'vue-router'
 import { queryArticleList, likeQueryArticle, queryArticleByTag, addArticleHot } from '../apis/article'
@@ -99,18 +100,6 @@ let total = ref()
 const small = ref(false)
 const background = ref(false)
 const disabled = ref(false)
-// 页面滚动到顶部效果
-const goTop = () => {
-  let distance = document.documentElement.scrollTop || document.body.scrollTop; //获得当前高度
-  let step = distance / 30; //每步的距离
-  (function jump() {
-    if (distance > 0) {
-      distance -= step;
-      window.scrollTo(0, distance);
-      setTimeout(jump, 10);
-    }
-  })();
-}
 const handleSizeChange = (val: number) => {
   pageSize.value = val
   goTop()
@@ -210,7 +199,7 @@ const hClickTag = (tag) => {
 }
 onMounted(() => {
   getArticleList()
-
+  goTop()
 })
 </script>
 
@@ -219,21 +208,36 @@ onMounted(() => {
   padding-top: 3.2rem;
 }
 
+.left-content {
+  width: 100%;
+}
+
 .left-content-header {
-  height: 2.5rem;
-  line-height: 2.5rem;
-  padding: 0 0.8rem;
-  margin-bottom: 0.3rem;
+  padding: .625rem .625rem 0.5rem;
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+
+  .ipt-class {
+    width: 160px;
+    border-radius: 5px;
+    color: rgb(122, 122, 122);
+  }
 }
 
 .left-content-items {
+  width: 100%;
+
   .left-content-item {
     padding: 0.75rem 0.3rem;
 
 
 
     .item-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       color: #1e90ff;
       padding: 0 0.3rem;
       cursor: pointer;
@@ -241,8 +245,8 @@ onMounted(() => {
 
     .item-tags {
       display: flex;
-      height: 1.5rem;
-      line-height: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
       padding: 0.5rem 0;
       color: #aaa;
       font-size: 14px;
@@ -268,15 +272,15 @@ onMounted(() => {
     }
 
     .item-img {
-      width: 100%;
-      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 300px;
       cursor: pointer;
       overflow: hidden;
-      margin-top: 20px;
 
       img {
         width: 100%;
-        height: 100%;
         transition: all 0.5s ease-out 0.1s;
       }
     }
@@ -325,11 +329,13 @@ onMounted(() => {
 }
 
 .pagination {
+  width: 100%;
   margin: 25px 0 10px;
-  text-align: center;
 }
 
 .el-pagination {
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 </style>

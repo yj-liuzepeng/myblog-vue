@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18">
         <div class="left-content">
           <div class="about-header">
             <div class="kb-img cssnice0">
@@ -85,7 +85,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
           <your-info />
@@ -97,15 +97,19 @@
 </template>
 
 <script lang='ts' setup>
-import { } from 'vue';
+import { onMounted } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import Skills from '../components/skills.vue'
 import timeClock from '../components/clock.vue';
 import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store";
+import { goTop } from '../utils/pageEffect'
 const mainStore = useMainStore();
 const { authorstyle } = storeToRefs(mainStore)
+onMounted(() => {
+  goTop()
+})
 </script>
 
 <style lang='scss' scoped>

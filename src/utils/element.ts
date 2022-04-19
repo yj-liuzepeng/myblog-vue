@@ -23,7 +23,11 @@ import {
   ElProgress,
   ElTimeline,
   ElCard,
-  ElDialog
+  ElDialog,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElDrawer
 } from "element-plus";
 export default (app) => {
   app
@@ -46,5 +50,9 @@ export default (app) => {
   .use(ElTimeline)
   .use(ElCard)
   .use(ElDialog)
+  .use(ElDropdown)
+  .use(ElDropdownMenu)
+  .use(ElDropdownItem)
+  .use(ElDrawer)
   // .use(ElMessage)
 };

@@ -1,7 +1,12 @@
+<!--
+ * @Author: lzp
+ * @Date: 2022-03-18 11:36:06
+ * @Description: file content
+-->
 <template>
   <div class="record">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18" >
         <div class="left-content cssnice1">
           <div class="timeline-box">
             <a-timeline mode="alternate">
@@ -25,7 +30,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+       <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
           <your-info />
@@ -44,6 +49,7 @@ import yourInfo from '../components/your-info.vue'
 import hotArticles from '../components/hot-articles.vue'
 import { queryTimelineList } from '../apis/timeline'
 import { UnixToDate } from '../utils/datetime'
+import { goTop } from '../utils/pageEffect'
 let timelineList = ref([])
 const getTimeline = () => {
   queryTimelineList({ pageSize: 9999, pageNo: 1 }).then((res: any) => {
@@ -55,6 +61,7 @@ const getTimeline = () => {
 }
 onMounted(() => {
   getTimeline()
+  goTop()
 })
 </script>
 

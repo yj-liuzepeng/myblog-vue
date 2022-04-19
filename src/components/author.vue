@@ -12,7 +12,7 @@
     <div class="myintroduction">前端：Vue3 + element-plus</div>
     <div class="myintroduction">后端：Node + Mysql</div>
     <div class="myintroduction">
-      <span class="iconfont icon-youxiang"></span>liuzepeng0200@163.com
+      <span class="iconfont icon-youxiang"></span>  <span>liuzepeng0200@163.com</span>
     </div>
     <div id="mymotto"></div>
     <el-divider>社交账号</el-divider>
@@ -149,6 +149,7 @@ onMounted(() => [
     font-size: 0.8rem;
     color: v-bind("authorstyle.textcolor");
     margin-bottom: 0.5rem;
+    word-wrap:break-word;
   }
   #mymotto {
     margin-top: 0.5rem;
@@ -159,11 +160,17 @@ onMounted(() => [
     display: flex;
     width: 100%;
     justify-content: space-around;
+    flex-wrap: wrap;
     .contact {
       font-size: 28px;
       color: #4c9b7d;
       cursor: pointer;
     }
   }
+}
+</style>
+<style>
+.el-divider__text.is-center {
+  background-color: transparent;
 }
 </style>

@@ -25,7 +25,6 @@ import "@kangc/v-md-editor/lib/style/preview-html.css";
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 
 
-
 const app = createApp(App);
 // 按需引入element-plus
 elementPlus(app);

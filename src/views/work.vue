@@ -1,38 +1,21 @@
 <template>
   <div class="work">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18">
         <div class="left-content">
           <div class="left-content-header">
-            <el-row>
-              <el-col :span="18">
-                项目实战
-                <span class="color-danger">{{ total || 0 }}</span> 篇
-              </el-col>
-              <el-col :span="6">
-                <el-input
-                  class="w-50 m-2"
-                  v-model="searchIpt"
-                  @change="hSearch"
-                  @input="hIpt"
-                  @blur="hBlur"
-                  :suffix-icon="Search"
-                  placeholder="搜索实战内容"
-                />
-              </el-col>
-            </el-row>
+            <span>
+              项目实战
+              <span class="color-danger">{{ total || 0 }}</span> 篇
+            </span>
+            <el-input class="ipt-class" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
+              :suffix-icon="Search" placeholder="搜索实战内容" />
+
           </div>
           <div class="left-content-items" v-if="total">
-            <div
-              class="left-content-item itemhover cssnice1"
-              v-for="item in workList"
-              :key="item.id"
-              @click="openUrl(item.url)"
-            >
-              <div
-                class="item-top"
-                :style="{ 'backgroundImage': 'url(https://liuzepeng.com/' + item.pic + ')' }"
-              >
+            <div class="left-content-item itemhover cssnice1" v-for="item in workList" :key="item.id"
+              @click="openUrl(item.url)">
+              <div class="item-top" :style="{ 'backgroundImage': 'url(https://liuzepeng.com/' + item.pic + ')' }">
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
                   <div class="des">{{ item.description }}</div>
@@ -54,19 +37,10 @@
               </div>
             </div>
             <div class="pagination">
-              <el-pagination
-                background
-                v-model:currentPage="pageNo"
-                v-model:page-size="pageSize"
-                :page-sizes="[3, 6, 9, 12]"
-                :small="small"
-                :disabled="disabled"
-                :background="background"
-                layout="sizes, prev, pager, next, jumper"
-                :total="total"
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-              ></el-pagination>
+              <el-pagination background v-model:currentPage="pageNo" v-model:page-size="pageSize"
+                :page-sizes="[3, 6, 9, 12]" :small="small" :disabled="disabled" :background="background"
+                layout="sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"></el-pagination>
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
@@ -75,7 +49,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
           <your-info />
@@ -91,6 +65,7 @@ import { Search } from '@element-plus/icons-vue'
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import { queryWorkList, likeQueryWork } from '../apis/work'
+import { goTop } from '../utils/pageEffect'
 import { UnixToDate } from '../utils/datetime'
 let searchIpt = ref('')
 const pageNo = ref(1)
@@ -100,18 +75,7 @@ const background = ref(false)
 const disabled = ref(false)
 let total = ref()
 const workList = ref([])
-// 页面滚动到顶部效果
-const goTop = () => {
-  let distance = document.documentElement.scrollTop || document.body.scrollTop; //获得当前高度
-  let step = distance / 30; //每步的距离
-  (function jump() {
-    if (distance > 0) {
-      distance -= step;
-      window.scrollTo(0, distance);
-      setTimeout(jump, 10);
-    }
-  })();
-}
+
 const getWorkList = () => {
   let params = {
     pageSize: pageSize.value,
@@ -171,6 +135,7 @@ const handleCurrentChange = (val: number) => {
   }
   else {
     getWorkList()
+
   }
 
 
@@ -181,6 +146,7 @@ const openUrl = (url) => {
 }
 onMounted(() => {
   getWorkList()
+  goTop()
 })
 </script>
 
@@ -188,10 +154,32 @@ onMounted(() => {
 .work {
   padding-top: 3.2rem;
 }
+
+.left-content {
+  width: 100%;
+}
+
+.left-content-header {
+  padding: .625rem .625rem 0.5rem;
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+
+  .ipt-class {
+    width: 160px;
+    border-radius: 5px;
+    color: rgb(122, 122, 122);
+  }
+}
+
 .left-content-items {
   .left-content-item {
     margin-top: 20px;
     border-radius: 20px 20px 0px 0px;
+
     .item-top {
       border-radius: 20px 20px 0px 0px;
       background-size: cover;
@@ -199,6 +187,7 @@ onMounted(() => {
       width: 100%;
       height: 288px;
     }
+
     .inner-info {
       transition: all 0.4s;
       cursor: pointer;
@@ -211,6 +200,7 @@ onMounted(() => {
       position: relative;
       color: white;
       border-radius: 20px 20px 0 0px;
+
       .item-title {
         width: 100%;
         text-align: center;
@@ -218,9 +208,11 @@ onMounted(() => {
         font-size: 35px;
         text-shadow: rgb(255, 255, 255) 0px 0px 8px;
       }
+
       .des {
         padding: 0 4px;
-        word-break: break-word; /* 文本行的任意字内断开 */
+        word-break: break-word;
+        /* 文本行的任意字内断开 */
         transition: all 0.3s;
         position: absolute;
         bottom: 0;
@@ -228,6 +220,7 @@ onMounted(() => {
         opacity: 0;
         transform: translateY(100%);
       }
+
       &:hover {
         background-color: rgba(0, 0, 0, 0.4);
 
@@ -235,29 +228,34 @@ onMounted(() => {
           transition: all 0.3s;
           transform: translateY(-100%);
         }
+
         .des {
           opacity: 1;
           bottom: 50%;
         }
       }
     }
+
     .item-info {
       display: flex;
       margin-top: 10px;
       margin-bottom: 10px;
       padding-bottom: 10px;
       font-size: 14px;
+
       .date {
         margin-right: 12px;
       }
+
       .type {
         margin-right: 12px;
       }
-      .author {
-      }
+
+      .author {}
     }
   }
-    .itemhover {
+
+  .itemhover {
     transition: all linear .7s;
   }
 
@@ -266,21 +264,26 @@ onMounted(() => {
     transform: translate3d(0, -2px, 0);
     background-color: rgb(253, 253, 253);
   }
+
   .pagination {
     margin: 25px 0 10px;
     text-align: center;
   }
+
   .el-pagination {
     justify-content: center;
   }
 }
+
 .nodata {
   height: 825px;
   text-align: center;
+
   img {
     margin-top: 100px;
   }
 }
+
 .right-content {
   width: 100%;
 }

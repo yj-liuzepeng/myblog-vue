@@ -11,13 +11,14 @@
         </div>
       </div>
       <div class="ways" v-show="isLogin">
-        <span style="font-size: 12px;color: red;">推荐登录方式：</span>
+        <div>
+          <span style="font-size: 12px;color: red;">推荐登录方式：</span>
 
-        <img src="../assets/qqdl.png" style="cursor: pointer;height: 20px;" @click="loginQq" />
-        <!-- <span class="iconfont icon-QQ-circle-fill icon" @click="loginQq"></span> -->
-        <!-- <span class="iconfont icon-weixin-copy icon" @click="loginWx"></span> -->
-        <span id="testqq"></span>
-        <span class="register" @click="toRegister">注册一个账号</span>
+          <img src="../assets/qqdl.png" style="cursor: pointer;height: 20px;" @click="loginQq" />
+        </div>
+        <div class="register">
+          <span  @click="toRegister">注册一个账号</span>
+        </div>
       </div>
 
       <div class="btns">
@@ -27,25 +28,13 @@
         <el-button type="primary" size="small" @click="hRegister" v-show="!isLogin">注册</el-button>
       </div>
     </div>
-    <el-dialog v-model="dialogVisible" title="QQ登录" width="30%" :before-close="handleClose">
-      <el-input v-model="account" placeholder="请输入qq账号" :suffix-icon="Calendar" />
-      <div style="height: 30px;"></div>
-      <el-input v-model="password" type="password" placeholder="请输入qq密码" show-password />
-      <div style="height: 30px;"></div>
-      <img style="width: 150px;" src="../assets/qq.png" alt />
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="loginByQq">确定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+
   </div>
 </template>
 
 <script lang='ts' setup>
 import { onMounted, ref, watch } from 'vue';
-import { Calendar} from '@element-plus/icons-vue'
+import { Calendar } from '@element-plus/icons-vue'
 import ElMessage from '../utils/resetMessage'
 import { register, login } from '../apis/user'
 import { useMainStore } from "../store/index";
@@ -66,14 +55,7 @@ let password = ref('')
 const cancel = () => {
   emit('close')
 }
-const dialogVisible = ref(false)
-const loginByQq = () => {
-  dialogVisible.value = false
-  ElMessage({
-    message: 'qq互联审批中～',
-    type: 'warning',
-  })
-}
+
 const backLogin = () => {
   isLogin.value = true
   account.value = ''
@@ -152,11 +134,24 @@ const qqLoginData = {
   redirecturl: 'https://www.liuzepeng.com/qq'
 }
 const loginQq = () => {
-  window.location.href =
-    "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
-    +qqLoginData.appid +
-    "&response_type=token&scope=all&redirect_uri=" +
-    qqLoginData.redirecturl
+  if (
+    navigator.userAgent.match(
+      /(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i
+    )
+  ) {
+    // eslint-disable-next-line no-undef
+    QC.Login.showPopup({
+      appId: qqLoginData.appid,
+      redirectURI: qqLoginData.redirecturl
+    });
+  } else {
+    window.location.href =
+      "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
+      +qqLoginData.appid +
+      "&response_type=token&scope=all&redirect_uri=" +
+      qqLoginData.redirecturl
+  }
+
 
 }
 const loginWx = () => {
@@ -216,9 +211,10 @@ onMounted(() => {
   background-color: rgba(36, 36, 36, 0.5);
   z-index: 99;
 }
+
 .login-box {
   width: 35%;
-  height: 40%;
+  height: 18.75rem;
   position: fixed;
   top: -15%;
   left: 0;
@@ -236,41 +232,57 @@ onMounted(() => {
   -webkit-animation: fullscreenOpen 1.5s forwards;
   /* Safari and Chrome */
   -o-animation: fullscreenOpen 1.5s forwards;
+
   .title {
     width: 100%;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 1.875rem;
     font-size: 20px;
   }
+
   .input {
     width: 70%;
-    margin: 20px auto;
+    margin: 1.25rem auto;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+
     .ipt {
       width: 100%;
+
       &:nth-child(1) {
-        margin-bottom: 40px;
+        margin-bottom: 2.5rem;
       }
     }
   }
+
   .ways {
-    margin-left: 15%;
-    margin-bottom: 30px;
-    .icon {
-      margin-right: 8px;
-      font-size: 20px;
-      cursor: pointer;
-    }
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.875rem;
+
     .register {
-      margin-left: 32%;
       font-size: 12px;
       cursor: pointer;
     }
   }
+
   .btns {
     text-align: center;
+  }
+}
+
+@media not screen and (min-width: 60em) {
+  .login-box {
+    width: 35%;
+  }
+}
+
+@media not screen and (min-width: 50em) {
+  .login-box {
+    width: 100%;
+    animation: none;
+    // animation: fullscreenOpenphone 1.5s forwards;
   }
 }
 
@@ -279,8 +291,19 @@ onMounted(() => {
     transform: rotateY(180deg) scale(0);
     opacity: 0;
   }
+
   100% {
     transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fullscreenOpenphone {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
     opacity: 1;
   }
 }

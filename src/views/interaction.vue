@@ -1,7 +1,7 @@
 <template>
   <div class="interaction">
     <el-row :gutter="10">
-      <el-col :span="18">
+      <el-col :xs="24" :sm="18">
         <div class="left-content">
           <div class="top-center">
             <h1 class="link-title" style="font-size: 28px;">友情链接</h1>
@@ -10,22 +10,23 @@
           </div>
           <div class="link-list">
             <el-row :gutter="12">
-              <el-col :span="8" class="link-item cssnice4" v-for="item in linkState.data">
+              <el-col :xs="24" :sm="8" class="link-item cssnice4" v-for="item in linkState.data"
+              @click="linkState.openLink(item.url)"
+              >
                 <div class="item-div">
                   <div class="avator">
-                    <el-avatar class="item-avatar" id="green" :size="60"
-                      :src='item.logo_url' />
+                    <el-avatar class="item-avatar" id="green" :size="60" :src='item.logo_url' />
                   </div>
                   <div class="info">
-                    <div class="title" :style="{ color: authorstyle.namecolor }">{{item.title}}</div>
-                    <div class="msg">{{item.description}}</div>
+                    <div class="title" :style="{ color: authorstyle.namecolor }">{{ item.title }}</div>
+                    <div class="msg">{{ item.description }}</div>
                   </div>
                 </div>
 
               </el-col>
             </el-row>
           </div>
-            <el-divider border-style="dashed" />
+          <el-divider border-style="dashed" />
           <div class="submit-link">
             <div class="link-title" style="font-size: 21px;">欢迎各位大佬交换友链👏👏👏</div>
             <div class="linl-style">
@@ -48,11 +49,10 @@
           <comment-box type="3" targetId="0" targetName="互动页" />
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
           <your-info />
-          <Skills></Skills>
         </div>
       </el-col>
     </el-row>
@@ -66,16 +66,18 @@ import yourInfo from '../components/your-info.vue'
 import commentBox from '../components/comment/index.vue'
 import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store";
-import { addLink,queryLinkList } from '../apis/friendlink'
+import { addLink, queryLinkList } from '../apis/friendlink'
 import ElMessage from '../utils/resetMessage'
+import { goTop } from '../utils/pageEffect'
 const mainStore = useMainStore();
+
 const { authorstyle } = storeToRefs(mainStore)
 const linkState = reactive({
   title: '',
   url: '',
   description: '',
   logo: '',
-  data:[],
+  data: [],
   submit: () => {
     let params = {
       title: linkState.title,
@@ -106,20 +108,24 @@ const linkState = reactive({
       }
     })
   },
-  getList:()=> {
+  getList: () => {
     let params = {
-      pageSize:100,
-      pageNo:1 
+      pageSize: 100,
+      pageNo: 1
     }
-    queryLinkList(params).then((res:any)=> {
-      if(res.code==200) {
-        linkState.data = res.data.data.filter(item=>item.status==1)
+    queryLinkList(params).then((res: any) => {
+      if (res.code == 200) {
+        linkState.data = res.data.data.filter(item => item.status == 1)
       }
     })
+  },
+  openLink:(url)=> {
+    window.open(url)
   }
 })
-onMounted(()=> {
+onMounted(() => {
   linkState.getList()
+  goTop()
 })
 </script>
 
@@ -199,11 +205,12 @@ onMounted(()=> {
 
 
           .avator {
-            margin-left: 10px;
-            margin-right: 5px;
+            width: 40%;
+            padding-left: 7%;
           }
 
           .info {
+            width: 60%;
             .title {
               font-size: 16px;
               padding-bottom: 5px;

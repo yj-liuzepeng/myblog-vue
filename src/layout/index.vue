@@ -33,13 +33,27 @@ onMounted(() => {
 .el-container {
   display: block;
 }
+
 .el-main {
   display: flex;
   justify-content: center;
   padding: 0;
   margin-top: 1%;
+
   .content {
     width: 73%;
+  }
+
+  @media not screen and (min-width: 60em) {
+    .content {
+      width: 73%;
+    }
+  }
+
+  @media not screen and (min-width: 50em) {
+    .content {
+      width: 100%;
+    }
   }
 }
 </style>
