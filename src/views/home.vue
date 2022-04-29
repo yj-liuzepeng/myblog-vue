@@ -37,7 +37,8 @@
               </div>
 
               <div class="item-img" @click="toDetail(item)">
-                <img :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" />
+                <img v-lazy="'https://liuzepeng.com/' + item.pic" :alt="item.title" />
+                <!-- <img :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" /> -->
               </div>
               <div class="item-txt">{{ item.description }}</div>
             </div>

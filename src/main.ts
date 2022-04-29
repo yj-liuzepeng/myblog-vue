@@ -10,7 +10,7 @@ import router from "./router/index";
 import { createPinia } from "pinia";
 import "../src/styles/index.scss";
 import elementPlus from "./utils/element";
-
+import lazyPlugin from 'vue3-lazy'
 // import SimpleWeather from 'simple-weather-vue'
 // import 'simple-weather-vue/dist/style.css'
 import clickstyle from "./styles/coolstyles/clickstyle"; // 全局鼠标点击动效
@@ -23,7 +23,7 @@ import "@kangc/v-md-editor/lib/style/preview-html.css";
 
 // 主题样式
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
-
+import loadingpic from './assets/other/load.gif'
 
 const app = createApp(App);
 // 按需引入element-plus
@@ -35,4 +35,9 @@ app.use(createPinia());
 // 引入v-md-editor预览组件
 app.use(VMdPreviewHtml);
 app.use(Timeline);
+// 图片懒加载
+app.use(lazyPlugin, {
+  loading:loadingpic, // 加载时默认图片
+  error: loadingpic// 图片失败时默认图片
+})
 app.mount("#app");

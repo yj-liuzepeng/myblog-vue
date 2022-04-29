@@ -49,7 +49,6 @@
 import { ref, onMounted,Transition } from 'vue';
 import { storeToRefs } from 'pinia'
 import bdd from '../assets/author/bdd.jpeg'
-import authorpic from '../assets/author/author.jpeg'
 import { useMainStore } from "../store";
 import { styleone, styletwo } from '../styles/skinstyles/styles'
 const mainStore = useMainStore();

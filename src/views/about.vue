@@ -66,6 +66,7 @@
               <li>server: node +Mysql</li>
               <li>服务器由腾讯云提供支持</li>
               <li>本站前后端均为个人书写，个人水平有限，大佬路过还请多多批评指正</li>
+              <li><a  href="https://www.liuzepeng.com/admin" target="_blank">后台管理</a> </li>
             </ul>
             <h1 class="h-title">联系方式</h1>
             <el-divider />

@@ -78,6 +78,7 @@ const hRegister = async () => {
   }
   let params = {
     role: 'user',// 用户权限
+    rolename:'用户',
     loginway: '账号登录',
     username: account.value,
     password: password.value,

@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="comment-list">
-    <div class="comment-item" v-for="item  in data">
+    <div class="comment-item cssnice4" v-for="item  in data">
       <div class="item-avatar">
         <span v-if="item.from_avatar">
           <el-avatar :size="30" class="comment-avatar" :src="item.from_avatar" />
@@ -102,6 +102,10 @@
         </div>
       </div>
     </div>
+    <div class="more">
+      <span v-if="more" class="get-more" @click="getMore">查看全部留言...</span>
+      <span v-else class="no-more">已经到底了～～<span class="get-more" @click="getLess">收起</span></span>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -125,8 +129,12 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  more: {
+    type: Boolean,
+    default: false
+  },
 })
-const emit = defineEmits(['reply', 'delete', 'refresh'])
+const emit = defineEmits(['reply', 'delete', 'refresh','getmore','getless'])
 const userInfoData = ref()
 let userCommentLike = ref()
 const replyIpt = ref('')
@@ -277,6 +285,14 @@ const sendComment = (item) => {
 
 
   }
+}
+// 查看更多评论
+const getMore  =()=> {
+  emit('getmore')
+}
+// 收起更多
+const getLess = ()=> {
+  emit('getless')
 }
 watch(() => showReply.value, (newval) => {
   // let classNameList = ['rep','reply-ipt','el-textarea__inner','reply-ipt-btns']
@@ -470,6 +486,19 @@ onMounted(() => {
           justify-content: right;
         }
       }
+    }
+  }
+  .more {
+    text-align: center;
+    .get-more{
+      cursor: pointer;
+      color: rgb(113, 113, 203);
+      &:hover {
+        color: rgb(71, 71, 228);
+      }
+    }
+    .no-more {
+      color: rgb(157, 151, 151);
     }
   }
 }

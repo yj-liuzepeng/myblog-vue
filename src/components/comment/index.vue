@@ -13,7 +13,10 @@
       <el-button type="primary" @click="addCommentBtn">提交评论</el-button>
     </div>
     <div v-if="can == '1'">
-      <comment-list :data="data" @refresh="getCommentList()"></comment-list>
+      <comment-list :data="data" :more="more"
+      @getmore = 'getMoreComments'
+      @getless = 'getLessComments'
+      @refresh="getCommentList()"></comment-list>
     </div>
     <div v-else class="close-comment">
       <span class="iconfont icon-jinggao1"></span>
@@ -62,6 +65,7 @@ const props = defineProps({
 })
 const textarea = ref('')
 let data = ref([])
+let more = ref(false)
 const userInfoData = ref()
 // 数据处理
 const getNeedData = (data) => {
@@ -72,14 +76,24 @@ const getNeedData = (data) => {
     }
   });
 }
+let pageSize = ref(5)
+let total = ref()
+// 获取留言数据
 const getCommentList = async () => {
   await queryCommentList({
+    pageNo:1,
+    pageSize:pageSize.value,
     page_id: props.targetId,
     type: props.type
   }).then((res: any) => {
     if (res.code == 200) {
       let commentData = res.data.data
-
+      if(pageSize.value < res.data.total) {
+        more.value = true
+      }else {
+         more.value =false
+      }
+      total.value = res.data.total 
       commentData.forEach(item => {
         // 文章的(每条评论item)下的（用户对用户）回复
         // item.children 用户对用户的回复 ---->   还会有children -----> children
@@ -96,6 +110,16 @@ const getCommentList = async () => {
 
 
   })
+}
+// 查看更多留言
+const getMoreComments = ()=> {
+  pageSize.value = total.value
+  getCommentList()
+}
+// 收起更多
+const getLessComments= ()=> {
+  pageSize.value = 5
+  getCommentList()
 }
 // 新增评论
 const addCommentBtn = () => {

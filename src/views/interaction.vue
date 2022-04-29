@@ -11,8 +11,7 @@
           <div class="link-list">
             <el-row :gutter="12">
               <el-col :xs="24" :sm="8" class="link-item cssnice4" v-for="item in linkState.data"
-              @click="linkState.openLink(item.url)"
-              >
+                @click="linkState.openLink(item.url)">
                 <div class="item-div">
                   <div class="avator">
                     <el-avatar class="item-avatar" id="green" :size="60" :src='item.logo_url' />
@@ -53,6 +52,7 @@
         <div class="right-content cssnice2">
           <Author />
           <your-info />
+          <hot-comments></hot-comments>
         </div>
       </el-col>
     </el-row>
@@ -60,10 +60,11 @@
 </template>
 
 <script lang='ts' setup>
-import { onMounted, reactive } from 'vue';
+import {  onMounted, reactive } from 'vue';
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
 import commentBox from '../components/comment/index.vue'
+import hotComments from '../components/hot-comments.vue'
 import { storeToRefs } from 'pinia'
 import { useMainStore } from "../store";
 import { addLink, queryLinkList } from '../apis/friendlink'
@@ -79,34 +80,45 @@ const linkState = reactive({
   logo: '',
   data: [],
   submit: () => {
-    let params = {
-      title: linkState.title,
-      url: linkState.url,
-      description: linkState.description,
-      logo_url: linkState.logo,
-      applicant_ip: returnCitySN["cip"]
-    }
-    addLink(params).then((res: any) => {
-      if (res.code == 200) {
-        ElMessage({
-          message: '申请已提交，博主审批ing~',
-          type: 'success',
-        })
-        linkState.title = ''
-        linkState.url = ''
-        linkState.description = ''
-        linkState.logo = ''
-      } else {
-        ElMessage({
-          message: res.msg,
-          type: 'warning',
-        })
-        linkState.title = ''
-        linkState.url = ''
-        linkState.description = ''
-        linkState.logo = ''
+    let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
+    if (!!localUserInfo) {
+      let params = {
+        title: linkState.title,
+        url: linkState.url,
+        description: linkState.description,
+        logo_url: linkState.logo,
+        adduser_id: localUserInfo.id,
+        adduser_role:localUserInfo.role
       }
-    })
+      addLink(params).then((res: any) => {
+        if (res.code == 200) {
+          ElMessage({
+            message: '申请已提交，博主审批ing~',
+            type: 'success',
+          })
+          linkState.title = ''
+          linkState.url = ''
+          linkState.description = ''
+          linkState.logo = ''
+        } else {
+          ElMessage({
+            message: res.msg,
+            type: 'warning',
+          })
+          linkState.title = ''
+          linkState.url = ''
+          linkState.description = ''
+          linkState.logo = ''
+        }
+      })
+    } else {
+      ElMessage({
+        message: '请登录后添加',
+        type: 'warning',
+      })
+      return
+    }
+
   },
   getList: () => {
     let params = {
@@ -119,7 +131,7 @@ const linkState = reactive({
       }
     })
   },
-  openLink:(url)=> {
+  openLink: (url) => {
     window.open(url)
   }
 })
@@ -211,6 +223,7 @@ onMounted(() => {
 
           .info {
             width: 60%;
+
             .title {
               font-size: 16px;
               padding-bottom: 5px;

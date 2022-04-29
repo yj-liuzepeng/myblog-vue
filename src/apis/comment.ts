@@ -25,3 +25,7 @@ export const addorDelLikeNum = (params: any) => {
 export const rfhUserCommentLike = (params: any) => {
   return axios.post('/api/rfhUserCommentLike', params)
 }
+// 评论热度排行
+export const queryCommentByHot = (params) => {
+  return axios.post('/api/queryCommentByHot', params)
+}
