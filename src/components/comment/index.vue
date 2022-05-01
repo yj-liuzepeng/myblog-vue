@@ -7,7 +7,7 @@
   <div class="comment-box">
     <div class="top-txt">可以在这里发表您的看法或者建议(支持markdown语法)</div>
     <div class="comment-ipt">
-      <el-input v-model="textarea" placeholder="请输入内容" show-word-limit type="textarea" rows="6" />
+      <el-input v-model="textarea" placeholder="请输入内容" show-word-limit type="textarea" rows="7" />
     </div>
     <div class="ipt-bottom">
       <el-button type="primary" @click="addCommentBtn">提交评论</el-button>
@@ -159,10 +159,10 @@ const addCommentBtn = () => {
     } else {
       addComment(params).then((res: any) => {
         if (res.code == 200) {
-          ElMessage({
-            message: '评论成功！',
-            type: 'success',
-          })
+          // ElMessage({
+          //   message: '评论成功！',
+          //   type: 'success',
+          // })
         } else {
           ElMessage({
             message: res.msg,
@@ -211,7 +211,8 @@ onMounted(() => {
   .el-textarea__inner,
   .el-input__inner {
     // background: url(https://static.talkxj.com/config/commentBack.webp)
-    background: url(https://blog-1303885568.cos.ap-chengdu.myqcloud.com/useImg/comment.png) right bottom no-repeat;
+    // background: url(https://blog-1303885568.cos.ap-chengdu.myqcloud.com/useImg/comment.png) right bottom no-repeat;
+    background: url('../../assets/author/kb.png') right bottom no-repeat;
   }
 }
 

@@ -20,6 +20,7 @@
       <div class="item-content">
         <div class="top">
           <span class="username">{{ item.from_name }}</span>
+          <span v-if="item.from_id =='10'" style="margin-right: 10px;"> <el-tag size="small" type="danger">博主</el-tag></span>
           <span class="commenttime">{{ UnixToDate(new Date(item.create_time), 3) }}</span>
           <span class="area">
             <!-- <span class="iconfont icon-didian"></span> -->
@@ -36,9 +37,9 @@
             {{ item.like_num }}
           </span>
           <span class="rep" @click="replyComment(item)">回复</span>
-          <span class="del" @click="delComment(item)">
+          <span class="del" @click="delComment(item)" v-if='item.from_id == userInfoData?.id'>
             删除
-            <span class="icon iconfont icon-shanchu_o"></span>
+            <!-- <span class="icon iconfont icon-shanchu_o"></span> -->
           </span>
         </div>
         <!-- 回复输入框 -->
@@ -83,9 +84,9 @@
                   {{ child.like_num }}
                 </span>
                 <span class="rep" @click="replyComment(child)">回复</span>
-                <span class="del" @click="delComment(child)">
+                <span class="del" @click="delComment(child)" v-if='child.from_id == userInfoData?.id'>
                   删除
-                  <span class="icon iconfont icon-shanchu_o"></span>
+                  <!-- <span class="icon iconfont icon-shanchu_o"></span> -->
                 </span>
               </div>
               <!-- 回复输入框 -->
@@ -134,7 +135,7 @@ const props = defineProps({
     default: false
   },
 })
-const emit = defineEmits(['reply', 'delete', 'refresh','getmore','getless'])
+const emit = defineEmits(['reply', 'delete', 'refresh', 'getmore', 'getless'])
 const userInfoData = ref()
 let userCommentLike = ref()
 const replyIpt = ref('')
@@ -218,10 +219,10 @@ const delComment = (item) => {
     }
     deleteComment(params).then((res: any) => {
       if (res.code == 200) {
-        ElMessage({
-          message: '删除成功！',
-          type: 'success',
-        })
+        // ElMessage({
+        //   message: '删除成功！',
+        //   type: 'success',
+        // })
         emit('refresh')
       } else {
         ElMessage({
@@ -265,10 +266,10 @@ const sendComment = (item) => {
     } else {
       addComment(params).then((res: any) => {
         if (res.code == 200) {
-          ElMessage({
-            message: '评论成功！',
-            type: 'success',
-          })
+          // ElMessage({
+          //   message: '评论成功！',
+          //   type: 'success',
+          // })
 
         }
         else {
@@ -287,11 +288,11 @@ const sendComment = (item) => {
   }
 }
 // 查看更多评论
-const getMore  =()=> {
+const getMore = () => {
   emit('getmore')
 }
 // 收起更多
-const getLess = ()=> {
+const getLess = () => {
   emit('getless')
 }
 watch(() => showReply.value, (newval) => {
@@ -367,6 +368,12 @@ onMounted(() => {
       .bottom {
         font-size: 12px;
 
+        &:hover {
+          .del {
+            display: inline-block;
+          }
+        }
+
         .like {
           .icon {
             font-size: 13px;
@@ -385,6 +392,7 @@ onMounted(() => {
         .del {
           color: rgb(24, 144, 255);
           cursor: pointer;
+          display: none;
 
           .icon {
             font-size: 15px;
@@ -448,6 +456,12 @@ onMounted(() => {
           .children-bottom {
             font-size: 12px;
 
+            &:hover {
+              .del {
+                display: inline-block;
+              }
+            }
+
             .like {
               .icon {
                 font-size: 13px;
@@ -466,6 +480,8 @@ onMounted(() => {
             .del {
               color: rgb(24, 144, 255);
               cursor: pointer;
+              display: none;
+
 
               .icon {
                 font-size: 15px;
@@ -488,15 +504,19 @@ onMounted(() => {
       }
     }
   }
+
   .more {
     text-align: center;
-    .get-more{
+
+    .get-more {
       cursor: pointer;
       color: rgb(113, 113, 203);
+
       &:hover {
         color: rgb(71, 71, 228);
       }
     }
+
     .no-more {
       color: rgb(157, 151, 151);
     }

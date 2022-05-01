@@ -79,15 +79,17 @@
         </div>
       </div>
       <div class="right">
-       <span  class="iconfont icon-jindianzijianyifabushenqingliucheng-03"></span> {{ weatherState.suggestion }}
+        <span class="iconfont icon-jindianzijianyifabushenqingliucheng-03"></span> {{ weatherState.suggestion }}
       </div>
 
     </div>
 
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">略过</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">加油</el-button>
+        <!-- <el-button @click="dialogFormVisible = false">略过</el-button> -->
+        <el-button type="primary" size="medium" @click="dialogFormVisible = false">加油
+        <span style="padding-left: 5px;" class="iconfont icon-xiaolian3"></span>
+        </el-button>
       </span>
     </template>
   </el-dialog>
@@ -99,7 +101,7 @@
 <script lang='ts' setup>
 import MyHeader from '../components/header.vue'
 import MyFooter from '../components/footer.vue'
-import { ref, reactive, onMounted,watch } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { getWeatherData } from '../apis/weather'
 import MapLoader from '../utils/mapimg'
 import { useRoute } from 'vue-router'
@@ -142,9 +144,9 @@ const getWeather = () => {
   })
 
 }
-watch(()=>dialogFormVisible.value,(nw)=> {
-  if(!nw) {
-      // console.log(route.name)
+watch(() => dialogFormVisible.value, (nw) => {
+  if (!nw) {
+    // console.log(route.name)
   }
 })
 onMounted(() => {
@@ -213,9 +215,11 @@ onMounted(() => {
   background-position: center center;
   background-repeat: no-repeat;
 }
+
 .weather .left {
   width: 69%;
 }
+
 .weather .right {
   width: 28%;
   border: 1px solid #ccc;
@@ -226,6 +230,7 @@ onMounted(() => {
   color: #937170;
   background-color: #cae7dc;
 }
+
 .weather-today {
   width: 100%;
 }
@@ -308,5 +313,10 @@ onMounted(() => {
 
 .weather-forecast .day-tmp .tmp-sign {
   font-size: 1px;
+}
+</style>
+<style>
+.el-dialog {
+  border-radius: 10px !important;
 }
 </style>

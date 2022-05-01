@@ -1,6 +1,6 @@
 <template>
 
-  <el-header id="scrolldisplay">
+  <el-header id="scrolldisplay" :style="{'background-color':headerstyle.bgc}">
     <div class="header">
       <el-row :gutter="20">
         <el-col :xs="3" :sm="0">
@@ -199,7 +199,7 @@ onBeforeMount(() => {
   let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
   if (!!localUserInfo) {
     let loginMsg = headerState.menuList[headerState.menuList.length - 1]
-    loginMsg.name = '退出  [' + localUserInfo.username + ']'
+    loginMsg.name = '退出 ' + localUserInfo.username 
     loginMsg.code = 'out'
     loginMsg.icon = 'icon-tuichu'
   }
@@ -209,7 +209,7 @@ watch(() => userInfo.value, (newval) => {
   if (newval && newval.username) {
     userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
     let loginMsg = headerState.menuList[headerState.menuList.length - 1]
-    loginMsg.name = '退出  [' + newval.username + ']'
+    loginMsg.name = '退出 ' + newval.username
     loginMsg.code = 'out'
     loginMsg.icon = 'icon-tuichu'
   }
@@ -228,7 +228,7 @@ onMounted(() => {
 .el-header {
   display: flex;
   justify-content: center;
-  background-color: v-bind("headerstyle.bgc");
+  // background-color: v-bind("headerstyle.bgc");
   opacity: 0.9;
   padding: 0;
   color: #fff;
@@ -296,7 +296,7 @@ onMounted(() => {
     // element菜单menu样式修改
     .el-menu {
       border-bottom: 0;
-
+      background-color: transparent;
       .el-menu-item {
         border-bottom: 0;
       }

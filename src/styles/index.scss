@@ -2,3 +2,21 @@
 @import "./scrollbar.scss";
 @import "./public.scss";
 
+.el-message--success{
+  border:1px dashed  #2c3442 !important;
+  opacity: 0.9;
+  padding: 10px !important;
+  min-width: 10% !important;
+}
+.el-message--error{
+  border:1px dashed  #2c3442 !important;
+  opacity: 0.9;
+  padding: 10px !important;
+  min-width: 10% !important;
+}
+.el-message--warning{
+  border:1px dashed  #2c3442 !important;
+  opacity: 0.9;
+  padding: 10px !important;
+  min-width: 10% !important;
+}
