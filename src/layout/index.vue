@@ -87,7 +87,7 @@
     <template #footer>
       <span class="dialog-footer">
         <!-- <el-button @click="dialogFormVisible = false">略过</el-button> -->
-        <el-button type="primary" size="medium" @click="dialogFormVisible = false">加油
+        <el-button type="primary" size="small" @click="dialogFormVisible = false">加油
         <span style="padding-left: 5px;" class="iconfont icon-xiaolian3"></span>
         </el-button>
       </span>

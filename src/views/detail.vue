@@ -1,8 +1,8 @@
 <template>
-  <div class="detail" >
+  <div class="detail">
     <el-row :gutter="10">
-      <el-col :xs="24" :sm="18" >
-        <div class="left-content cssnice1" >
+      <el-col :xs="24" :sm="18">
+        <div class="left-content cssnice1">
           <div class="detail-header">
             <div class="to-home" @click="toHome">首页</div>
             <div>/ {{ articleState.title }}</div>
@@ -48,14 +48,15 @@
 
         </div>
       </el-col>
-      <el-col :xs="0" :sm="6" >
+      <el-col :xs="0" :sm="6">
         <div class="right-content">
           <Author />
           <your-info />
-            <div class="catalog-content sticky-top">
-              <div class="catalog-title">文章标题</div>
-              <div id="right-catalog"></div>
-            </div>
+          <div id="catalogBox" class="catalog-content sticky-top"
+            :style="[{ 'position': fixedCatalog ? 'fixed' : '' }, { 'top': fixedCatalog ? '20px' : '' }]">
+            <div class="catalog-title">文章标题</div>
+            <div id="right-catalog"></div>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -139,13 +140,23 @@ const toHome = () => {
 }
 onBeforeMount(() => {
   articleId.value = route.query.id
-})
-onMounted(() => {
 
+})
+let fixedCatalog = ref(false)
+let startOffsetTop = ref()
+const handleScroll = () => {
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+  let offsetTop = document.querySelector('#catalogBox').offsetTop
+  scrollTop > offsetTop ? fixedCatalog.value = true : fixedCatalog.value = false
+  if(offsetTop==20) {
+    scrollTop-30 <= startOffsetTop.value ? fixedCatalog.value = false : fixedCatalog.value = true
+  }
+}
+onMounted(() => {
   getTagList()
   goTop()
-
-
+  window.addEventListener('scroll', handleScroll)
+  startOffsetTop.value = document.querySelector('#catalogBox').offsetTop
 })
 </script>
 
@@ -248,7 +259,7 @@ onMounted(() => {
   }
 
   .sticky-top {
-    // position: -webkit-sticky;
+    position: -webkit-sticky;
     // position: fixed;
     // top: 20px;
   }
