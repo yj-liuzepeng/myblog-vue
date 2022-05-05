@@ -88,7 +88,7 @@
       <span class="dialog-footer">
         <!-- <el-button @click="dialogFormVisible = false">略过</el-button> -->
         <el-button type="primary" size="small" @click="dialogFormVisible = false">加油
-        <span style="padding-left: 5px;" class="iconfont icon-xiaolian3"></span>
+          <span style="padding-left: 5px;" class="iconfont icon-xiaolian3"></span>
         </el-button>
       </span>
     </template>
@@ -96,6 +96,10 @@
   <el-backtop :bottom="100">
     <span class="iconfont icon-icon-test" style="color: red;"></span>
   </el-backtop>
+  <!--音乐播放器-->
+  <div v-if="isMobile">
+    <Player style="z-index: 100000"></Player>
+  </div>
 </template>
 
 <script lang='ts' setup>
@@ -104,6 +108,7 @@ import MyFooter from '../components/footer.vue'
 import { ref, reactive, onMounted, watch } from 'vue';
 import { getWeatherData } from '../apis/weather'
 import MapLoader from '../utils/mapimg'
+import Player from "../components/zw-player/player.vue";
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const dialogFormVisible = ref(false)
@@ -144,12 +149,36 @@ const getWeather = () => {
   })
 
 }
+const isMobile = ref(false)
+// const hMobile = () => {
+//  return /(iPhone|iPad|iPod|iOS|Android|Linux armv8l|Linux armv7l|Linux aarch64)/i.test(navigator.platform);
+// }
+const hMobile = () => {
+  var sUserAgent = navigator.userAgent.toLowerCase();
+  var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+  var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+  var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+  var bIsAndroid = sUserAgent.match(/android/i) == "android";
+  var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+  var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+  if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+    // 移动端页面
+    isMobile.value = false
+
+  } else {
+    // pc端页面
+    isMobile.value = true
+  }
+}
 watch(() => dialogFormVisible.value, (nw) => {
   if (!nw) {
     // console.log(route.name)
   }
 })
 onMounted(() => {
+  hMobile()
   getWeather()
 
 

@@ -153,7 +153,8 @@ onMounted(() => [
   #mymotto {
     margin-top: 0.5rem;
     margin-bottom: 1rem;
-    color: #209d7b;
+    // color: #209d7b;
+    color: v-bind("authorstyle.namecolor");
   }
   .mycontacts {
     display: flex;
@@ -162,7 +163,7 @@ onMounted(() => [
     flex-wrap: wrap;
     .contact {
       font-size: 28px;
-      color: #4c9b7d;
+      color: v-bind("authorstyle.namecolor");
       cursor: pointer;
     }
   }
