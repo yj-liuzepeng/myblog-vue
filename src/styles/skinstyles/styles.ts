@@ -22,10 +22,11 @@ export const styletwo = {
   headerstyle: {
     bgc: "#813744",
     textcolor: "#fff",
-    activetextcolor: "#84cfec",
+    activetextcolor: "#548c96",
+    // activetextcolor: "#84cfec",
   },
   authorstyle: {
-    namecolor:'#84cfec',
+    namecolor:'#548c96',
     textcolor: "#813744"
   },
   otherstyle: {

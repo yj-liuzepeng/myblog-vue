@@ -1,8 +1,8 @@
 <template>
-  <div class="detail">
+  <div class="detail" >
     <el-row :gutter="10">
-      <el-col :xs="24" :sm="18">
-        <div class="left-content cssnice1">
+      <el-col :xs="24" :sm="18" >
+        <div class="left-content cssnice1" id="ceshi">
           <div class="detail-header">
             <div class="to-home" @click="toHome">首页</div>
             <div>/ {{ articleState.title }}</div>
@@ -52,7 +52,7 @@
         <div class="right-content">
           <Author />
           <your-info />
-          <div id="catalogBox" class="catalog-content sticky-top"
+          <div id="catalogBox" class=" sticky-top"
             :style="[{ 'position': fixedCatalog ? 'fixed' : '' }, { 'top': fixedCatalog ? '20px' : '' }]">
             <div class="catalog-title">文章标题</div>
             <div id="right-catalog"></div>
@@ -71,10 +71,14 @@ import commentBox from '../components/comment/index.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UnixToDate } from '../utils/datetime'
 import { queryArticleById, queryTagList } from '../apis/article'
-// 引入
-import Catalog from 'Progress-catalog'
-import 'progress-catalog/src/progress-catalog.css'
+// 引入目录
+import Catalog from '../utils/catalog/index.js'
+import '../utils/catalog/progress-catalog.css'
 import { goTop } from '../utils/pageEffect'
+import { storeToRefs } from 'pinia'
+import { useMainStore } from "../store";
+const mainStore = useMainStore();
+const { authorstyle } = storeToRefs(mainStore)
 const route = useRoute()
 
 const router = useRouter()
@@ -116,8 +120,8 @@ const getArticle = async (id) => {
   new Catalog({
     contentEl: 'preview-box', // 需要检索生成目录的内容区的id选择器
     catalogEl: 'right-catalog',// 将生成的目录append进的目录容器的id选择器
-    // scrollWrapper:'artdetail' // 监听scroll事件的内容区容器的id选择器，不需要加#，如果不填则默认是 contentEl 的父元素
-    // cool: false
+    // scrollWrapper:'', // 监听scroll事件的内容区容器的id选择器，不需要加#，如果不填则默认是 contentEl 的父元素
+    // cool: false,
     // selector: ['h2', 'h3']
   })
 }
@@ -148,8 +152,8 @@ const handleScroll = () => {
   let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
   let offsetTop = document.querySelector('#catalogBox').offsetTop
   scrollTop > offsetTop ? fixedCatalog.value = true : fixedCatalog.value = false
-  if(offsetTop==20) {
-    scrollTop-30 <= startOffsetTop.value ? fixedCatalog.value = false : fixedCatalog.value = true
+  if (offsetTop == 20) {
+    scrollTop - 30 <= startOffsetTop.value ? fixedCatalog.value = false : fixedCatalog.value = true
   }
 }
 onMounted(() => {
@@ -157,6 +161,9 @@ onMounted(() => {
   goTop()
   window.addEventListener('scroll', handleScroll)
   startOffsetTop.value = document.querySelector('#catalogBox').offsetTop
+  // window.addEventListener('scroll', function(e) {
+  //   console.log(123)
+  // })
 })
 </script>
 
@@ -244,24 +251,32 @@ onMounted(() => {
   }
 
   .right-content {
-    .catalog-title {
-      padding-bottom: 5px;
-      font-size: 16px;
-      border-radius: 4px;
-      border-bottom: 1px solid #dcdfe6;
-      text-align: center;
-      margin-bottom: 15px;
-    }
+    width: 100%;
 
-    #right-catalog {
-      margin-bottom: 15px;
+    .sticky-top {
+      position: -webkit-sticky;
+
+      .catalog-title {
+        padding-bottom: 5px;
+        font-size: 16px;
+        border-radius: 4px;
+        border-bottom: 1px solid #dcdfe6;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      #right-catalog {
+        margin-bottom: 15px;
+      }
     }
   }
 
-  .sticky-top {
-    position: -webkit-sticky;
-    // position: fixed;
-    // top: 20px;
-  }
+}
+</style>
+<style>
+.cl-wrapper li > .cl-link.cl-link-active {
+    /* color: blue; */
+    color: v-bind("authorstyle.textcolor") !important;
+    transition: all 0.5s ease 0s;
 }
 </style>

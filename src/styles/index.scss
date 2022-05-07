@@ -1,7 +1,9 @@
 @import "./reset.scss";
 @import "./scrollbar.scss";
 @import "./public.scss";
-
+ body {
+   height: 100%;
+ }
 .el-message--success{
   border:1px dashed  #2c3442 !important;
   opacity: 0.9;
@@ -20,3 +22,12 @@
   padding: 10px !important;
   min-width: 10% !important;
 }
+// 黑白色调
+// html{
+// 	-webkit-filter: grayscale(100%);
+// 	-moz-filter: grayscale(100%);
+// 	-ms-filter: grayscale(100%);
+// 	-o-filter: grayscale(100%);
+// 	filter: grayscale(100%);
+// 	filter: gray; 
+// }

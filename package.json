@@ -8,7 +8,6 @@
   "dependencies": {
     "@element-plus/icons-vue": "^1.1.1",
     "@kangc/v-md-editor": "^2.3.14",
-    "Progress-catalog": "^1.0.7",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.27.2",
     "element-plus": "^1.3.0-beta.1",
