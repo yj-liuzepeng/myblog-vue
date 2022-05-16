@@ -9,8 +9,11 @@
     <div class="myintroduction">
       <span class="iconfont icon-didian"></span>中国-北京
     </div>
-    <div class="myintroduction">前端：Vue3 + element-plus</div>
+    <div class="myintroduction admin" @click="toAdmin">网站后台管理系统</div>
     <div class="myintroduction">后端：Node + Mysql</div>
+    <div class="myintroduction">前端：Vue3 + element-plus</div>
+    
+    
     <div class="myintroduction">
       <span class="iconfont icon-youxiang"></span>  <span>liuzepeng0200@163.com</span>
     </div>
@@ -114,6 +117,9 @@ let mouseEnterAvatar = () => {
     }, 300);
   }
 }
+const toAdmin = () => {
+  window.open('https://www.liuzepeng.com/admin','_blank')
+}
 onMounted(() => [
   componentDidMount()
 ])
@@ -149,6 +155,10 @@ onMounted(() => [
     color: v-bind("authorstyle.textcolor");
     margin-bottom: 0.5rem;
     word-wrap:break-word;
+  }
+  .admin {
+    cursor: pointer;
+    color: rgb(124, 124, 197);
   }
   #mymotto {
     margin-top: 0.5rem;

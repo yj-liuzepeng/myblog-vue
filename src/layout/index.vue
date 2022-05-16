@@ -348,4 +348,9 @@ onMounted(() => {
 .el-dialog {
   border-radius: 10px !important;
 }
+.el-backtop {
+  /* opacity: 0.8;
+  background-color: #51555d !important;
+  color: rgb(145, 49, 49); */
+}
 </style>

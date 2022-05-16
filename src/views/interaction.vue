@@ -4,46 +4,86 @@
       <el-col :xs="24" :sm="18">
         <div class="left-content">
           <div class="top-center">
-            <h1 class="link-title" style="font-size: 28px;">友情链接</h1>
+            <h1 class="link-title" style="font-size: 28px">友情链接</h1>
             <p class="link-title">(顺序随机,不分先后)</p>
-            <hr class="parting-line">
+            <hr class="parting-line" />
           </div>
           <div class="link-list">
             <el-row :gutter="12">
-              <el-col :xs="24" :sm="8" class="link-item cssnice4" v-for="item in linkState.data"
-                @click="linkState.openLink(item.url)">
+              <el-col
+                :xs="24"
+                :sm="8"
+                class="link-item cssnice4"
+                v-for="item in linkState.data"
+                @click="linkState.openLink(item.url)"
+              >
                 <div class="item-div">
                   <div class="avator">
-                    <el-avatar class="item-avatar" id="green" :size="60" :src='item.logo_url' />
+                    <el-avatar
+                      class="item-avatar"
+                      id="green"
+                      :size="60"
+                      :src="item.logo_url"
+                    />
                   </div>
                   <div class="info">
-                    <div class="title" :style="{ color: authorstyle.namecolor }">{{ item.title }}</div>
+                    <div
+                      class="title"
+                      :style="{ color: authorstyle.namecolor }"
+                    >
+                      {{ item.title }}
+                    </div>
                     <div class="msg">{{ item.description }}</div>
                   </div>
                 </div>
-
               </el-col>
             </el-row>
           </div>
           <el-divider border-style="dashed" />
           <div class="submit-link">
-            <div class="link-title" style="font-size: 21px;">欢迎各位大佬交换友链👏👏👏</div>
+            <div class="link-title" style="font-size: 21px">
+              欢迎各位大佬交换友链👏👏👏
+            </div>
             <div class="linl-style">
               <div class="title">友链格式</div>
               <div class="txt">标题：lzp的个人网站</div>
               <div class="txt">地址：https://www.liuzepeng.com</div>
               <div class="txt">网站描述：唯有热爱，可抵岁月漫长</div>
               <div class="txt">logo：https://liuzepeng.com/author.png</div>
-              <div class="txt">提示：申请提交后若无其它原因将在24小时内审核，如超过时间还未通过，请私信我</div>
+              <div class="txt">
+                提示：申请提交后若无其它原因将在24小时内审核，如超过时间还未通过，请私信我
+              </div>
             </div>
             <div class="link-ipt">
-              <el-input class="ipt" v-model="linkState.title" placeholder="大佬网站名称" />
-              <el-input class="ipt" v-model="linkState.url" placeholder="大佬网站地址(http,https开头）" />
-              <el-input class="ipt" v-model="linkState.description" placeholder="大佬网站描述（或者主要内容）" />
-              <el-input class="ipt" v-model="linkState.logo" placeholder="网站logo图(http,https开头）" />
+              <el-input
+                class="ipt"
+                v-model="linkState.title"
+                placeholder="大佬网站名称"
+              />
+              <el-input
+                class="ipt"
+                v-model="linkState.url"
+                placeholder="大佬网站地址(http,https开头）"
+              />
+              <el-input
+                class="ipt"
+                v-model="linkState.description"
+                placeholder="大佬网站描述（或者主要内容）"
+              />
+              <el-input
+                class="ipt"
+                v-model="linkState.logo"
+                placeholder="网站logo图(http,https开头）"
+              />
             </div>
-            <el-button style="margin: 15px;" type="primary" size="small" @click="linkState.submit">申请友链</el-button>
-            <hr class="parting-line">
+            <el-button
+              style="margin: 15px"
+              type="primary"
+              size="small"
+              @click="linkState.submit"
+              >申请友链</el-button
+            >
+            <hr class="parting-line" />
           </div>
           <comment-box type="3" targetId="0" targetName="互动页" />
         </div>
@@ -59,28 +99,28 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import {  onMounted, reactive } from 'vue';
-import Author from '../components/author.vue'
-import yourInfo from '../components/your-info.vue'
-import commentBox from '../components/comment/index.vue'
-import hotComments from '../components/hot-comments.vue'
-import { storeToRefs } from 'pinia'
+<script lang="ts" setup>
+import { onMounted, reactive } from "vue";
+import Author from "../components/author.vue";
+import yourInfo from "../components/your-info.vue";
+import commentBox from "../components/comment/index.vue";
+import hotComments from "../components/hot-comments.vue";
+import { storeToRefs } from "pinia";
 import { useMainStore } from "../store";
-import { addLink, queryLinkList } from '../apis/friendlink'
-import ElMessage from '../utils/resetMessage'
-import { goTop } from '../utils/pageEffect'
+import { addLink, queryLinkList } from "../apis/friendlink";
+import ElMessage from "../utils/resetMessage";
+import { goTop } from "../utils/pageEffect";
 const mainStore = useMainStore();
 
-const { authorstyle } = storeToRefs(mainStore)
+const { authorstyle } = storeToRefs(mainStore);
 const linkState = reactive({
-  title: '',
-  url: '',
-  description: '',
-  logo: '',
+  title: "",
+  url: "",
+  description: "",
+  logo: "",
   data: [],
   submit: () => {
-    let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
+    let localUserInfo = JSON.parse(localStorage.getItem("BLOGUSERINFO"));
     if (!!localUserInfo) {
       let params = {
         title: linkState.title,
@@ -88,60 +128,62 @@ const linkState = reactive({
         description: linkState.description,
         logo_url: linkState.logo,
         adduser_id: localUserInfo.id,
-        adduser_role:localUserInfo.role
-      }
+        adduser_role: localUserInfo.role,
+      };
       addLink(params).then((res: any) => {
         if (res.code == 200) {
           ElMessage({
-            message: '申请已提交，博主审批ing~',
-            type: 'success',
-          })
-          linkState.title = ''
-          linkState.url = ''
-          linkState.description = ''
-          linkState.logo = ''
+            message: "申请已提交，博主审批ing~",
+            type: "success",
+          });
+          linkState.title = "";
+          linkState.url = "";
+          linkState.description = "";
+          linkState.logo = "";
         } else {
           ElMessage({
             message: res.msg,
-            type: 'warning',
-          })
-          linkState.title = ''
-          linkState.url = ''
-          linkState.description = ''
-          linkState.logo = ''
+            type: "warning",
+          });
+          linkState.title = "";
+          linkState.url = "";
+          linkState.description = "";
+          linkState.logo = "";
         }
-      })
+      });
     } else {
       ElMessage({
-        message: '请登录后添加',
-        type: 'warning',
-      })
-      return
+        message: "请登录后添加",
+        type: "warning",
+      });
+      return;
     }
-
   },
   getList: () => {
     let params = {
       pageSize: 100,
-      pageNo: 1
-    }
+      pageNo: 1,
+    };
     queryLinkList(params).then((res: any) => {
       if (res.code == 200) {
-        linkState.data = res.data.data.filter(item => item.status == 1)
+        linkState.data = res.data.data.filter((item) => item.status == 1);
+        linkState.data.sort(function () {
+          return Math.random() - 0.5;
+        });
       }
-    })
+    });
   },
   openLink: (url) => {
-    window.open(url)
-  }
-})
+    window.open(url);
+  },
+});
 onMounted(() => {
-  linkState.getList()
-  goTop()
-})
+  linkState.getList();
+  goTop();
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .interaction {
   padding-top: 3.2rem;
 
@@ -159,8 +201,6 @@ onMounted(() => {
         margin: 30px 0px;
         font-weight: bold;
       }
-
-
     }
 
     .link-list {
@@ -186,9 +226,13 @@ onMounted(() => {
           position: relative;
 
           &:before {
-            content: '';
+            content: "";
             display: block;
-            background: linear-gradient(to left, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.4) 50%);
+            background: linear-gradient(
+              to left,
+              rgba(255, 255, 255, 0) 50%,
+              rgba(255, 255, 255, 0.4) 50%
+            );
             background-size: 210% 100%;
             background-position: right bottom;
             height: 100%;
@@ -215,7 +259,6 @@ onMounted(() => {
             transform: rotate(360deg);
           }
 
-
           .avator {
             width: 40%;
             padding-left: 7%;
@@ -240,8 +283,6 @@ onMounted(() => {
             }
           }
         }
-
-
       }
     }
 
@@ -291,7 +332,13 @@ onMounted(() => {
     border: 0px;
     background-color: rgb(221, 221, 221);
     margin: 20px 0px;
-    background-image: repeating-linear-gradient(-45deg, rgb(255, 255, 255), rgb(8, 245, 150) 5px, transparent 0px, transparent 8px);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(255, 255, 255),
+      rgb(8, 245, 150) 5px,
+      transparent 0px,
+      transparent 8px
+    );
   }
 }
 </style>
