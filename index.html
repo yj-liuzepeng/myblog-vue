@@ -20,13 +20,13 @@
   <!-- 百度统计 -->
   <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
       var hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?39bf78ea70c8f28b2e1bedc961ff21f2";
-      var s = document.getElementsByTagName("script")[0]; 
+      var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
-    </script>    
+  </script>
   <!-- 访问者信息 -->
   <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 
@@ -35,7 +35,7 @@
     data-redirecturi="https://www.liuzepeng.com/qq" charset="utf-8">
   </script>
   <!-- cdn引入动态线条背景特效 -->
-  <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  <!-- <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script> -->
   <!-- 阿里图标引入 -->
   <link rel="stylesheet" href="//at.alicdn.com/t/font_3120938_q6p2axjard.css">
   <script>
@@ -49,6 +49,16 @@
       }, 3000)
     };
     document.title = 'Liuzepeng的个人博客'
+    // 移动端打开去掉线条效果
+    if (/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+      console.log('移动端打开')
+    } else {
+      let head = document.querySelector('head');
+      let script = document.createElement('script');
+      script.type = "text/javascript";
+      script.src = "https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"
+      head.appendChild(script);
+    }
   </script>
 
 </body>
