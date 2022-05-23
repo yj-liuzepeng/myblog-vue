@@ -8,14 +8,32 @@
               项目实战
               <span class="color-danger">{{ total || 0 }}</span> 篇
             </span>
-            <el-input class="ipt-class" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
-              :suffix-icon="Search" placeholder="搜索实战内容" />
-
+            <el-input
+              class="ipt-class"
+              v-model="searchIpt"
+              @change="hSearch"
+              @input="hIpt"
+              @blur="hBlur"
+              :suffix-icon="Search"
+              placeholder="搜索实战内容"
+            />
           </div>
           <div class="left-content-items" v-if="total">
-            <div class="left-content-item itemhover cssnice1" v-for="item in workList" :key="item.id"
-              @click="openUrl(item.url)">
-              <div class="item-top" :style="{ 'backgroundImage': 'url(https://liuzepeng.com/' + item.pic + ')' }">
+            <div
+              class="left-content-item itemhover cssnice1"
+              v-for="item in workList"
+              :key="item.id"
+              @click="openUrl(item.url)"
+            >
+              <div class="item-top">
+                <!-- <div
+                class="item-top"
+                :style="{
+                  backgroundImage:
+                    'url(https://liuzepeng.com/' + item.pic + ')',
+                }"
+              > -->
+                <img v-lazy="'https://liuzepeng.com/' + item.pic" />
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
                   <div class="des">{{ item.description }}</div>
@@ -24,28 +42,45 @@
               <div class="item-info">
                 <div class="date">
                   <span class="iconfont icon-icon pr-5px"></span>
-                  <span style="color:#51aaad;">{{ UnixToDate(new Date(item.create_time), 6) }}</span>
+                  <span style="color: #51aaad">{{
+                    UnixToDate(new Date(item.create_time), 6)
+                  }}</span>
                 </div>
                 <div class="type">
                   <span class="iconfont icon-24gl-tags4 pr-5px"></span>
-                  <span style="color:#232831;">项目实战</span>
+                  <span style="color: #232831">项目实战</span>
                 </div>
                 <div class="author">
                   <span class="iconfont icon-203yonghu_yonghu4 pr-5px"></span>
-                  <span style="color:#72abf9">liuzepeng</span>
+                  <span style="color: #72abf9">liuzepeng</span>
                 </div>
               </div>
             </div>
             <div class="pagination">
-              <el-pagination background v-model:currentPage="pageNo" v-model:page-size="pageSize"
-                :page-sizes="[3, 6, 9, 12]" :small="small" :disabled="disabled" :background="background"
-                layout="sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"></el-pagination>
+              <el-pagination
+                background
+                v-model:currentPage="pageNo"
+                v-model:page-size="pageSize"
+                :page-sizes="[3, 6, 9, 12]"
+                :small="small"
+                :disabled="disabled"
+                :background="background"
+                layout="sizes, prev, pager, next, jumper"
+                :total="total"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+              ></el-pagination>
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
-            <img style="width: 120px;height: 120px;" src="../assets/nodata.png" alt="暂无数据" />
-            <div style="color: #bbbbbb;font-size: 14px;margin-top: 10px;">暂无数据</div>
+            <img
+              style="width: 120px; height: 120px"
+              src="../assets/nodata.png"
+              alt="暂无数据"
+            />
+            <div style="color: #bbbbbb; font-size: 14px; margin-top: 10px">
+              暂无数据
+            </div>
           </div>
         </div>
       </el-col>
@@ -59,98 +94,91 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import { onMounted, ref } from 'vue';
-import { Search } from '@element-plus/icons-vue'
-import Author from '../components/author.vue'
-import yourInfo from '../components/your-info.vue'
-import { queryWorkList, likeQueryWork } from '../apis/work'
-import { goTop } from '../utils/pageEffect'
-import { UnixToDate } from '../utils/datetime'
-let searchIpt = ref('')
-const pageNo = ref(1)
-const pageSize = ref(6)
-const small = ref(false)
-const background = ref(false)
-const disabled = ref(false)
-let total = ref()
-const workList = ref([])
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import { Search } from "@element-plus/icons-vue";
+import Author from "../components/author.vue";
+import yourInfo from "../components/your-info.vue";
+import { queryWorkList, likeQueryWork } from "../apis/work";
+import { goTop } from "../utils/pageEffect";
+import { UnixToDate } from "../utils/datetime";
+let searchIpt = ref("");
+const pageNo = ref(1);
+const pageSize = ref(6);
+const small = ref(false);
+const background = ref(false);
+const disabled = ref(false);
+let total = ref();
+const workList = ref([]);
 
 const getWorkList = () => {
   let params = {
     pageSize: pageSize.value,
-    pageNo: pageNo.value
-  }
+    pageNo: pageNo.value,
+  };
   queryWorkList(params).then((res: any) => {
     if (res.code == 200) {
-      workList.value = res.data.data
-      total.value = res.data.total
+      workList.value = res.data.data;
+      total.value = res.data.total;
     }
-  })
-}
+  });
+};
 // 模糊查询
 const hSearch = () => {
   likeQueryWork({
     queryipt: searchIpt.value,
     pageSize: pageSize.value,
-    pageNo: pageNo.value
+    pageNo: pageNo.value,
   }).then((res: any) => {
     if (res.code == 200) {
-      workList.value = res.data.data
-      total.value = res.data.total
+      workList.value = res.data.data;
+      total.value = res.data.total;
     } else {
-      workList.value = []
-      total.value = 0
+      workList.value = [];
+      total.value = 0;
     }
-  })
-}
+  });
+};
 const hIpt = () => {
-  if (searchIpt.value == '') {
-    getWorkList()
+  if (searchIpt.value == "") {
+    getWorkList();
   }
-}
+};
 const hBlur = () => {
-  if (searchIpt.value == '') {
-    getWorkList()
+  if (searchIpt.value == "") {
+    getWorkList();
   }
-}
+};
 const handleSizeChange = (val: number) => {
-  pageSize.value = val
-  goTop()
+  pageSize.value = val;
+  goTop();
 
   if (searchIpt.value) {
-    hSearch()
+    hSearch();
+  } else {
+    getWorkList();
   }
-  else {
-    getWorkList()
-  }
-
-}
+};
 const handleCurrentChange = (val: number) => {
-  pageNo.value = val
-  goTop()
+  pageNo.value = val;
+  goTop();
 
   if (searchIpt.value) {
-    hSearch()
+    hSearch();
+  } else {
+    getWorkList();
   }
-  else {
-    getWorkList()
-
-  }
-
-
-
-}
+};
 const openUrl = (url) => {
-  window.open(url)
-}
+  window.open(url);
+};
 onMounted(() => {
-  getWorkList()
-  goTop()
-})
+  getWorkList();
+  goTop();
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .work {
   padding-top: 3.2rem;
 }
@@ -160,7 +188,7 @@ onMounted(() => {
 }
 
 .left-content-header {
-  padding: .625rem .625rem 0.5rem;
+  padding: 0.625rem 0.625rem 0.5rem;
   width: 100%;
   display: flex;
   -webkit-box-pack: justify;
@@ -181,11 +209,20 @@ onMounted(() => {
     border-radius: 20px 20px 0px 0px;
 
     .item-top {
+      position: relative;
       border-radius: 20px 20px 0px 0px;
-      background-size: cover;
-      background-position: center center;
+      // background-size: cover;
+      // background-position: center center;
       width: 100%;
       height: 288px;
+      img {
+        position: absolute;
+        border-radius: 20px 20px 0px 0px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .inner-info {
@@ -251,16 +288,17 @@ onMounted(() => {
         margin-right: 12px;
       }
 
-      .author {}
+      .author {
+      }
     }
   }
 
   .itemhover {
-    transition: all linear .7s;
+    transition: all linear 0.7s;
   }
 
   .itemhover:hover {
-    box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     transform: translate3d(0, -2px, 0);
     background-color: rgb(253, 253, 253);
   }

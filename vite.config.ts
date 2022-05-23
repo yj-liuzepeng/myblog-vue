@@ -7,6 +7,7 @@
 
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+// import viteImagemin from 'vite-plugin-imagemin'
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 import vue from "@vitejs/plugin-vue";
@@ -26,6 +27,33 @@ export default {
   // },
   plugins: [
     vue(),
+    // viteImagemin({
+    //   gifsicle: {
+    //     optimizationLevel: 7,
+    //     interlaced: false
+    //   },
+    //   optipng: {
+    //     optimizationLevel: 7
+    //   },
+    //   mozjpeg: {
+    //     quality: 20
+    //   },
+    //   pngquant: {
+    //     quality: [0.8, 0.9],
+    //     speed: 4
+    //   },
+    //   svgo: {
+    //     plugins: [
+    //       {
+    //         name: 'removeViewBox'
+    //       },
+    //       {
+    //         name: 'removeEmptyAttrs',
+    //         active: false
+    //       }
+    //     ]
+    //   }
+    // }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
