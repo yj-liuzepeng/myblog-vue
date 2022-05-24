@@ -16,7 +16,7 @@
   <el-dialog v-model="dialogFormVisible" width="40%">
     <template #title>
       <span class="dialog-title">
-        欢迎<span class="iconfont icon-xihuan"></span>
+        欢迎你好<span class="iconfont icon-xihuan"></span>
       </span>
       <el-divider />
     </template>
