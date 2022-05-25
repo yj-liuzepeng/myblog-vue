@@ -136,8 +136,8 @@ const getWeather = () => {
       weatherState.city = weatherState.data.basic.city
       weatherState.cond = weatherState.data.now.cond.txt
       weatherState.air = weatherState.data.aqi.city.qlty
-      weatherState.sugcomf = weatherState.data.suggestion.comf.brf
-      weatherState.suggestion = weatherState.data.suggestion.comf.txt
+      weatherState.sugcomf = weatherState.data.suggestion.drsg.brf
+      weatherState.suggestion = weatherState.data.suggestion.drsg.txt
       weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3)
       weatherState.now = weatherState.data.now
 
