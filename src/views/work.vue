@@ -25,15 +25,15 @@
               :key="item.id"
               @click="openUrl(item.url)"
             >
-              <div class="item-top">
-                <!-- <div
+              <!-- <div class="item-top"> -->
+              <div
                 class="item-top"
                 :style="{
                   backgroundImage:
                     'url(https://liuzepeng.com/' + item.pic + ')',
                 }"
-              > -->
-                <img v-lazy="'https://liuzepeng.com/' + item.pic" />
+              >
+                <!-- <img v-lazy="'https://liuzepeng.com/' + item.pic" /> -->
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
                   <div class="des">{{ item.description }}</div>
@@ -209,20 +209,21 @@ onMounted(() => {
     border-radius: 20px 20px 0px 0px;
 
     .item-top {
-      position: relative;
-      border-radius: 20px 20px 0px 0px;
-      // background-size: cover;
-      // background-position: center center;
+      // position: relative;
       width: 100%;
       height: 288px;
-      img {
-        position: absolute;
-        border-radius: 20px 20px 0px 0px;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
+      border-radius: 20px 20px 0px 0px;
+      background-size: cover;
+      background-position: center center;
+
+      // img {
+      //   position: absolute;
+      //   border-radius: 20px 20px 0px 0px;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+      // }
     }
 
     .inner-info {
