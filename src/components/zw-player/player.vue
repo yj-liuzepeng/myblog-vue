@@ -176,7 +176,8 @@ let allMusicState = reactive({
     { name: "热歌榜", id: 3778678 },
     { name: "新歌榜", id: 3779629 },
     { name: "飙升榜", id: 19723756 },
-    { name: "嘻哈榜", id: 991319590 },
+    // { name: "嘻哈榜", id: 991319590 },
+    { name: "原创榜", id: 2884035 },
     { name: "My Songs", id: -1 }
   ],
   hotTalkList: [], // 热评
@@ -297,7 +298,10 @@ const getMusicType = (id) => {
     } else {
       getHotMusic({ id: id }).then((res: any) => {
         let data = JSON.parse(res.data)
-        allMusicState.musicList = data.playlist.tracks.splice(0, 200);
+  
+   
+        allMusicState.musicList = data.playlist.tracks;
+        // allMusicState.musicList = data.playlist.tracks.splice(0, 100);
         thisMusicType.value = id;
         thisMusicIndex.value = 0;
         allMusicState.thisListPage = 1;
@@ -359,6 +363,7 @@ const Cut = (str) => {
 const getInfo = () => {
 
   getMusicUrl({ id: allMusicState.musicList[thisMusicIndex.value].id }).then((res: any) => {
+
     let data = JSON.parse(res.data)
     if (
       data.data[0].url === null ||
@@ -383,6 +388,7 @@ const getInfo = () => {
       }
     } else {
       curPlayMusic.musicUrl = data.data[0].url.replace("http://", "https://");
+    
       curPlayMusic.musicImg =
         allMusicState.musicList[thisMusicIndex.value].al.picUrl.replace(
           "http://",
