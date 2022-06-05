@@ -97,8 +97,8 @@
     <span class="iconfont icon-icon-test" style="color: red;"></span>
   </el-backtop>
   <!--音乐播放器-->
-  <div v-if="isMobile">
-    <Player style="z-index: 100000"></Player>
+  <div v-if="isMobile" ref="target">
+    <Player style="z-index: 100000" @boxshow="boxShow" :closeBox='emitBoxShow'></Player>
   </div>
 </template>
 
@@ -109,13 +109,17 @@ import { ref, reactive, onMounted, watch } from 'vue';
 import { getWeatherData } from '../apis/weather'
 import MapLoader from '../utils/mapimg'
 import Player from "../components/zw-player/player.vue";
+import { onClickOutside } from '@vueuse/core'
+
 import { useRoute } from 'vue-router'
+
 const route = useRoute()
 const dialogFormVisible = ref(false)
 
 let todayImgbg = ref()
 let tomorrowImgbg = ref()
 let aTomorrowImgbg = ref()
+
 const weatherState = reactive({
   data: {} as any, // 保存全部天气信息
   dailyForecast: [], // 天气预测
@@ -171,6 +175,23 @@ const hMobile = () => {
     // pc端页面
     isMobile.value = true
   }
+}
+// 点击其他位置隐藏
+const target = ref(null)
+// 鼠标在目标之外点击
+onClickOutside(target, () => {
+  closeMusicBox()
+})
+const closeMusicBox = () => {
+  if (emitBoxShow.value) {
+    emitBoxShow.value = false
+  } else {
+    emitBoxShow.value = true
+  }
+}
+let emitBoxShow = ref(false)
+const boxShow = (show) => {
+  emitBoxShow.value = show
 }
 watch(() => dialogFormVisible.value, (nw) => {
   if (!nw) {
@@ -348,6 +369,7 @@ onMounted(() => {
 .el-dialog {
   border-radius: 10px !important;
 }
+
 .el-backtop {
   /* opacity: 0.8;
   background-color: #51555d !important;

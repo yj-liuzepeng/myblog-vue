@@ -150,9 +150,16 @@ import state1 from "./img/state_1.png";
 import talkicon1 from "./img/talkicon1.png";
 import talkicon2 from "./img/talkicon2.png";
 import $ from "jquery";
+const props = defineProps({
+  closeBox:{
+    type: Boolean,
+    default: false
+  }
+})
+const emit = defineEmits(['boxshow'])
 // 当前正在播放的音乐
 let curPlayMusic = reactive({
-    autoplay:false,
+  autoplay:false,
   musicName: '',
   musicTitle: '',
   musicWords: null,
@@ -161,6 +168,7 @@ let curPlayMusic = reactive({
   showBox: false, // 是否显示小box
   hShowBox: () => { // 控制小盒子显示隐藏
     curPlayMusic.showBox = !curPlayMusic.showBox
+    emit('boxshow',curPlayMusic.showBox )
   },
   playIcon: play, // 播放暂停按钮
   playState: false, // 播放状态,默认暂停，不播放
@@ -596,7 +604,11 @@ watch(() => allMusicState.musicSearchVal, () => {
 })
 getMusicType(3779629); // 新歌榜
 // DisAuthorInfo();
-
+watch(()=> props.closeBox,(nw)=> {
+  if(nw==false) {
+    curPlayMusic.showBox = false
+  }
+})
 onMounted(() => {
   Player()
 })
