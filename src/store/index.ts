@@ -4,7 +4,7 @@
  * @Description: pinia全局状态管理
  */
 import { defineStore } from "pinia";
-import {styleone} from '../styles/skinstyles/styles'
+import { styleone } from '../styles/skinstyles/styles'
 // interface MainState {
 //   counter: number
 //   name: string
@@ -23,6 +23,7 @@ export const useMainStore = defineStore("main", {
  
   },
   actions: {
+    // 切换主题
     changeStyle(style) {
       this.headerstyle = {...style.headerstyle}
       this.authorstyle = {...style.authorstyle}

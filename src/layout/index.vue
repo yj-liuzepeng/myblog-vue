@@ -103,8 +103,8 @@
 </template>
 
 <script lang='ts' setup>
-import MyHeader from '../components/header.vue'
-import MyFooter from '../components/footer.vue'
+import MyHeader from '../components/myheader.vue'
+import MyFooter from '../components/myfooter.vue'
 import { ref, reactive, onMounted, watch } from 'vue';
 import { getWeatherData } from '../apis/weather'
 import MapLoader from '../utils/mapimg'
