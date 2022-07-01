@@ -47,6 +47,7 @@ const getStyle = () => {
       styletwo.headerstyle.activetextcolor = "#548c96"
       styletwo.otherstyle.scrollbarbgc = '#813744'
 
+
     }
   })
 }
