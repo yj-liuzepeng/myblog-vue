@@ -97,6 +97,7 @@ const drawer = ref(false)
 // header皮肤
 const mainStore = useMainStore();
 const { headerstyle, userInfo } = storeToRefs(mainStore)
+
 let showLogin = ref(false)
 const headerState = reactive({
   menuList: [
