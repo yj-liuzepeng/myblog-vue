@@ -70,7 +70,7 @@
 </template>
 
 <script lang='ts' setup>
-import { nextTick, onMounted, reactive, ref } from 'vue';
+import {  onMounted,  ref } from 'vue';
 import { Search } from '@element-plus/icons-vue'
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'
