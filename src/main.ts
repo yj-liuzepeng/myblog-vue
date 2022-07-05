@@ -9,6 +9,7 @@ import App from "./App.vue";
 import router from "./router/index";
 import { createPinia } from "pinia";
 import "../src/styles/index.scss";
+
 import elementPlus from "./utils/element";
 import lazyPlugin from "vue3-lazy";
 // import SimpleWeather from 'simple-weather-vue'
@@ -27,7 +28,9 @@ import loadingpic from "./assets/other/load.gif";
 import { getCurStyle } from "./apis/style";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 
+
 const getStyle = async () => {
+  
   await getCurStyle().then((res: any) => {
     if (res.code == 200) {
       let styleData = res.data;
@@ -39,6 +42,9 @@ const getStyle = async () => {
       styletwo.headerstyle.textcolor = styleData[1].header_color;
       styletwo.headerstyle.activetextcolor = styleData[1].header_click_color;
       styletwo.otherstyle.scrollbarbgc = styleData[0].header_background;
+      if(res.ishb==1) {
+        import('../src/styles/hb.scss');
+      }
     } else {
       styleone.headerstyle.bgc = "#2b3645";
       styleone.headerstyle.textcolor = "#fff";
@@ -49,6 +55,7 @@ const getStyle = async () => {
       styletwo.headerstyle.activetextcolor = "#548c96";
       styletwo.otherstyle.scrollbarbgc = "#813744";
     }
+    
     const app = createApp(App);
     // 按需引入element-plus
     elementPlus(app);
