@@ -25,6 +25,7 @@ import "@kangc/v-md-editor/lib/style/preview-html.css";
 // 主题样式
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import loadingpic from "./assets/other/load.gif";
+import errorpic from "./assets/other/404.png";
 import { getCurStyle } from "./apis/style";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 
@@ -68,7 +69,7 @@ const getStyle = async () => {
     // 图片懒加载
     app.use(lazyPlugin, {
       loading: loadingpic, // 加载时默认图片
-      error: loadingpic, // 图片失败时默认图片
+      error: errorpic, // 图片失败时默认图片
     });
     app.mount("#app");
   });
