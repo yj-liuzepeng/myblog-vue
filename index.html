@@ -1,11 +1,5 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-18 11:36:06
- * @Description: file content
--->
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
   <!-- <meta charset="UTF-8"> -->
@@ -13,21 +7,68 @@
   <meta http-equiv='content-type' content='text/html;charset=utf-8' />
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    @import url("./src/styles/loading.css");
+  </style>
 </head>
 
 <body>
+  <div class="loader-box" id="Loading">
+    <div class="loader-block">
+      <div class="loader">
+      </div>
+      <div class="loading-text">正在加载中....</div>
+    </div>
+  </div>
   <div id="app"></div>
   <!-- 百度统计 -->
   <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
       var hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?c3521aae9e37f28be04de32a0abd58d3";
-      var s = document.getElementsByTagName("script")[0]; 
+      var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
-    </script>
-    
+  </script>
+  <!-- 白屏loading -->
+  <script>
+    var n = document.getElementsByClassName('loading-text');
+    var loader = document.getElementsByClassName('loader');
+    let className = ""
+    className = "loading-filp"
+
+    function getClassName() {
+      if (className === 'loading-filp') {
+        n[0].classList.remove('loading-bounce')
+      } else {
+        n[0].classList.remove('loading-filp')
+      }
+      n[0].classList.add(className)
+      changeLoading()
+    }
+    getClassName()
+
+    function changeLoading() {
+      if (!className) return;
+      for (var e = 0, t = n.length; e < t; e++) {
+        var a = n[e],
+          r = a.textContent.trim();
+        a.innerHTML = null;
+        i(a, r)
+      }
+    }
+
+    function i(n, e) {
+      for (var t in e) {
+        var a = document.createElement("span");
+        a.innerHTML = e[t] === " " ? "&nbsp;" : e[t];
+        n.appendChild(a)
+      }
+    }
+  </script>
+
+
   <!-- 访问者信息 -->
   <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 
@@ -37,9 +78,6 @@
   </script>
   <script src="https://unpkg.com/@vueuse/shared"></script>
   <script src="https://unpkg.com/@vueuse/core"></script>
-  
-  <!-- cdn引入动态线条背景特效 -->
-  <!-- <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script> -->
   <!-- 阿里图标引入 -->
   <link rel="stylesheet" href="//at.alicdn.com/t/font_3120938_q6p2axjard.css">
   <script>
@@ -53,6 +91,7 @@
       }, 3000)
     };
     document.title = 'Liuzepeng的个人博客'
+
     // 移动端打开去掉线条效果
     if (/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
       console.log('移动端打开')

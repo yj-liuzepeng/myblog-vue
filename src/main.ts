@@ -30,7 +30,6 @@ import { styleone, styletwo } from "./styles/skinstyles/styles";
 
 
 const getStyle = async () => {
-  
   await getCurStyle().then((res: any) => {
     if (res.code == 200) {
       let styleData = res.data;
