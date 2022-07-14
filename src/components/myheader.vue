@@ -1,5 +1,4 @@
 <template>
-
   <el-header id="scrolldisplay" :style="{'background-color':headerstyle.bgc}">
     <div class="header">
       <el-row :gutter="20">

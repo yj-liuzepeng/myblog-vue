@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-31 14:29:07
- * @Description: file content
--->
 <template>
   <div class="comment-list">
     <div class="comment-item cssnice4" v-for="item in data">

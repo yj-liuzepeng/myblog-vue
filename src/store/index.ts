@@ -11,7 +11,6 @@ import { styleone } from '../styles/skinstyles/styles'
 // }
 
 export const useMainStore = defineStore("main", {
-
   state: () => {
     return {
       userInfo: {}, // 用户信息

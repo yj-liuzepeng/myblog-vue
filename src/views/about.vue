@@ -10,17 +10,13 @@
             <div class="self-info">
               <div class="avat">
                 <img
-                  src="https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-                />
+                  src="https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" />
               </div>
               <div class="info-right">
                 <div class="name" :style="{ color: authorstyle.namecolor }">
                   liuzepeng
                 </div>
-                <div
-                  class="loacl-sex"
-                  :style="{ color: authorstyle.textcolor }"
-                >
+                <div class="loacl-sex" :style="{ color: authorstyle.textcolor }">
                   <span>
                     <span class="iconfont icon-didian"></span> 衡水 |
                   </span>
@@ -57,11 +53,7 @@
                 <li>
                   <div>热爱篮球🏀，健身（又爱又菜了）</div>
                   <div style="width: 80%; margin-top: 10px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/author/jsjl.png"
-                      alt=""
-                    />
+                    <img style="width: 100%" src="../assets/author/jsjl.png" alt="" />
                   </div>
                 </li>
                 <li>
@@ -83,16 +75,12 @@
                 <li>
                   <div>养了点多肉，喜欢绿植🪴，花花草草真的会让人心情很好</div>
                   <div style="width: 60%; margin-top: 10px">
-                    <img
-                      style="width: 100%"
-                      src="../assets/author/lz.png"
-                      alt=""
-                    />
+                    <img style="width: 100%" src="../assets/author/lz.png" alt="" />
                   </div>
                 </li>
                 <li>
                   <div>做自己。感觉快乐，就忙东忙西，感觉累了，就放空自己，别人说的话，随便听一听，自己做决定💪</div>
-                
+
                 </li>
               </ul>
             </div>
@@ -118,9 +106,7 @@
                 本站前后端均为个人书写，个人水平有限，大佬路过还请多多批评指正
               </li>
               <li>
-                <a href="https://www.liuzepeng.com/admin" target="_blank"
-                  >后台管理</a
-                >
+                <a href="https://www.liuzepeng.com/admin" target="_blank">后台管理</a>
               </li>
             </ul>
             <h1 class="h-title">联系方式</h1>
@@ -130,10 +116,7 @@
               <li>微信: Lzp20190330</li>
               <li>
                 csdn:
-                <a
-                  href="https://blog.csdn.net/m0_49159526?spm=1000.2115.3001.5343"
-                  >Bwcx_lzp</a
-                >
+                <a href="https://blog.csdn.net/m0_49159526?spm=1000.2115.3001.5343">Bwcx_lzp</a>
               </li>
               <li>
                 GitHub:

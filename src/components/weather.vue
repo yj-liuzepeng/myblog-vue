@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-26 08:50:10
- * @Description: 天气组件
--->
 <template>
   <div
     class="weather"

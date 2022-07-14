@@ -4,6 +4,7 @@
  * @Description: 音乐接口
  */
 import axios from '../utils/axios'
+
 // 获取歌词
 export const getWords = (params: any) => {
   return axios.post('/api/getWords', params)

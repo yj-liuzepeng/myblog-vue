@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-18 11:36:06
- * @Description: file content
--->
 <template>
   <div class="yourinfo-box">
     <div class="yourinfo-box-title" :style="{ color: authorstyle.namecolor }">

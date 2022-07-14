@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-18 11:36:06
- * @Description: 标签云
--->
 <template>
   <div class="taglist-box cssnice4">
     <div class="taglist-box-title" :style="{ color: authorstyle.namecolor }">

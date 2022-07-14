@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-18 11:36:06
- * @Description: layout
--->
 <template>
   <el-container>
     <my-header></my-header>

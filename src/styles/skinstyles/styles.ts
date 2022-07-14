@@ -8,36 +8,26 @@ export const styleone = {
     bgc: "",
     textcolor: "",
     activetextcolor: "",
-    // bgc: "#2b3645",
-    // textcolor: "#fff",
-    // activetextcolor: "#4c9b7d",
   },
   authorstyle: {
-    namecolor:'#4c9b7d',
-    // namecolor:'#f5d079',
-    textcolor: "#837d7d"
+    namecolor: "#4c9b7d",
+    textcolor: "#837d7d",
   },
   otherstyle: {
-    scrollbarbgc:''
-    // scrollbarbgc:'#283646'
-  }
+    scrollbarbgc: "",
+  },
 };
 export const styletwo = {
   headerstyle: {
     bgc: "",
     textcolor: "",
     activetextcolor: "",
-    // bgc: "#813744",
-    // textcolor: "#fff",
-    // activetextcolor: "#548c96",
-
   },
   authorstyle: {
-    namecolor:'#548c96',
-    textcolor: "#813744"
+    namecolor: "#548c96",
+    textcolor: "#813744",
   },
   otherstyle: {
-    scrollbarbgc:''
-    // scrollbarbgc:'#864f58'
-  }
+    scrollbarbgc: "",
+  },
 };

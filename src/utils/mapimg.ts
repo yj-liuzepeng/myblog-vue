@@ -3,416 +3,349 @@
  * @Date: 2022-03-26 08:52:03
  * @Description: 天气组件图片
  */
-import weather01 from "../assets/weather01.png";
-import weather02 from "../assets/weather02.png";
-import weather03 from "../assets/weather03.png";
-import weather04 from "../assets/weather04.png";
-import weather05 from "../assets/weather05.png";
-import weather06 from "../assets/weather06.png";
-import weather07 from "../assets/weather07.png";
-import weather08 from "../assets/weather08.png";
-import weather09 from "../assets/weather09.png";
-import weather10 from "../assets/weather10.png";
-import weather11 from "../assets/weather11.png";
-import weather12 from "../assets/weather12.png";
-import weather13 from "../assets/weather13.png";
-import weather14 from "../assets/weather14.png";
-import weather15 from "../assets/weather15.png";
-import weather16 from "../assets/weather16.png";
-import weather17 from "../assets/weather17.png";
-import weather18 from "../assets/weather18.png";
-import weather19 from "../assets/weather19.png";
-import weather20 from "../assets/weather20.png";
-import weather21 from "../assets/weather21.png";
-import weather22 from "../assets/weather22.png";
-import weather23 from "../assets/weather23.png";
-import weather24 from "../assets/weather24.png";
-import weather25 from "../assets/weather25.png";
-import weather26 from "../assets/weather26.png";
-import weather27 from "../assets/weather27.png";
-import weather28 from "../assets/weather28.png";
-import weather29 from "../assets/weather29.png";
-import weather30 from "../assets/weather30.png";
-import weather31 from "../assets/weather31.png";
-import weather32 from "../assets/weather32.png";
-import weather33 from "../assets/weather33.png";
-import weather34 from "../assets/weather34.png";
-import weather35 from "../assets/weather35.png";
-import weather36 from "../assets/weather36.png";
-import weather37 from "../assets/weather37.png";
-import weather38 from "../assets/weather38.png";
-import weather39 from "../assets/weather39.png";
-import weather40 from "../assets/weather40.png";
-import weather41 from "../assets/weather41.png";
-import weather42 from "../assets/weather42.png";
-import weather43 from "../assets/weather43.png";
-import weather44 from "../assets/weather44.png";
-import weather45 from "../assets/weather45.png";
-import weather46 from "../assets/weather46.png";
-import weather47 from "../assets/weather47.png";
-import weather48 from "../assets/weather48.png";
-import weather49 from "../assets/weather49.png";
-import weather50 from "../assets/weather50.png";
-import weather51 from "../assets/weather51.png";
-import weather52 from "../assets/weather52.png";
-import weather53 from "../assets/weather53.png";
-import weather54 from "../assets/weather54.png";
-import weather55 from "../assets/weather55.png";
-import weather56 from "../assets/weather56.png";
-import weather57 from "../assets/weather57.png";
-import weather58 from "../assets/weather58.png";
-import weather59 from "../assets/weather59.png";
-import weather60 from "../assets/weather60.png";
-import weather61 from "../assets/weather61.png";
-import weather62 from "../assets/weather62.png";
-import weather63 from "../assets/weather63.png";
-import weather64 from "../assets/weather64.png";
-import weather65 from "../assets/weather65.png";
-import weather66 from "../assets/weather66.png";
-import weather67 from "../assets/weather67.png";
-import weather68 from "../assets/weather68.png";
+
 
 export default function MapLoader(name) {
   let weatherList = [
     {
       id: 1,
       name: "晴",
-      url: weather01,
+      url: 'https://liuzepeng.com/weather01.png',
     },
     {
       id: 2,
       name: "少云",
-      url: weather02,
+      url: 'https://liuzepeng.com/weather02.png',
     },
     {
       id: 3,
       name: "晴间多云",
-      url: weather03,
+      url: 'https://liuzepeng.com/weather03.png',
     },
     {
       id: 4,
       name: "多云",
-      url: weather04,
+      url: 'https://liuzepeng.com/weather04.png',
     },
     {
       id: 5,
       name: "阴",
-      url: weather05,
+      url: 'https://liuzepeng.com/weather05.png',
     },
     {
       id: 6,
       name: "有风",
-      url: weather06,
+      url: 'https://liuzepeng.com/weather06.png',
     },
     {
       id: 7,
       name: "平静",
-      url: weather07,
+      url: 'https://liuzepeng.com/weather07.png',
     },
     {
       id: 8,
       name: "微风",
-      url: weather08,
+      url: 'https://liuzepeng.com/weather08.png',
     },
     {
       id: 9,
       name: "和风",
-      url: weather09,
+      url: 'https://liuzepeng.com/weather09.png',
     },
     {
       id: 10,
       name: "清风",
-      url: weather10,
+      url: 'https://liuzepeng.com/weather10.png',
     },
     {
       id: 11,
       name: "强风/劲风",
-      url: weather11,
+      url: 'https://liuzepeng.com/weather11.png',
     },
     {
       id: 12,
       name: "疾风",
-      url: weather12,
+      url: 'https://liuzepeng.com/weather12.png',
     },
     {
       id: 13,
       name: "大风",
-      url: weather13,
+      url: 'https://liuzepeng.com/weather13.png',
     },
     {
       id: 14,
       name: "烈风",
-      url: weather14,
+      url: 'https://liuzepeng.com/weather14.png',
     },
     {
       id: 15,
       name: "风暴",
-      url: weather15,
+      url: 'https://liuzepeng.com/weather15.png',
     },
     {
       id: 16,
       name: "狂爆风",
-      url: weather16,
+      url: 'https://liuzepeng.com/weather16.png',
     },
     {
       id: 17,
       name: "飓风",
-      url: weather17,
+      url: 'https://liuzepeng.com/weather17.png',
     },
     {
       id: 18,
       name: "热带风暴",
-      url: weather18,
+      url: 'https://liuzepeng.com/weather18.png',
     },
     {
       id: 19,
       name: "霾",
-      url: weather19,
+      url: 'https://liuzepeng.com/weather19.png',
     },
     {
       id: 20,
       name: "中度霾",
-      url: weather20,
+      url: 'https://liuzepeng.com/weather20.png',
     },
     {
       id: 21,
       name: "重度霾",
-      url: weather21,
+      url: 'https://liuzepeng.com/weather21.png',
     },
     {
       id: 22,
       name: "严重霾",
-      url: weather22,
+      url: 'https://liuzepeng.com/weather22.png',
     },
     {
       id: 23,
       name: "阵雨",
-      url: weather23,
+      url: 'https://liuzepeng.com/weather23.png',
     },
     {
       id: 24,
       name: "雷阵雨",
-      url: weather24,
+      url: 'https://liuzepeng.com/weather24.png',
     },
     {
       id: 25,
       name: "雷阵雨并伴有冰雹",
-      url: weather25,
+      url: 'https://liuzepeng.com/weather25.png',
     },
     {
       id: 26,
       name: "小雨",
-      url: weather26,
+      url: 'https://liuzepeng.com/weather26.png',
     },
     {
       id: 27,
       name: "中雨",
-      url: weather27,
+      url: 'https://liuzepeng.com/weather27.png',
     },
     {
       id: 28,
       name: "大雨",
-      url: weather28,
+      url: 'https://liuzepeng.com/weather28.png',
     },
     {
       id: 29,
       name: "暴雨",
-      url: weather29,
+      url: 'https://liuzepeng.com/weather29.png',
     },
     {
       id: 30,
       name: "大暴雨",
-      url: weather30,
+      url: 'https://liuzepeng.com/weather30.png',
     },
     {
       id: 31,
       name: "特大暴雨",
-      url: weather31,
+      url: 'https://liuzepeng.com/weather31.png',
     },
     {
       id: 32,
       name: "强阵雨",
-      url: weather32,
+      url: 'https://liuzepeng.com/weather32.png',
     },
     {
       id: 33,
       name: "强雷阵雨",
-      url: weather33,
+      url: 'https://liuzepeng.com/weather33.png',
     },
     {
       id: 34,
       name: "极端降雨",
-      url: weather34,
+      url: 'https://liuzepeng.com/weather34.png',
     },
     {
       id: 35,
       name: "毛毛雨/细雨",
-      url: weather35,
+      url: 'https://liuzepeng.com/weather35.png',
     },
     {
       id: 36,
       name: "雨",
-      url: weather36,
+      url: 'https://liuzepeng.com/weather36.png',
     },
     {
       id: 37,
       name: "小雨-中雨",
-      url: weather37,
+      url: 'https://liuzepeng.com/weather37.png',
     },
     {
       id: 38,
       name: "中雨-大雨",
-      url: weather38,
+      url: 'https://liuzepeng.com/weather38.png',
     },
     {
       id: 39,
       name: "大雨-暴雨",
-      url: weather39,
+      url: 'https://liuzepeng.com/weather39.png',
     },
     {
       id: 40,
       name: "暴雨-大暴雨",
-      url: weather40,
+      url: 'https://liuzepeng.com/weather40.png',
     },
     {
       id: 41,
       name: "大暴雨-特大暴雨",
-      url: weather41,
+      url: 'https://liuzepeng.com/weather41.png',
     },
     {
       id: 42,
       name: "雨雪天气",
-      url: weather42,
+      url: 'https://liuzepeng.com/weather42.png',
     },
     {
       id: 43,
       name: "雨夹雪",
-      url: weather43,
+      url: 'https://liuzepeng.com/weather43.png',
     },
     {
       id: 44,
       name: "阵雨夹雪",
-      url: weather44,
+      url: 'https://liuzepeng.com/weather44.png',
     },
     {
       id: 45,
       name: "冻雨",
-      url: weather45,
+      url: 'https://liuzepeng.com/weather45.png',
     },
     {
       id: 46,
       name: "雪",
-      url: weather46,
+      url: 'https://liuzepeng.com/weather46.png',
     },
     {
       id: 47,
       name: "阵雪",
-      url: weather47,
+      url: 'https://liuzepeng.com/weather47.png',
     },
     {
       id: 48,
       name: "小雪",
-      url: weather48,
+      url: 'https://liuzepeng.com/weather48.png',
     },
     {
       id: 49,
       name: "中雪",
-      url: weather49,
+      url: 'https://liuzepeng.com/weather49.png',
     },
     {
       id: 50,
       name: "大雪",
-      url: weather50,
+      url: 'https://liuzepeng.com/weather50.png',
     },
     {
       id: 51,
       name: "暴雪",
-      url: weather51,
+      url: 'https://liuzepeng.com/weather51.png',
     },
     {
       id: 52,
       name: "小雪-中雪",
-      url: weather52,
+      url: 'https://liuzepeng.com/weather52.png',
     },
     {
       id: 53,
       name: "中雪-大雪",
-      url: weather53,
+      url: 'https://liuzepeng.com/weather53.png',
     },
     {
       id: 54,
       name: "大雪-暴雪",
-      url: weather54,
+      url: 'https://liuzepeng.com/weather54.png',
     },
     {
       id: 55,
       name: "浮尘",
-      url: weather55,
+      url: 'https://liuzepeng.com/weather55.png',
     },
     {
       id: 56,
       name: "扬沙",
-      url: weather56,
+      url: 'https://liuzepeng.com/weather56.png',
     },
     {
       id: 57,
       name: "沙尘暴",
-      url: weather57,
+      url: 'https://liuzepeng.com/weather57.png',
     },
     {
       id: 58,
       name: "强沙尘暴",
-      url: weather58,
+      url: 'https://liuzepeng.com/weather58.png',
     },
     {
       id: 59,
       name: "龙卷风",
-      url: weather59,
+      url: 'https://liuzepeng.com/weather59.png',
     },
     {
       id: 60,
       name: "雾",
-      url: weather60,
+      url: 'https://liuzepeng.com/weather60.png',
     },
     {
       id: 61,
       name: "浓雾",
-      url: weather61,
+      url: 'https://liuzepeng.com/weather61.png',
     },
     {
       id: 62,
       name: "强浓雾",
-      url: weather62,
+      url: 'https://liuzepeng.com/weather62.png',
     },
     {
       id: 63,
       name: "轻雾",
-      url: weather63,
+      url: 'https://liuzepeng.com/weather63.png',
     },
     {
       id: 64,
       name: "大雾",
-      url: weather64,
+      url: 'https://liuzepeng.com/weather64.png',
     },
     {
       id: 65,
       name: "特强浓雾",
-      url: weather65,
+      url: 'https://liuzepeng.com/weather65.png',
     },
     {
       id: 66,
       name: "热",
-      url: weather66,
+      url: 'https://liuzepeng.com/weather66.png',
     },
     {
       id: 67,
       name: "冷",
-      url: weather67,
+      url: 'https://liuzepeng.com/weather67.png',
     },
     {
       id: 68,
       name: "未知",
-      url: weather68,
+      url: 'https://liuzepeng.com/weather68.png',
     },
   ];
   return weatherList.filter((item) => item.name == name)[0].url;

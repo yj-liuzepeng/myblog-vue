@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-30 11:44:41
- * @Description: 评论组件
--->
 <template>
   <div class="comment-box">
     <div class="top-txt">可以在这里发表您的看法或者建议(支持markdown语法)</div>

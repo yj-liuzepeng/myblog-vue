@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-04-18 14:24:23
- * @Description: 移动端抽屉
--->
 <template>
   <el-drawer v-model="show" title="I am the title" :direction="opendrawer" size="60%" :with-header="false"
     @close='closeDrawer'>

@@ -1,9 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-03-30 09:47:26
- * @Description: file content
--->
-
 <template>
   <div class="hotcomments-box cssnice3">
     <div class="hotcomments-box-title">

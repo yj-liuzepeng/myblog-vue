@@ -1,8 +1,3 @@
-<!--
- * @Author: lzp
- * @Date: 2022-04-09 23:30:50
- * @Description: file content
--->
 <template>
   <div class="oauth-background">
     <div id="preloader_1">
