@@ -6,9 +6,9 @@
 
 import axios from '../utils/axios'
 
-// 活动列表查询
+// 文章列表查询
 export const queryArticleList = (params: any) => {
-  return axios.post('/api/queryArticleList', params)
+  return axios.post('/api/queryWebArticleList', params)
 }
 // 查询标签
 export const queryTagList = (params) => {
