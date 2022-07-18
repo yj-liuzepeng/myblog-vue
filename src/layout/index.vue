@@ -105,10 +105,9 @@ import { getWeatherData } from '../apis/weather'
 import MapLoader from '../utils/mapimg'
 import Player from "../components/zw-player/player.vue";
 import { onClickOutside } from '@vueuse/core'
+// import { useRoute } from 'vue-router'
 
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
+// const route = useRoute()
 const dialogFormVisible = ref(false)
 
 let todayImgbg = ref()

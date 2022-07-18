@@ -1,5 +1,5 @@
 <template>
-  <el-header id="scrolldisplay" :style="{'background-color':headerstyle.bgc}">
+  <el-header id="scrolldisplay" :style="{ 'background-color': headerstyle.bgc }">
     <div class="header">
       <el-row :gutter="20">
         <el-col :xs="3" :sm="0">
@@ -38,7 +38,7 @@
         </el-col>
         <el-col :xs="3" :sm="0">
           <div class="phone-dropdowm" @click="openDropdown">
-            <el-dropdown >
+            <el-dropdown>
               <span class="el-dropdown-link">
                 <el-icon class="el-icon--right">
                   <arrow-down />
@@ -199,7 +199,7 @@ onBeforeMount(() => {
   let localUserInfo = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
   if (!!localUserInfo) {
     let loginMsg = headerState.menuList[headerState.menuList.length - 1]
-    loginMsg.name = '退出 ' + localUserInfo.username 
+    loginMsg.name = '退出 ' + localUserInfo.username
     loginMsg.code = 'out'
     loginMsg.icon = 'icon-tuichu'
   }
@@ -297,6 +297,7 @@ onMounted(() => {
     .el-menu {
       border-bottom: 0;
       background-color: transparent;
+
       .el-menu-item {
         border-bottom: 0;
       }
