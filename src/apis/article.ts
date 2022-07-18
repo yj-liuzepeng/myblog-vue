@@ -16,7 +16,7 @@ export const queryTagList = (params) => {
 }
 // 模糊查询
 export const likeQueryArticle = (params) => {
-  return axios.post('/api/likeQueryArticle', params)
+  return axios.post('/api/likeQueryWebArticle', params)
 }
 // 根据标签查询文章
 export const queryArticleByTag = (params) => {
