@@ -20,10 +20,7 @@
               </div>
             </div>
             <div class="detail-img">
-              <img
-                :src="'https://liuzepeng.com/' + articleState.pic"
-                :alt="articleState.title"
-              />
+              <img :src="'https://liuzepeng.com/' + articleState.pic" :alt="articleState.title" />
             </div>
           </div>
           <el-divider content-position="center">
@@ -35,48 +32,33 @@
             <span style="color: #5e8ed3; font-size: 16px">正文</span>
           </el-divider>
           <div id="preview-box">
-            <v-md-preview-html
-              :html="articleState.html"
-              preview-class="vuepress-markdown-body"
-            ></v-md-preview-html>
+            <v-md-preview-html :html="articleState.html" preview-class="vuepress-markdown-body"></v-md-preview-html>
           </div>
           <div class="tag-box">
             <div class="tag-list">
               <span class="iconfont icon-24gf-tags3"></span>
-              <el-tag
-                class="tag-item"
-                v-for="item in articleState.taglist"
-                :style="[{ 'background-color': item.color }, { color: '#fff' }]"
-                >{{ item.name }}</el-tag
-              >
+              <el-tag class="tag-item" v-for="item in articleState.taglist"
+                :style="[{ 'background-color': item.color }, { color: '#fff' }]">{{ item.name }}</el-tag>
             </div>
             <div class="last-time">最后修改于{{ articleState.updatetime }}</div>
           </div>
           <el-divider></el-divider>
 
-          <comment-box
-            :can="articleState.comment"
-            type="1"
-            :targetId="articleId"
-            :targetName="articleState.title"
-          />
+          <comment-box :can="articleState.comment" type="1" :targetId="articleId" :targetName="articleState.title" />
         </div>
       </el-col>
       <el-col :xs="0" :sm="6">
         <div class="right-content">
           <Author />
           <your-info />
-          <div
-            id="catalogBox"
-            class="sticky-top"
-            :style="[
-              { position: fixedCatalog ? 'fixed' : '' },
-              { top: fixedCatalog ? '20px' : '' },
-            ]"
-          >
-            <div class="catalog-title">文章标题</div>
-            <div id="right-catalog"></div>
-          </div>
+        </div>
+        <div id="catalogBox" class="sticky-top" :style="[
+          { width: fixedCatalog ? (rightContentWidth + 'px') : '100%' },
+          { position: fixedCatalog ? 'fixed' : '' },
+          { top: fixedCatalog ? '25px' : '' }
+        ]">
+          <div class="catalog-title">文章标题</div>
+          <div id="right-catalog"></div>
         </div>
       </el-col>
     </el-row>
@@ -168,17 +150,22 @@ onBeforeMount(() => {
 });
 let fixedCatalog = ref(false);
 let startOffsetTop = ref();
+let rightContentWidth = ref()
 const handleScroll = () => {
+  let rightContent = document.querySelector('.right-content')
+  rightContentWidth.value = rightContent?.offsetWidth
+  // 滚动距离
   let scrollTop =
     window.pageYOffset ||
     document.documentElement.scrollTop ||
     document.body.scrollTop;
+  // 元素距离顶部
   let offsetTop = document.querySelector("#catalogBox")?.offsetTop;
-  scrollTop > offsetTop
+  scrollTop > offsetTop + 60
     ? (fixedCatalog.value = true)
     : (fixedCatalog.value = false);
-  if (offsetTop == 20) {
-    scrollTop - 30 <= startOffsetTop.value
+  if (offsetTop == 25) {
+    scrollTop - 60 <= startOffsetTop.value
       ? (fixedCatalog.value = false)
       : (fixedCatalog.value = true);
   }
@@ -279,38 +266,47 @@ onMounted(() => {
 
   .right-content {
     width: 100%;
+    margin-bottom: 10px;
+  }
 
-    .sticky-top {
-      position: -webkit-sticky;
-      height: 600px;
-      overflow: scroll;
-      overflow-x: hidden;
-      &::-webkit-scrollbar {
-        width: 0px;
-      }
-      & { // 兼容火狐
-        scrollbar-width: none; /* 滚动条宽度有三种：thin、auto、none */
-      }
-      .catalog-title {
-        padding-bottom: 5px;
-        font-size: 16px;
-        border-radius: 4px;
-        border-bottom: 1px solid #dcdfe6;
-        text-align: center;
-        margin-bottom: 15px;
-      }
+  .sticky-top {
+    position: -webkit-sticky;
+    box-sizing: border-box;
+    height: 600px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: 1px solid;
+    padding: 0.3rem;
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 0.3rem;
 
-      #right-catalog {
-        margin-bottom: 15px;
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
 
-        // overflow: scroll;
-      }
+    & {
+      // 兼容火狐
+      scrollbar-width: none;
+      /* 滚动条宽度有三种：thin、auto、none */
+    }
+
+    .catalog-title {
+      padding-bottom: 5px;
+      font-size: 16px;
+      border-radius: 4px;
+      border-bottom: 1px solid #dcdfe6;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    #right-catalog {
+      margin-bottom: 15px;
     }
   }
 }
 </style>
 <style>
-.cl-wrapper li > .cl-link.cl-link-active {
+.cl-wrapper li>.cl-link.cl-link-active {
   /* color: blue; */
   color: v-bind("authorstyle.textcolor") !important;
   transition: all 0.5s ease 0s;
