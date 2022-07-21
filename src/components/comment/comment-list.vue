@@ -1,6 +1,6 @@
 <template>
   <div class="comment-list">
-    <div class="comment-item cssnice4" v-for="item in data">
+    <div class="comment-item" v-for="item in data">
       <div class="item-avatar">
         <span v-if="item.from_avatar">
           <el-avatar

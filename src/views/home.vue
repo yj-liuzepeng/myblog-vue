@@ -1,20 +1,20 @@
 <template>
   <div class="home" id="home">
     <el-row :gutter="10">
-      <el-col :xs="24" :sm="18" >
+      <el-col :xs="24" :sm="18">
         <div class="left-content">
           <div class="left-content-header">
-        
+
             <span>
               博客日志
               <span class="color-danger">{{ total || 0 }}</span> 篇
               <el-tag class="tag-item" v-if="curTag"
                 :style="[{ 'background-color': curTag.color }, { 'color': '#fff' }]">{{ curTag.name }}</el-tag>
             </span>
-        
+
             <el-input class="ipt-class" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
               :suffix-icon="Search" placeholder="搜索首页内容" />
-           
+
           </div>
           <div class="left-content-items" v-if="total">
             <div class="left-content-item itemhover cssnice1" v-for="item in articleList" :key="item.id">
@@ -56,7 +56,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="6" >
+      <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
 
@@ -70,7 +70,7 @@
 </template>
 
 <script lang='ts' setup>
-import {  onMounted,  ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Search } from '@element-plus/icons-vue'
 import Author from '../components/author.vue'
 import yourInfo from '../components/your-info.vue'

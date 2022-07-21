@@ -1,5 +1,5 @@
 <template>
-  <div class="taglist-box cssnice4">
+  <div class="taglist-box">
     <div class="taglist-box-title" :style="{ color: authorstyle.namecolor }">
       标签云
       <span class="iconfont icon-24gf-tags3"></span>

@@ -5,7 +5,7 @@
         <div class="left-content cssnice1">
           <div class="timeline-box">
             <a-timeline mode="alternate">
-              <a-timeline-item v-for="item in timelineList">
+              <a-timeline-item v-for="item in timelineList" >
                 <template #dot>
                   <span
                     :class="['iconfont', item.icon]"
@@ -18,7 +18,7 @@
                   <!-- <img v-if="item.pic" style="width:80%;margin-top: 10px;" :src="'https://liuzepeng.com/' + item.pic" :alt="item.title" /> -->
                   <img v-if="item.pic" style="width:80%;margin-top: 10px;" v-lazy="'https://liuzepeng.com/' + item.pic"   :alt="item.title" />
 
-                  <div class="timeline-time">{{ UnixToDate(new Date(item.dotime), 6) }}</div>
+                  <div class="timeline-time cssnice2">{{ UnixToDate(new Date(item.dotime), 6) }}</div>
                   <el-divider border-style="dashed" />
                 </div>
               </a-timeline-item>
