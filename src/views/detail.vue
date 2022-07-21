@@ -173,7 +173,7 @@ const handleScroll = () => {
     window.pageYOffset ||
     document.documentElement.scrollTop ||
     document.body.scrollTop;
-  let offsetTop = document.querySelector("#catalogBox").offsetTop;
+  let offsetTop = document.querySelector("#catalogBox")?.offsetTop;
   scrollTop > offsetTop
     ? (fixedCatalog.value = true)
     : (fixedCatalog.value = false);
@@ -187,7 +187,7 @@ onMounted(() => {
   getTagList();
   goTop();
   window.addEventListener("scroll", handleScroll);
-  startOffsetTop.value = document.querySelector("#catalogBox").offsetTop;
+  startOffsetTop.value = document.querySelector("#catalogBox")?.offsetTop;
   // window.addEventListener('scroll', function(e) {
   //   console.log(123)
   // })

@@ -57,30 +57,33 @@ export default function(opts) {
     
     const path = []
     let pathIndent
-    
-    tocItems.forEach(function(item, idx) {
-      const { offsetLeft, offsetTop, offsetHeight } = item.anchor,
-        x = Opt.cool ? offsetLeft - 5 : offsetLeft,
-        y = offsetTop,
-        height = offsetHeight
-      
-      if (idx === 0) {
-        path.push('M', x, y, 'L', x, y + height)
-        item.pathStart = 0
-      }
-      else {
-        if (pathIndent !== x) path.push('L', pathIndent, y)     // 缩进级别发生变化
-        path.push('L', x, y)
+    if(tocItems?.length>0) {
+      tocItems.forEach(function(item, idx) {
+        const { offsetLeft, offsetTop, offsetHeight } = item.anchor,
+          x = Opt.cool ? offsetLeft - 5 : offsetLeft,
+          y = offsetTop,
+          height = offsetHeight
+        
+        if (idx === 0) {
+          path.push('M', x, y, 'L', x, y + height)
+          item.pathStart = 0
+        }
+        else {
+          if (pathIndent !== x) path.push('L', pathIndent, y)     // 缩进级别发生变化
+          path.push('L', x, y)
+          tocPath.setAttribute('d', path.join(' '))
+          item.pathStart = tocPath.getTotalLength() || 0
+          path.push('L', x, y + height)
+        }
+        pathIndent = x
         tocPath.setAttribute('d', path.join(' '))
-        item.pathStart = tocPath.getTotalLength() || 0
-        path.push('L', x, y + height)
-      }
-      pathIndent = x
-      tocPath.setAttribute('d', path.join(' '))
-      item.pathEnd = tocPath.getTotalLength()
-    })
-    pathLength = tocPath.getTotalLength()
-    coolScrollHandler()
+        item.pathEnd = tocPath.getTotalLength()
+      })
+      pathLength = tocPath.getTotalLength()
+      coolScrollHandler()
+    }
+   
+  
   }
   
   /**
@@ -92,6 +95,9 @@ export default function(opts) {
     let pathStart = pathLength,
       pathEnd = 0,
       visibleItems = 0
+      if(tocItems?.length>0) {
+
+    
     tocItems.forEach(function(liItem) {
       const { bottom, top } = liItem.target.getBoundingClientRect(),
         firstChild = liItem.listItem.firstChild
@@ -114,6 +120,7 @@ export default function(opts) {
     else {
       tocPath.setAttribute('opacity', '0')
     }
+  }
   }
   
   /**
