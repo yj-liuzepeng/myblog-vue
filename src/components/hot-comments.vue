@@ -1,11 +1,11 @@
 <template>
-  <div class="hotcomments-box cssnice3">
+  <div class="hotcomments-box">
     <div class="hotcomments-box-title">
       热门评论
       <span class="iconfont icon-remen"></span>
     </div>
     <div class="hotcomments-box-content">
-      <div class="comment-list" v-for="item in hotArticleList" >
+      <div class="comment-list" v-for="item in hotArticleList">
         <div class="avatar">
           <span v-if="item.from_avatar">
             <el-avatar :size="30" class="comment-avatar" :src="item.from_avatar" />
@@ -19,7 +19,8 @@
         <div>
           <div class="from-box">
             <div class="top">
-              <span class="name">{{ item?.from_name.length > 14 ? (item.from_name.substring(0, 14) + '...') : item.from_name
+              <span class="name">{{ item?.from_name.length > 14 ? (item.from_name.substring(0, 14) + '...') :
+                  item.from_name
               }}</span>
               <span class="iconstyle iconfont icon-dianzan_kuai"></span>
               <span class="like-num">{{ item.like_num }}</span>
@@ -105,7 +106,7 @@ onMounted(() => {
 
           .like-num {
             font-size: 12px;
-               color: rgb(130, 130, 213);
+            color: rgb(130, 130, 213);
           }
         }
 
