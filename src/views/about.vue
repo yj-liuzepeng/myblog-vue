@@ -192,7 +192,8 @@ ul {
 
       .kb-img {
         width: 100%;
-        height: 240px;
+        height: 18vw;
+        // height: 240px;
 
         img {
           width: 100%;

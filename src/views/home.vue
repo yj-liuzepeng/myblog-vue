@@ -276,7 +276,8 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      max-height: 300px;
+      max-height: 20vw;
+      // max-height: 300px;
       cursor: pointer;
       overflow: hidden;
 
