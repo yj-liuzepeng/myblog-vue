@@ -276,7 +276,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      max-height: 20vw;
+      // max-height: 20vw;
       // max-height: 300px;
       cursor: pointer;
       overflow: hidden;
@@ -284,6 +284,19 @@ onMounted(() => {
       img {
         width: 100%;
         transition: all 0.5s ease-out 0.1s;
+      }
+    }
+
+    @media not screen and (min-width: 60em) {
+     .item-img{
+       max-height: 20vw;
+      }
+    }
+
+    @media not screen and (min-width: 50em) {
+      .item-img {
+       max-height: 40vw;
+      
       }
     }
 

@@ -185,7 +185,7 @@ onMounted(() => {
       // position: relative;
       width: 100%;
       // height: 288px;
-      height: 20vw;
+      // height: 20vw;
       border-radius: 20px 20px 0px 0px;
       background-size: cover;
       background-position: center center;
@@ -198,6 +198,19 @@ onMounted(() => {
       //   width: 100%;
       //   height: 100%;
       // }
+    }
+
+    @media not screen and (min-width: 60em) {
+      .item-top {
+        height: 20vw;
+      }
+    }
+
+    @media not screen and (min-width: 50em) {
+      .item-top {
+        height: 40vw;
+
+      }
     }
 
     .inner-info {

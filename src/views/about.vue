@@ -201,6 +201,19 @@ ul {
         }
       }
 
+      @media not screen and (min-width: 60em) {
+        .kb-img {
+          height: 18vw;
+        }
+      }
+
+      @media not screen and (min-width: 50em) {
+        .kb-img {
+          height: 40vw;
+
+        }
+      }
+
       .self-info {
         background-color: white;
         display: flex;
