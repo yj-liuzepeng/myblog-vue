@@ -34,7 +34,7 @@ const addUserVist =  ()=> {
     ip: returnCitySN["cip"],
     city: returnCitySN["cname"],
     device:getOsInfo().name,
-    browser:getBrowser()
+    browser:getBrowser().type +'(v'+ getBrowser().versions+')'
   })
 }
 const getStyle = async () => {
