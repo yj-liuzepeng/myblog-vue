@@ -19,4 +19,7 @@ export const qqLogin = (params) => {
   return axios.post('/api/qqLogin', params)
 }
 
-
+// 用户访问
+export const addVist = (params: any) => {
+  return axios.post('/api/addVist', params)
+}

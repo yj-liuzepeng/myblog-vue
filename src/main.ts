@@ -3,7 +3,6 @@
  * @Date: 2022-03-18 11:36:06
  * @Description: 入口文件
  */
-
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
@@ -26,8 +25,18 @@ import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import loadingpic from "./assets/other/load.gif";
 import errorpic from "./assets/other/404.png";
 import { getCurStyle } from "./apis/style";
+import { addVist } from "./apis/user";
+import { getOsInfo,getBrowser } from './utils/getInfo'
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 
+const addUserVist =  ()=> {
+   addVist({
+    ip: returnCitySN["cip"],
+    city: returnCitySN["cname"],
+    device:getOsInfo().name,
+    browser:getBrowser()
+  })
+}
 const getStyle = async () => {
   await getCurStyle().then((res: any) => {
     if (res.code == 200) {
@@ -88,3 +97,4 @@ const getStyle = async () => {
   });
 };
 getStyle();
+addUserVist()

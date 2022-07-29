@@ -138,11 +138,12 @@ const getWeather = () => {
       weatherState.suggestion = weatherState.data.suggestion.drsg.txt
       weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3)
       weatherState.now = weatherState.data.now
-
       todayImgbg.value = MapLoader(weatherState.now.cond.txt)
       tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].cond.txt_d)
       aTomorrowImgbg.value = MapLoader(weatherState.dailyForecast[2].cond.txt_d)
       dialogFormVisible.value = true
+    } else {
+        dialogFormVisible.value = false
     }
   })
 
