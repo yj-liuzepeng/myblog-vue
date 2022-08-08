@@ -11,7 +11,8 @@ import "../src/styles/index.scss";
 
 import elementPlus from "./utils/element";
 import lazyPlugin from "vue3-lazy";
-
+import "viewerjs/dist/viewer.css";
+import VueViewer from "v-viewer";
 import clickstyle from "./styles/coolstyles/clickstyle"; // 全局鼠标点击动效
 // 引入了ant的timeline，后面去掉这部分，使用element处理
 import { Timeline } from "ant-design-vue";
@@ -26,17 +27,17 @@ import loadingpic from "./assets/other/load.gif";
 import errorpic from "./assets/other/404.png";
 import { getCurStyle } from "./apis/style";
 import { addVist } from "./apis/user";
-import { getOsInfo,getBrowser } from './utils/getInfo'
+import { getOsInfo, getBrowser } from "./utils/getInfo";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 
-const addUserVist =  ()=> {
-   addVist({
+const addUserVist = () => {
+  addVist({
     ip: returnCitySN["cip"],
     city: returnCitySN["cname"],
-    device:getOsInfo().name,
-    browser:getBrowser().type +'(v'+ getBrowser().versions+')'
-  })
-}
+    device: getOsInfo().name,
+    browser: getBrowser().type + "(v" + getBrowser().versions + ")",
+  });
+};
 const getStyle = async () => {
   await getCurStyle().then((res: any) => {
     if (res.code == 200) {
@@ -66,15 +67,15 @@ const getStyle = async () => {
       }
     } else {
       styleone.headerstyle = {
-        bgc:"#2b3645",
-        textcolor:'#fff',
-        activetextcolor:'#4c9b7d'
-      }
+        bgc: "#2b3645",
+        textcolor: "#fff",
+        activetextcolor: "#4c9b7d",
+      };
       styletwo.headerstyle = {
-        bgc:"#813744",
-        textcolor:'#fff',
-        activetextcolor:'#548c96'
-      }
+        bgc: "#813744",
+        textcolor: "#fff",
+        activetextcolor: "#548c96",
+      };
       styleone.otherstyle.scrollbarbgc = "#2b3645";
       styletwo.otherstyle.scrollbarbgc = "#813744";
     }
@@ -88,6 +89,7 @@ const getStyle = async () => {
     // 引入v-md-editor预览组件
     app.use(VMdPreviewHtml);
     app.use(Timeline);
+    app.use(VueViewer);
     // 图片懒加载
     app.use(lazyPlugin, {
       loading: loadingpic, // 加载时默认图片
@@ -97,4 +99,4 @@ const getStyle = async () => {
   });
 };
 getStyle();
-addUserVist()
+addUserVist();

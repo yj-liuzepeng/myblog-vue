@@ -20,7 +20,10 @@
               </div>
             </div>
             <div class="detail-img">
-              <img :src="'https://liuzepeng.com/' + articleState.pic" :alt="articleState.title" />
+              <img
+                :src="'https://liuzepeng.com/' + articleState.pic"
+                :alt="articleState.title"
+              />
             </div>
           </div>
           <el-divider content-position="center">
@@ -31,20 +34,32 @@
           <el-divider content-position="center">
             <span style="color: #5e8ed3; font-size: 16px">正文</span>
           </el-divider>
-          <div id="preview-box">
-            <v-md-preview-html :html="articleState.html" preview-class="vuepress-markdown-body"></v-md-preview-html>
+          <div id="preview-box" v-viewer="{ movable: false }">
+            <v-md-preview-html
+              :html="articleState.html"
+              preview-class="vuepress-markdown-body"
+            ></v-md-preview-html>
           </div>
           <div class="tag-box">
             <div class="tag-list">
               <span class="iconfont icon-24gf-tags3"></span>
-              <el-tag class="tag-item" v-for="item in articleState.taglist"
-                :style="[{ 'background-color': item.color }, { color: '#fff' }]">{{ item.name }}</el-tag>
+              <el-tag
+                class="tag-item"
+                v-for="item in articleState.taglist"
+                :style="[{ 'background-color': item.color }, { color: '#fff' }]"
+                >{{ item.name }}</el-tag
+              >
             </div>
             <div class="last-time">最后修改于{{ articleState.updatetime }}</div>
           </div>
           <el-divider></el-divider>
 
-          <comment-box :can="articleState.comment" type="1" :targetId="articleId" :targetName="articleState.title" />
+          <comment-box
+            :can="articleState.comment"
+            type="1"
+            :targetId="articleId"
+            :targetName="articleState.title"
+          />
         </div>
       </el-col>
       <el-col :xs="0" :sm="6">
@@ -52,11 +67,15 @@
           <Author />
           <your-info />
         </div>
-        <div id="catalogBox" class="sticky-top" :style="[
-          { width: fixedCatalog ? (rightContentWidth + 'px') : '100%' },
-          { position: fixedCatalog ? 'fixed' : '' },
-          { top: fixedCatalog ? '25px' : '' }
-        ]">
+        <div
+          id="catalogBox"
+          class="sticky-top"
+          :style="[
+            { width: fixedCatalog ? rightContentWidth + 'px' : '100%' },
+            { position: fixedCatalog ? 'fixed' : '' },
+            { top: fixedCatalog ? '25px' : '' },
+          ]"
+        >
           <div class="catalog-title">文章标题</div>
           <div id="right-catalog"></div>
         </div>
@@ -150,10 +169,10 @@ onBeforeMount(() => {
 });
 let fixedCatalog = ref(false);
 let startOffsetTop = ref();
-let rightContentWidth = ref()
+let rightContentWidth = ref();
 const handleScroll = () => {
-  let rightContent = document.querySelector('.right-content')
-  rightContentWidth.value = rightContent?.offsetWidth
+  let rightContent = document.querySelector(".right-content");
+  rightContentWidth.value = rightContent?.offsetWidth;
   // 滚动距离
   let scrollTop =
     window.pageYOffset ||
@@ -175,9 +194,14 @@ onMounted(() => {
   goTop();
   window.addEventListener("scroll", handleScroll);
   startOffsetTop.value = document.querySelector("#catalogBox")?.offsetTop;
-  // window.addEventListener('scroll', function(e) {
-  //   console.log(123)
-  // })
+  setTimeout(() => {
+    let allImgs = Array.from(
+      window.document.getElementById("preview-box")?.getElementsByTagName("img")
+    );
+    allImgs.forEach((element) => {
+      element.style.cursor = "pointer";
+    });
+  }, 500);
 });
 </script>
 
@@ -306,7 +330,7 @@ onMounted(() => {
 }
 </style>
 <style>
-.cl-wrapper li>.cl-link.cl-link-active {
+.cl-wrapper li > .cl-link.cl-link-active {
   /* color: blue; */
   color: v-bind("authorstyle.textcolor") !important;
   transition: all 0.5s ease 0s;
