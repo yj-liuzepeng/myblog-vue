@@ -180,9 +180,10 @@ import {
   addorDelLikeNum,
   rfhUserCommentLike,
 } from "../../apis/comment";
+import { updateUserEmail } from "../../apis/user";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../../store";
-
+import { ElMessageBox } from "element-plus";
 const mainStore = useMainStore();
 const { userInfo } = storeToRefs(mainStore);
 const props = defineProps({
@@ -315,6 +316,7 @@ const sendComment = (item) => {
       from_avatar: userInfoData.value.avator,
       from_area: userInfoData.value.city,
       content: replyIpt.value,
+      email: userInfoData.value.email,
     };
     if (!replyIpt.value) {
       ElMessage({
@@ -323,6 +325,39 @@ const sendComment = (item) => {
       });
       return;
     } else {
+      if (!userInfoData.value.email) {
+        ElMessageBox.prompt("您未绑定邮箱，无法收到回复！", "邮箱绑定", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          buttonSize: "small",
+          inputType: "text",
+          inputPlaceholder: "请输入邮箱账号",
+          inputPattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+          inputErrorMessage: "请填写正确邮箱",
+        })
+          .then(({ value }) => {
+            updateUserEmail({
+              id: userInfoData.value.id,
+              email: value,
+              loginip: userInfoData.value.loginip,
+            }).then((res: any) => {
+              if (res.code == 200) {
+                let userinfo = JSON.parse(localStorage.getItem("BLOGUSERINFO"));
+                userinfo.email = value;
+                localStorage.setItem("BLOGUSERINFO", JSON.stringify(userinfo));
+                userInfoData.value = JSON.parse(
+                  localStorage.getItem("BLOGUSERINFO")
+                );
+                ElMessage({
+                  message: "绑定成功！",
+                  type: "success",
+                });
+              }
+            });
+          })
+          .catch(() => {});
+        return;
+      }
       addComment(params).then((res: any) => {
         if (res.code == 200) {
           // ElMessage({

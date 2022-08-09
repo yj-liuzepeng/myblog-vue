@@ -5,11 +5,12 @@
  */
 import "element-plus/dist/index.css";
 // import ElMessage from './resetMessage'
-import { 
+import {
   ElButton,
-  ElHeader, 
+  ElHeader,
   ElContainer,
-  ElRow,ElCol,
+  ElRow,
+  ElCol,
   ElMenu,
   ElInput,
   ElTag,
@@ -27,32 +28,38 @@ import {
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
-  ElDrawer
+  ElDrawer,
+  ElForm,
+  ElFormItem,
+  ElMessageBox,
 } from "element-plus";
 export default (app) => {
   app
-  .use(ElButton)
-  .use(ElTag)
-  .use(ElHeader)
-  .use(ElRow)
-  .use(ElCol)
-  .use(ElMenu)
-  .use(ElInput)
-  .use(ElContainer)
-  .use(ElAvatar)
-  .use(ElDivider)
-  .use(ElTooltip)
-  .use(ElPagination)
-  .use(ElIcon)
-  .use(ElBacktop)
-  .use(ElAffix)
-  .use(ElProgress)
-  .use(ElTimeline)
-  .use(ElCard)
-  .use(ElDialog)
-  .use(ElDropdown)
-  .use(ElDropdownMenu)
-  .use(ElDropdownItem)
-  .use(ElDrawer)
+    .use(ElButton)
+    .use(ElTag)
+    .use(ElHeader)
+    .use(ElRow)
+    .use(ElCol)
+    .use(ElMenu)
+    .use(ElInput)
+    .use(ElContainer)
+    .use(ElAvatar)
+    .use(ElDivider)
+    .use(ElTooltip)
+    .use(ElPagination)
+    .use(ElIcon)
+    .use(ElBacktop)
+    .use(ElAffix)
+    .use(ElProgress)
+    .use(ElTimeline)
+    .use(ElCard)
+    .use(ElDialog)
+    .use(ElDropdown)
+    .use(ElDropdownMenu)
+    .use(ElDropdownItem)
+    .use(ElDrawer)
+    .use(ElMessageBox)
+    .use(ElForm)
+    .use(ElFormItem);
   // .use(ElMessage)
 };

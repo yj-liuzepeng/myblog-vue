@@ -2,140 +2,148 @@
   <div class="comment-box">
     <div class="top-txt">可以在这里发表您的看法或者建议(支持markdown语法)</div>
     <div class="comment-ipt">
-      <el-input v-model="textarea" placeholder="请输入内容" show-word-limit type="textarea" rows="7" />
+      <el-input
+        v-model="textarea"
+        placeholder="请输入内容"
+        show-word-limit
+        type="textarea"
+        rows="7"
+      />
     </div>
     <div class="ipt-bottom">
       <el-button type="primary" @click="addCommentBtn">提交评论</el-button>
     </div>
     <div v-if="can == '1'">
-      <comment-list :data="data" :more="more"
-      @getmore = 'getMoreComments'
-      @getless = 'getLessComments'
-      @refresh="getCommentList()"></comment-list>
+      <comment-list
+        :data="data"
+        :more="more"
+        @getmore="getMoreComments"
+        @getless="getLessComments"
+        @refresh="getCommentList()"
+      ></comment-list>
     </div>
     <div v-else class="close-comment">
       <span class="iconfont icon-jinggao1"></span>
-      当前{{ type == '1' ? '文章' : '资源' }}关闭了评论权限
+      当前{{ type == "1" ? "文章" : "资源" }}关闭了评论权限
     </div>
   </div>
 </template>
 
-<script lang='ts' setup>
-import { onMounted, ref, watch } from 'vue'
-import ElMessage from '../../utils/resetMessage'
-import { storeToRefs } from 'pinia'
+<script lang="ts" setup>
+import { onMounted, ref, watch } from "vue";
+import ElMessage from "../../utils/resetMessage";
+import { storeToRefs } from "pinia";
 import { useMainStore } from "../../store";
-import commentList from './comment-list.vue'
-import { queryCommentList, addComment } from '../../apis/comment'
-import { DataAnalysis } from '@element-plus/icons-vue/dist/types';
+import commentList from "./comment-list.vue";
+import { queryCommentList, addComment } from "../../apis/comment";
+import { updateUserEmail } from "../../apis/user";
+import { ElMessageBox } from "element-plus";
 const mainStore = useMainStore();
-const { userInfo } = storeToRefs(mainStore)
+const { userInfo } = storeToRefs(mainStore);
 
 const props = defineProps({
   // 是否允许评论
   can: {
     type: String,
-    default: '1'
+    default: "1",
   },
   // 对什么评论
   type: {
     type: String,
-    default: ''
+    default: "",
   },
   // 被评论者id
   targetId: {
     type: String,
-    default: ''
+    default: "",
   },
   // 被评论者name
   targetName: {
     type: String,
-    default: ''
+    default: "",
   },
   // 评论人信息
   fromData: {
     type: Object,
-    default: {}
+    default: {},
   },
-})
-const textarea = ref('')
-let data = ref([])
-let more = ref(false)
-const userInfoData = ref()
+});
+const textarea = ref("");
+let data = ref([]);
+let more = ref(false);
+const userInfoData = ref();
 // 数据处理
 const getNeedData = (data) => {
-  data.forEach(item => {
+  data.forEach((item) => {
     if (item.children && item.children.length) {
-      getNeedData(item.children)
-      data.push(...item.children)
+      getNeedData(item.children);
+      data.push(...item.children);
     }
   });
-}
-let pageSize = ref(5)
-let total = ref()
+};
+let pageSize = ref(5);
+let total = ref();
 // 获取留言数据
 const getCommentList = async () => {
   await queryCommentList({
-    pageNo:1,
-    pageSize:pageSize.value,
+    pageNo: 1,
+    pageSize: pageSize.value,
     page_id: props.targetId,
-    type: props.type
+    type: props.type,
   }).then((res: any) => {
     if (res.code == 200) {
-      let commentData = res.data.data
-      if(pageSize.value < res.data.total) {
-        more.value = true
-      }else {
-         more.value =false
+      let commentData = res.data.data;
+      if (pageSize.value < res.data.total) {
+        more.value = true;
+      } else {
+        more.value = false;
       }
-      total.value = res.data.total 
-      commentData.forEach(item => {
+      total.value = res.data.total;
+      commentData.forEach((item) => {
         // 文章的(每条评论item)下的（用户对用户）回复
         // item.children 用户对用户的回复 ---->   还会有children -----> children
         if (item.children && item.children.length) {
           // 如果有用户对用户的回复,不管多少层,都拍平放到item.children中去
 
-          getNeedData(item.children)
+          getNeedData(item.children);
         }
       });
-      data.value = commentData
+      data.value = commentData;
     } else {
-      data.value = []
+      data.value = [];
     }
-
-
-  })
-}
+  });
+};
 // 查看更多留言
-const getMoreComments = ()=> {
-  pageSize.value = total.value
-  getCommentList()
-}
+const getMoreComments = () => {
+  pageSize.value = total.value;
+  getCommentList();
+};
 // 收起更多
-const getLessComments= ()=> {
-  pageSize.value = 5
-  getCommentList()
-}
+const getLessComments = () => {
+  pageSize.value = 5;
+  getCommentList();
+};
 // 新增评论
 const addCommentBtn = () => {
-  if (props.can != '1') {
+  if (props.can != "1") {
     ElMessage({
-      message: '当前' + (props.type == '1' ? '文章' : '页面') + '关闭了评论权限',
-      type: 'warning',
-    })
-    return
+      message:
+        "当前" + (props.type == "1" ? "文章" : "页面") + "关闭了评论权限",
+      type: "warning",
+    });
+    return;
   }
   if (!userInfoData.value) {
     ElMessage({
-      message: '请登录后评论',
-      type: 'warning',
-    })
-    return
+      message: "请登录后评论",
+      type: "warning",
+    });
+    return;
   } else {
-
     let params = {
       type: props.type,
-      pid: '0',
+      pid: "0",
       page_id: props.targetId,
       target_id: props.targetId,
       target_name: props.targetName,
@@ -144,14 +152,49 @@ const addCommentBtn = () => {
       from_avatar: userInfoData.value.avator,
       from_area: userInfoData.value.city,
       content: textarea.value,
-    }
+      email: userInfoData.value.email,
+    };
+
     if (!textarea.value) {
       ElMessage({
-        message: '请输入评论内容',
-        type: 'warning',
-      })
-      return
+        message: "请输入评论内容",
+        type: "warning",
+      });
+      return;
     } else {
+      if (!userInfoData.value.email) {
+        ElMessageBox.prompt("您未绑定邮箱，无法收到回复！", "邮箱绑定", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          buttonSize: "small",
+          inputType: "text",
+          inputPlaceholder: "请输入邮箱账号",
+          inputPattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+          inputErrorMessage: "请填写正确邮箱",
+        })
+          .then(({ value }) => {
+            updateUserEmail({
+              id: userInfoData.value.id,
+              email: value,
+              loginip: userInfoData.value.loginip,
+            }).then((res: any) => {
+              if (res.code == 200) {
+                let userinfo = JSON.parse(localStorage.getItem("BLOGUSERINFO"));
+                userinfo.email = value;
+                localStorage.setItem("BLOGUSERINFO", JSON.stringify(userinfo));
+                userInfoData.value = JSON.parse(
+                  localStorage.getItem("BLOGUSERINFO")
+                );
+                ElMessage({
+                  message: "绑定成功！",
+                  type: "success",
+                });
+              }
+            });
+          })
+          .catch(() => {});
+        return;
+      }
       addComment(params).then((res: any) => {
         if (res.code == 200) {
           // ElMessage({
@@ -161,27 +204,28 @@ const addCommentBtn = () => {
         } else {
           ElMessage({
             message: res.msg,
-            type: 'warning',
-          })
+            type: "warning",
+          });
         }
-        textarea.value = ''
-        getCommentList()
-      })
+        textarea.value = "";
+        getCommentList();
+      });
     }
   }
-
-}
-watch(() => userInfo.value, (newval) => {
-  userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
-})
+};
+watch(
+  () => userInfo.value,
+  (newval) => {
+    userInfoData.value = JSON.parse(localStorage.getItem("BLOGUSERINFO"));
+  }
+);
 onMounted(() => {
-  userInfoData.value = JSON.parse(localStorage.getItem('BLOGUSERINFO'))
-  getCommentList()
-
-})
+  userInfoData.value = JSON.parse(localStorage.getItem("BLOGUSERINFO"));
+  getCommentList();
+});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .comment-box {
   margin-bottom: 20px;
 
@@ -200,14 +244,13 @@ onMounted(() => {
   }
 }
 </style>
-<style lang='scss' >
+<style lang="scss">
 .comment-ipt {
-
   .el-textarea__inner,
   .el-input__inner {
     // background: url(https://static.talkxj.com/config/commentBack.webp)
     // background: url(https://blog-1303885568.cos.ap-chengdu.myqcloud.com/useImg/comment.png) right bottom no-repeat;
-    background: url('../../assets/author/kb.png') right bottom no-repeat;
+    background: url("../../assets/author/kb.png") right bottom no-repeat;
   }
 }
 

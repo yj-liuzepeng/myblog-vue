@@ -3,40 +3,71 @@
     <div class="login-box">
       <div class="title">欢迎登录本网站</div>
       <div class="input">
-        <div class="ipt">
-          <el-input v-model="account" placeholder="请输入账号" :suffix-icon="Calendar" />
+        <div :class="['ipt', { email: !isLogin }]">
+          <el-input
+            v-model.trim="account"
+            placeholder="请输入账号"
+            :suffix-icon="Calendar"
+          />
+        </div>
+        <div class="ipt email" v-show="!isLogin">
+          <el-input
+            v-model="email"
+            placeholder="请输入邮箱"
+            :suffix-icon="Promotion"
+          />
         </div>
         <div class="ipt">
-          <el-input v-model="password" type="password" placeholder="请输入密码" show-password />
+          <el-input
+            v-model="password"
+            type="password"
+            placeholder="请输入密码"
+            show-password
+          />
         </div>
       </div>
       <div class="ways" v-show="isLogin">
         <div>
-          <span style="font-size: 12px;color: red;">推荐登录方式：</span>
+          <span style="font-size: 12px; color: red">推荐登录方式：</span>
 
-          <img src="../assets/qqdl.png" style="cursor: pointer;height: 20px;" @click="loginQq" />
+          <img
+            src="../assets/qqdl.png"
+            style="cursor: pointer; height: 20px"
+            @click="loginQq"
+          />
         </div>
         <div class="register">
-          <span  @click="toRegister">注册一个账号</span>
+          <span @click="toRegister">注册一个账号</span>
         </div>
       </div>
 
       <div class="btns">
-        <el-button size="small" @click="cancel" v-show="isLogin">取消</el-button>
-        <el-button size="small" @click="backLogin" v-show="!isLogin">返回</el-button>
-        <el-button type="primary" size="small" @click="hLogin" v-show="isLogin">登录</el-button>
-        <el-button type="primary" size="small" @click="hRegister" v-show="!isLogin">注册</el-button>
+        <el-button size="small" @click="cancel" v-show="isLogin"
+          >取消</el-button
+        >
+        <el-button size="small" @click="backLogin" v-show="!isLogin"
+          >返回</el-button
+        >
+        <el-button type="primary" size="small" @click="hLogin" v-show="isLogin"
+          >登录</el-button
+        >
+        <el-button
+          type="primary"
+          size="small"
+          @click="hRegister"
+          v-show="!isLogin"
+          >注册</el-button
+        >
       </div>
     </div>
-
   </div>
 </template>
 
-<script lang='ts' setup>
-import { onMounted, ref, watch } from 'vue';
-import { Calendar } from '@element-plus/icons-vue'
-import ElMessage from '../utils/resetMessage'
-import { register, login } from '../apis/user'
+<script lang="ts" setup>
+import { onMounted, ref, watch } from "vue";
+import { Calendar, Promotion } from "@element-plus/icons-vue";
+import ElMessage from "../utils/resetMessage";
+import { register, login } from "../apis/user";
 import { useMainStore } from "../store/index";
 
 const mainStore = useMainStore();
@@ -44,96 +75,120 @@ const mainStore = useMainStore();
 const props = defineProps({
   show: {
     type: Boolean,
-    default: false
-  }
-})
-const emit = defineEmits(['close'])
+    default: false,
+  },
+});
+const emit = defineEmits(["close"]);
 // 账号
-let account = ref('')
+let account = ref("");
+// 邮箱
+let email = ref("");
 // 密码
-let password = ref('')
+let password = ref("");
 const cancel = () => {
-  emit('close')
-}
+  isLogin.value = true;
+  emit("close");
+};
 
 const backLogin = () => {
-  isLogin.value = true
-  account.value = ''
-  password.value = ''
-}
-const isLogin = ref(true)
+  isLogin.value = true;
+  account.value = "";
+  password.value = "";
+  email.value = "";
+};
+const isLogin = ref(true);
 const toRegister = () => {
-  isLogin.value = false
-  account.value = ''
-  password.value = ''
-}
+  isLogin.value = false;
+  account.value = "";
+  password.value = "";
+  email.value = "";
+};
+const isEmail = (value): boolean => {
+  const reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+  return reg.test(value);
+};
 // 注册账号
 const hRegister = async () => {
-  if (!account.value || !password.value) {
+  if (!account.value || !password.value || !email.value) {
     ElMessage({
-      message: '请输入用户名和密码',
-      type: 'warning',
-    })
-    return
+      message: "请填写注册信息",
+      type: "warning",
+    });
+    return;
+  }
+  if (!isEmail(email.value)) {
+    ElMessage({
+      message: "邮箱格式错误",
+      type: "warning",
+    });
+    return;
+  }
+  if (account.value.length > 6) {
+    ElMessage({
+      message: "账号长度不超6个字符",
+      type: "warning",
+    });
+    return;
   }
   let params = {
-    role: 'user',// 用户权限
-    rolename:'用户',
-    loginway: '账号登录',
+    role: "user", // 用户权限
+    rolename: "用户",
+    loginway: "账号登录",
     username: account.value,
+    email: email.value,
     password: password.value,
     loginip: returnCitySN["cip"],
     logincity: returnCitySN["cname"],
-  }
+  };
   await register(params).then((res: any) => {
     if (res.code == 200) {
-      isLogin.value = true
+      isLogin.value = true;
       ElMessage({
-        message: '注册成功！',
-        type: 'success',
-      })
+        message: "注册成功！",
+        type: "success",
+      });
     } else {
       ElMessage({
         message: res.msg,
-        type: 'error',
-      })
+        type: "error",
+      });
     }
-  })
-}
+  });
+};
 // 登录网站
 const hLogin = async () => {
   if (!account.value || !password.value) {
     ElMessage({
-      message: '请输入用户名和密码',
-      type: 'warning',
-    })
-    return
+      message: "请输入用户名和密码",
+      type: "warning",
+    });
+    return;
   }
   let params = {
     username: account.value,
-    password: password.value
-  }
+    password: password.value,
+  };
   await login(params).then((res: any) => {
     if (res.code == 200) {
-      emit('close')
-      mainStore.saveUserInfo(res.data.userData)
-      mainStore.saveToken(res.data.token)
+      emit("close");
+      mainStore.saveUserInfo(res.data.userData);
+      mainStore.saveToken(res.data.token);
       ElMessage({
-        message: '登录成功！',
-        type: 'success',
-      })
+        message: "登录成功！",
+        type: "success",
+      });
     } else {
       ElMessage({
         message: res.msg,
-        type: 'error',
-      })
+        type: "error",
+      });
     }
-  })
-}
+  });
+};
 const qqLoginData = {
-  appid: '102000151',
-  redirecturl: 'https://www.liuzepeng.com/qq'
-}
+  appid: "102000151",
+  redirecturl: "https://www.liuzepeng.com/qq",
+};
 const loginQq = () => {
   if (
     navigator.userAgent.match(
@@ -143,63 +198,61 @@ const loginQq = () => {
     // eslint-disable-next-line no-undef
     QC.Login.showPopup({
       appId: qqLoginData.appid,
-      redirectURI: qqLoginData.redirecturl
+      redirectURI: qqLoginData.redirecturl,
     });
   } else {
     window.location.href =
       "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
       +qqLoginData.appid +
       "&response_type=token&scope=all&redirect_uri=" +
-      qqLoginData.redirecturl
+      qqLoginData.redirecturl;
   }
-
-
-}
+};
 const loginWx = () => {
   ElMessage({
-    message: '功能正在开发......',
-    type: 'warning',
-  })
-}
+    message: "功能正在开发......",
+    type: "warning",
+  });
+};
 
-watch(() => props.show, (newval) => {
-  account.value = ''
-  password.value = ''
-
-  if (newval) {
-    // 监听点击非登录框事件，关闭弹窗
-    document.addEventListener('click', (e: any) => {
-      if (e.target.className == 'mask-layer') {
-        cancel()
-      }
-    })
-    // 监听按钮ese退出，关闭弹窗
-    document.addEventListener('keyup', function (e: any) {
-      if (e.keyCode == 27) {
-        cancel()
-      }
-    })
-    // 监听回车事件，注册+登录
-    // document.addEventListener('keyup', function (e: any) {
-    //   if (e.keyCode == 13) {
-    //     if (isLogin.value) {
-    //       // 登录
-    //       hLogin()
-    //     } else {
-    //       // 注册
-    //       hRegister()
-    //     }
-    //   }
-    // })
+watch(
+  () => props.show,
+  (newval) => {
+    account.value = "";
+    password.value = "";
+    email.value = "";
+    if (newval) {
+      // 监听点击非登录框事件，关闭弹窗
+      document.addEventListener("click", (e: any) => {
+        if (e.target.className == "mask-layer") {
+          cancel();
+        }
+      });
+      // 监听按钮ese退出，关闭弹窗
+      document.addEventListener("keyup", function (e: any) {
+        if (e.keyCode == 27) {
+          cancel();
+        }
+      });
+      // 监听回车事件，注册+登录
+      // document.addEventListener('keyup', function (e: any) {
+      //   if (e.keyCode == 13) {
+      //     if (isLogin.value) {
+      //       // 登录
+      //       hLogin()
+      //     } else {
+      //       // 注册
+      //       hRegister()
+      //     }
+      //   }
+      // })
+    }
   }
-})
-onMounted(() => {
-
-
-})
+);
+onMounted(() => {});
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .mask-layer {
   width: 100%;
   height: 100%;
@@ -254,6 +307,9 @@ onMounted(() => {
       &:nth-child(1) {
         margin-bottom: 2.5rem;
       }
+    }
+    .email {
+      margin-bottom: 1.5rem !important;
     }
   }
 
