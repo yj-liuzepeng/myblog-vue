@@ -1,9 +1,15 @@
 <template>
   <div class="author-box">
-        
-    <el-avatar id="avatarimg" :size="100" :src="avatarImg" @mouseenter="mouseEnterAvatar"></el-avatar>
-    <div class="myname" :style="{ color: authorstyle.namecolor }">Liuzepeng</div>
-  
+    <el-avatar
+      id="avatarimg"
+      :size="100"
+      :src="avatarImg"
+      @mouseenter="mouseEnterAvatar"
+    ></el-avatar>
+    <div class="myname" :style="{ color: authorstyle.namecolor }">
+      Liuzepeng
+    </div>
+
     <div class="myintroduction">软件工程</div>
     <div class="myintroduction">2015-2019级</div>
     <div class="myintroduction">
@@ -12,26 +18,35 @@
     <div class="myintroduction admin" @click="toAdmin">网站后台管理系统</div>
     <div class="myintroduction">后端：Node + Mysql</div>
     <div class="myintroduction">前端：Vue3 + element-plus</div>
-    
-    
+
     <div class="myintroduction">
-      <span class="iconfont icon-youxiang"></span>  <span>liuzepeng0200@163.com</span>
+      <span class="iconfont icon-youxiang"></span>
+      <span>liuzepeng0200@163.com</span>
     </div>
     <div id="mymotto"></div>
     <el-divider>社交账号</el-divider>
     <div class="mycontacts">
       <el-tooltip effect="light" placement="top">
         <template #content>
-          <img style="width: 5rem;" src="../assets/author/myqq.jpeg" alt="我的qq" />
-        </template>
-        <span class="contact iconfont icon-qq"></span>
-      </el-tooltip>
-      <el-tooltip effect="light" placement="top">
-        <template #content>
-          <img style="width: 5rem;" src="../assets/author/mywx.jpeg" alt="我的微信" />
+          <img
+            style="width: 5rem"
+            src="../assets/author/mywx.jpeg"
+            alt="我的微信"
+          />
         </template>
         <span class="contact iconfont icon-sign_wechat"></span>
       </el-tooltip>
+      <el-tooltip effect="light" placement="top">
+        <template #content>
+          <img
+            style="width: 5rem"
+            src="../assets/author/myqq.jpeg"
+            alt="我的qq"
+          />
+        </template>
+        <span class="contact iconfont icon-qq"></span>
+      </el-tooltip>
+
       <el-tooltip effect="light" placement="top">
         <template #content>
           <a href="https://github.com/yj-liuzepeng" target="_blank">GITHUB</a>
@@ -40,7 +55,11 @@
       </el-tooltip>
       <el-tooltip effect="light" placement="top">
         <template #content>
-          <a href="https://blog.csdn.net/m0_49159526?spm=1000.2115.3001.5343" target="_blank">CSDN</a>
+          <a
+            href="https://blog.csdn.net/m0_49159526?spm=1000.2115.3001.5343"
+            target="_blank"
+            >CSDN</a
+          >
         </template>
         <span class="contact iconfont icon-lianjie1"></span>
       </el-tooltip>
@@ -48,14 +67,14 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import { ref, onMounted,Transition } from 'vue';
-import { storeToRefs } from 'pinia'
-import bdd from '../assets/author/bdd.jpeg'
+<script lang="ts" setup>
+import { ref, onMounted, Transition } from "vue";
+import { storeToRefs } from "pinia";
+import bdd from "../assets/author/bdd.jpeg";
 import { useMainStore } from "../store";
-import { styleone, styletwo } from '../styles/skinstyles/styles'
+import { styleone, styletwo } from "../styles/skinstyles/styles";
 const mainStore = useMainStore();
-const { authorstyle } = storeToRefs(mainStore)
+const { authorstyle } = storeToRefs(mainStore);
 
 // 动态字体
 let componentDidMount = () => {
@@ -90,42 +109,44 @@ let componentDidMount = () => {
     }
   }
   typing();
-}
-let avatarImg = ref('https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500')
+};
+let avatarImg = ref(
+  "https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
+);
 
 // 头像旋转，主题改变
 let mouseEnterAvatar = () => {
-  let deg = 0
+  let deg = 0;
   let img = document.getElementById("avatarimg");
-  if (avatarImg.value === 'https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500') {
-
+  if (
+    avatarImg.value ===
+    "https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
+  ) {
     deg -= 360;
     img.style.transform = "rotate(" + deg + "deg)";
     setTimeout(() => {
-      avatarImg.value = bdd
-      mainStore.changeStyle(styletwo)
-      document.querySelector('body').classList.add('red-theme')
+      avatarImg.value = bdd;
+      mainStore.changeStyle(styletwo);
+      document.querySelector("body").classList.add("red-theme");
     }, 300);
   } else {
     deg += 360;
     img.style.transform = "rotate(" + deg + "deg)";
     setTimeout(() => {
- 
-      avatarImg.value = "https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-      mainStore.changeStyle(styleone)
-      document.querySelector('body').classList.remove('red-theme')
+      avatarImg.value =
+        "https://img1.baidu.com/it/u=1143518526,1255623724&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500";
+      mainStore.changeStyle(styleone);
+      document.querySelector("body").classList.remove("red-theme");
     }, 300);
   }
-}
+};
 const toAdmin = () => {
-  window.open('https://www.liuzepeng.com/admin','_blank')
-}
-onMounted(() => [
-  componentDidMount()
-])
+  window.open("https://www.liuzepeng.com/admin", "_blank");
+};
+onMounted(() => [componentDidMount()]);
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .author-box {
   padding: 1rem;
   text-align: center;
@@ -154,7 +175,7 @@ onMounted(() => [
     font-size: 0.8rem;
     color: v-bind("authorstyle.textcolor");
     margin-bottom: 0.5rem;
-    word-wrap:break-word;
+    word-wrap: break-word;
   }
   .admin {
     cursor: pointer;
