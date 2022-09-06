@@ -270,6 +270,9 @@ onMounted(() => {
             .title {
               font-size: 16px;
               padding-bottom: 5px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
             }
 
             .msg {
