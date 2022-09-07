@@ -155,7 +155,7 @@ const headerState = reactive({
       code: "work",
       icon: "icon-gongzuotai",
       path: "./work",
-      slogan: "不要为平庸找借口！",
+      slogan: "千里之行，始于足下",
     },
     {
       name: "记录",
@@ -184,7 +184,7 @@ const headerState = reactive({
       code: "login",
       icon: "icon-denglu",
       path: "./login",
-      slogan: "不要为平庸找借口！",
+      slogan: "千里之行，始于足下",
     },
   ],
 
