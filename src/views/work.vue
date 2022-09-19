@@ -8,17 +8,31 @@
               项目实战
               <span class="color-danger">{{ total || 0 }}</span> 篇
             </span>
-            <el-input class="ipt-class" v-model="searchIpt" @change="hSearch" @input="hIpt" @blur="hBlur"
-              :suffix-icon="Search" placeholder="搜索实战内容" />
+            <el-input
+              class="ipt-class"
+              v-model="searchIpt"
+              @change="hSearch"
+              @input="hIpt"
+              @blur="hBlur"
+              :suffix-icon="Search"
+              placeholder="搜索实战内容"
+            />
           </div>
           <div class="left-content-items" v-if="total">
-            <div class="left-content-item itemhover cssnice1" v-for="item in workList" :key="item.id"
-              @click="openUrl(item.url)">
+            <div
+              class="left-content-item itemhover cssnice1"
+              v-for="item in workList"
+              :key="item.id"
+              @click="openUrl(item.url)"
+            >
               <!-- <div class="item-top"> -->
-              <div class="item-top" :style="{
-                backgroundImage:
-                  'url(https://liuzepeng.com/' + item.pic + ')',
-              }">
+              <div
+                class="item-top"
+                :style="{
+                  backgroundImage:
+                    'url(https://liuzepeng.com/' + item.pic + ')',
+                }"
+              >
                 <!-- <img v-lazy="'https://liuzepeng.com/' + item.pic" /> -->
                 <div class="inner-info">
                   <div class="item-title">{{ item.title }}</div>
@@ -29,7 +43,7 @@
                 <div class="date">
                   <span class="iconfont icon-icon pr-5px"></span>
                   <span style="color: #51aaad">{{
-                      UnixToDate(new Date(item.create_time), 6)
+                    UnixToDate(new Date(item.create_time), 6)
                   }}</span>
                 </div>
                 <div class="type">
@@ -43,14 +57,27 @@
               </div>
             </div>
             <div class="pagination">
-              <el-pagination background v-model:currentPage="pageNo" v-model:page-size="pageSize"
-                :page-sizes="[3, 6, 9, 12]" small :disabled="disabled" :background="background"
-                layout="sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"></el-pagination>
+              <el-pagination
+                background
+                v-model:currentPage="pageNo"
+                v-model:page-size="pageSize"
+                :page-sizes="[3, 6, 9, 12]"
+                small
+                :disabled="disabled"
+                :background="background"
+                :layout="pageLayout"
+                :total="total"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+              ></el-pagination>
             </div>
           </div>
           <div class="left-content-items nodata" v-else>
-            <img style="width: 120px; height: 120px" src="../assets/nodata.png" alt="暂无数据" />
+            <img
+              style="width: 120px; height: 120px"
+              src="../assets/nodata.png"
+              alt="暂无数据"
+            />
             <div style="color: #bbbbbb; font-size: 14px; margin-top: 10px">
               暂无数据
             </div>
@@ -75,10 +102,15 @@ import yourInfo from "../components/your-info.vue";
 import { queryWorkList, likeQueryWork } from "../apis/work";
 import { goTop } from "../utils/pageEffect";
 import { UnixToDate } from "../utils/datetime";
+import { isMobile } from "../utils/getInfo";
 let searchIpt = ref("");
 const pageNo = ref(1);
 const pageSize = ref(6);
-
+let pageLayout = ref("sizes, prev, pager, next, jumper");
+let mobile = isMobile();
+pageLayout.value = mobile
+  ? "prev, pager, next"
+  : "sizes, prev, pager, next, jumper";
 const background = ref(false);
 const disabled = ref(false);
 let total = ref();
@@ -209,7 +241,6 @@ onMounted(() => {
     @media not screen and (min-width: 50em) {
       .item-top {
         height: 40vw;
-
       }
     }
 
@@ -276,7 +307,8 @@ onMounted(() => {
         margin-right: 12px;
       }
 
-      .author {}
+      .author {
+      }
     }
   }
 

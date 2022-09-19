@@ -83,15 +83,14 @@
             </div>
             <div class="pagination">
               <el-pagination
-                small
                 background
                 v-model:currentPage="pageNo"
                 v-model:page-size="pageSize"
                 :page-sizes="[3, 6, 9, 12]"
-                :small="small"
+                small
                 :disabled="disabled"
                 :background="background"
-                layout="sizes, prev, pager, next, jumper"
+                :layout="pageLayout"
                 :total="total"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -134,6 +133,7 @@ import tagList from "../components/tag-list.vue";
 import { goTop } from "../utils/pageEffect";
 import { UnixToDate } from "../utils/datetime";
 import { useRouter } from "vue-router";
+import { isMobile } from "../utils/getInfo";
 import {
   queryArticleList,
   likeQueryArticle,
@@ -158,9 +158,13 @@ const pageNo = ref(1);
 
 const pageSize = ref(6);
 let total = ref();
-const small = ref(false);
 const background = ref(false);
 const disabled = ref(false);
+let pageLayout = ref("sizes, prev, pager, next, jumper");
+let mobile = isMobile();
+pageLayout.value = mobile
+  ? "prev, pager, next"
+  : "sizes, prev, pager, next, jumper";
 const handleSizeChange = (val: number) => {
   pageSize.value = val;
   goTop();
