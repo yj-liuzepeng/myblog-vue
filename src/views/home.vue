@@ -21,7 +21,7 @@
             <el-input
               class="ipt-class"
               v-model="searchIpt"
-              @change="hSearch"
+              @change="hSearch(true)"
               @input="hIpt"
               @blur="hBlur"
               :suffix-icon="Search"
@@ -116,7 +116,7 @@
 
           <your-info />
 
-          <tag-list @clickTag="hClickTag" />
+          <tag-list @clickTag="hDirectClickTag" />
         </div>
       </el-col>
     </el-row>
@@ -165,32 +165,40 @@ let mobile = isMobile();
 pageLayout.value = mobile
   ? "prev, pager, next"
   : "sizes, prev, pager, next, jumper";
+
+// 每页条数size
 const handleSizeChange = (val: number) => {
+  directClickTag.value = false;
   pageSize.value = val;
   goTop();
 
   if (searchIpt.value) {
-    hSearch();
+    hSearch(false);
+    return;
   }
   if (curTag.value && curTag.value.name) {
     hClickTag(curTag.value);
-  } else {
-    getArticleList();
+    return;
   }
+  getArticleList();
 };
+// 切换页
 const handleCurrentChange = (val: number) => {
+  directClickTag.value = false;
   pageNo.value = val;
   goTop();
 
   if (searchIpt.value) {
-    hSearch();
+    hSearch(false);
+    return;
   }
   if (curTag.value && curTag.value.name) {
     hClickTag(curTag.value);
-  } else {
-    getArticleList();
+    return;
   }
+  getArticleList();
 };
+
 let articleList = ref([]);
 const getArticleList = () => {
   let params = {
@@ -205,7 +213,12 @@ const getArticleList = () => {
   });
 };
 // 模糊查询
-const hSearch = () => {
+const hSearch = (direct) => {
+  if (direct) {
+    // 直接搜索
+    pageNo.value = 1;
+    pageSize.value = 6;
+  }
   likeQueryArticle({
     queryipt: searchIpt.value,
     pageSize: pageSize.value,
@@ -232,8 +245,16 @@ const hBlur = () => {
 };
 // 点击右侧标签
 const curTag = ref();
-
+let directClickTag = ref(true);
+let hDirectClickTag = (tag) => {
+  directClickTag.value = true;
+  hClickTag(tag);
+};
 const hClickTag = (tag) => {
+  if (directClickTag.value) {
+    pageSize.value = 6;
+    pageNo.value = 1;
+  }
   goTop();
   if (tag.name == "全部") {
     getArticleList();
