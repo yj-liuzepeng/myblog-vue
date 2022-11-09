@@ -16,8 +16,8 @@ import VueViewer from "v-viewer";
 import clickstyle from "./styles/coolstyles/clickstyle"; // 全局鼠标点击动效
 // 引入了ant的timeline，后面去掉这部分，使用element处理
 import { Timeline } from "ant-design-vue";
-import "ant-design-vue/dist/antd.css"; // or 'ant-design-vue/dist/antd.less'
-// import "ant-design-vue/lib/timeline/style/index.css";
+// import "ant-design-vue/dist/antd.css"; // or 'ant-design-vue/dist/antd.less'
+import "ant-design-vue/lib/timeline/style/index.css";
 // 预览组件以及样式
 import VMdPreviewHtml from "@kangc/v-md-editor/lib/preview-html";
 import "@kangc/v-md-editor/lib/style/preview-html.css";

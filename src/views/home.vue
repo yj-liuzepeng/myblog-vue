@@ -286,12 +286,12 @@ onMounted(() => {
 }
 
 .left-content {
-  width: 100%;
+  // width: 100%;
 }
 
 .left-content-header {
   padding: 0.625rem 0.625rem 0.5rem;
-  width: 100%;
+  // width: 100%;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
