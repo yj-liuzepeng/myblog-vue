@@ -27,12 +27,12 @@
             </div>
           </div>
           <el-divider content-position="center">
-            <span style="color: #5e8ed3; font-size: 16px">description</span>
+            <span class="divider-span">description</span>
           </el-divider>
           <div class="detail-des">{{ articleState.description }}</div>
 
           <el-divider content-position="center">
-            <span style="color: #5e8ed3; font-size: 16px">正文</span>
+            <span class="divider-span">正文</span>
           </el-divider>
           <div id="preview-box" v-viewer="{ movable: false }">
             <v-md-preview-html
@@ -214,7 +214,13 @@ onMounted(() => {
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 5px;
     margin-right: 10px;
-
+    .divider-span {
+      color: rgb(94, 142, 211);
+      font-size: 16px;
+      background: rgb(247 246 246);
+      border-radius: 10px;
+      padding: 0 5px;
+    }
     .detail-header {
       background-color: rgb(225, 240, 255);
       padding: 10px 0px 10px 5px;
