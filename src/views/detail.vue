@@ -213,7 +213,7 @@ onMounted(() => {
     border: 1px solid rgb(242, 235, 235);
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 5px;
-    margin-right: 10px;
+    // margin-right: 10px;
     .divider-span {
       color: rgb(94, 142, 211);
       font-size: 16px;
