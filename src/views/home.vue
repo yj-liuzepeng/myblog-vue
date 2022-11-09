@@ -113,9 +113,7 @@
       <el-col :xs="0" :sm="6">
         <div class="right-content cssnice2">
           <Author />
-
           <your-info />
-
           <tag-list @clickTag="hDirectClickTag" />
         </div>
       </el-col>
@@ -415,7 +413,6 @@ onMounted(() => {
     margin-top: 100px;
   }
 }
-
 .right-content {
   width: 100%;
 }

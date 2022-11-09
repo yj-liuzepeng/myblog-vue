@@ -30,7 +30,7 @@
         <template #content>
           <img
             style="width: 5rem"
-            src="../assets/author/mywx.jpeg"
+            src="https://liuzepeng.com/mywx.jpeg"
             alt="我的微信"
           />
         </template>
@@ -40,7 +40,7 @@
         <template #content>
           <img
             style="width: 5rem"
-            src="../assets/author/myqq.jpeg"
+            src="https://liuzepeng.com/myqq.jpeg"
             alt="我的qq"
           />
         </template>
@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, Transition } from "vue";
 import { storeToRefs } from "pinia";
-import bdd from "../assets/author/bdd.jpeg";
+// import bdd from "../assets/author/bdd.jpeg";
 import { useMainStore } from "../store";
 import { styleone, styletwo } from "../styles/skinstyles/styles";
 const mainStore = useMainStore();
@@ -125,7 +125,7 @@ let mouseEnterAvatar = () => {
     deg -= 360;
     img.style.transform = "rotate(" + deg + "deg)";
     setTimeout(() => {
-      avatarImg.value = bdd;
+      avatarImg.value = "https://liuzepeng.com/bdd.jpeg";
       mainStore.changeStyle(styletwo);
       document.querySelector("body").classList.add("red-theme");
     }, 300);

@@ -8,8 +8,11 @@
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 // import viteImagemin from 'vite-plugin-imagemin'
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import {
+  ElementPlusResolver,
+  // AntDesignVueResolver,
+} from "unplugin-vue-components/resolvers";
+
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
 
@@ -58,7 +61,10 @@ export default {
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver(), AntDesignVueResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        // AntDesignVueResolver()
+      ],
     }),
   ],
   css: {
