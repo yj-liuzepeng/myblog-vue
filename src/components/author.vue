@@ -24,7 +24,10 @@
       <span>liuzepeng0200@163.com</span>
     </div>
     <div id="mymotto"></div>
-    <el-divider>社交账号</el-divider>
+    <!-- <el-divider>社交账号</el-divider> -->
+    <el-divider content-position="center">
+      <span class="divider-span">社交账号</span>
+    </el-divider>
     <div class="mycontacts">
       <el-tooltip effect="light" placement="top">
         <template #content>
@@ -203,5 +206,11 @@ onMounted(() => [componentDidMount()]);
 <style>
 .el-divider__text.is-center {
   background-color: transparent;
+}
+.divider-span {
+  color: rgb(94, 142, 211);
+  background: rgb(247 246 246);
+  border-radius: 10px;
+  padding: 0 2px;
 }
 </style>
