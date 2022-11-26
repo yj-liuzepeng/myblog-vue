@@ -17,7 +17,6 @@
     </template>
 
     <div class="weather">
-
       <div class="left">
         <div class="weather-today">
           <div class="city">{{ weatherState.city }}</div>
@@ -27,7 +26,7 @@
               <div class="info-tmp">
                 <span>{{ weatherState.now.tmp }}</span>
                 <span class="tmp-sign">℃</span>
-                <span style="font-size: 12px;"> （实时）</span>
+                <span style="font-size: 12px"> （实时）</span>
               </div>
               <div class="info-cond-air">
                 {{ weatherState.cond }} |
@@ -35,7 +34,10 @@
               </div>
             </div>
             <div class="wind">
-              <div class="wind-txt">{{ weatherState.now?.wind?.dir }}{{ weatherState.now?.wind?.sc }}级</div>
+              <div class="wind-txt">
+                {{ weatherState.now?.wind?.dir
+                }}{{ weatherState.now?.wind?.sc }}级
+              </div>
               <div class="sug">舒适度：{{ weatherState.sugcomf }}</div>
             </div>
           </div>
@@ -46,20 +48,24 @@
             <div class="day-img">
               <img v-if="todayImgbg" v-lazy="todayImgbg" />
             </div>
-            <div class="day-tmp">{{ weatherState.dailyForecast[0]?.tmp.min }}-{{
+            <div class="day-tmp">
+              {{ weatherState.dailyForecast[0]?.tmp.min }}-{{
                 weatherState.dailyForecast[0]?.tmp.max
-            }}
-              ℃</div>
+              }}
+              ℃
+            </div>
           </div>
           <div class="tomorrow">
             <div class="day-txt">明天</div>
             <div class="day-img">
               <img v-if="tomorrowImgbg" v-lazy="tomorrowImgbg" />
             </div>
-            <div class="day-tmp">{{ weatherState.dailyForecast[1]?.tmp.min }}-{{
+            <div class="day-tmp">
+              {{ weatherState.dailyForecast[1]?.tmp.min }}-{{
                 weatherState.dailyForecast[1]?.tmp.max
-            }}
-              ℃</div>
+              }}
+              ℃
+            </div>
           </div>
           <div class="after-tomorrow">
             <div class="day-txt">后天</div>
@@ -67,88 +73,108 @@
               <img v-if="aTomorrowImgbg" v-lazy="aTomorrowImgbg" />
             </div>
             <div class="day-tmp">
-              {{ weatherState.dailyForecast[2]?.tmp.min }}-{{ weatherState.dailyForecast[2]?.tmp.max }}
+              {{ weatherState.dailyForecast[2]?.tmp.min }}-{{
+                weatherState.dailyForecast[2]?.tmp.max
+              }}
               ℃
             </div>
           </div>
         </div>
       </div>
       <div class="right">
-        <span class="iconfont icon-jindianzijianyifabushenqingliucheng-03"></span> {{ weatherState.suggestion }}
+        <span
+          class="iconfont icon-jindianzijianyifabushenqingliucheng-03"
+        ></span>
+        {{ weatherState.suggestion }}
       </div>
-
     </div>
 
     <template #footer>
       <span class="dialog-footer">
         <!-- <el-button @click="dialogFormVisible = false">略过</el-button> -->
-        <el-button type="primary" size="small" @click="dialogFormVisible = false">加油
-          <span style="padding-left: 5px;" class="iconfont icon-xiaolian3"></span>
+        <el-button
+          type="primary"
+          size="small"
+          @click="dialogFormVisible = false"
+          >加油
+          <span
+            style="padding-left: 5px"
+            class="iconfont icon-xiaolian3"
+          ></span>
         </el-button>
       </span>
     </template>
   </el-dialog>
   <el-backtop :bottom="100">
-    <span class="iconfont icon-icon-test" style="color: red;"></span>
+    <span class="iconfont icon-icon-test" style="color: red"></span>
   </el-backtop>
   <!--音乐播放器-->
   <div v-if="isMobile" ref="target">
-    <Player style="z-index: 100000" @boxshow="boxShow" :closeBox='emitBoxShow'></Player>
+    <Player
+      style="z-index: 100000"
+      @boxshow="boxShow"
+      :closeBox="emitBoxShow"
+    ></Player>
   </div>
 </template>
 
-<script lang='ts' setup>
-import MyHeader from '../components/myheader.vue'
-import MyFooter from '../components/myfooter.vue'
-import { ref, reactive, onMounted, watch } from 'vue';
-import { getWeatherData } from '../apis/weather'
-import MapLoader from '../utils/mapimg'
+<script lang="ts" setup>
+import MyHeader from "../components/myheader.vue";
+import MyFooter from "../components/myfooter.vue";
+import { ref, reactive, onMounted, watch } from "vue";
+import { getWeatherData } from "../apis/weather";
+import MapLoader from "../utils/mapimg";
 import Player from "../components/zw-player/player.vue";
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside } from "@vueuse/core";
+import { storeToRefs } from "pinia";
+import { useMainStore } from "../store/index";
+const mainStore = useMainStore();
+const { position } = storeToRefs(mainStore);
 // import { useRoute } from 'vue-router'
 
 // const route = useRoute()
-const dialogFormVisible = ref(false)
+const dialogFormVisible = ref(false);
 
-let todayImgbg = ref()
-let tomorrowImgbg = ref()
-let aTomorrowImgbg = ref()
+let todayImgbg = ref();
+let tomorrowImgbg = ref();
+let aTomorrowImgbg = ref();
 
 const weatherState = reactive({
   data: {} as any, // 保存全部天气信息
   dailyForecast: [], // 天气预测
   now: {} as any, // 现在天气信息总
-  city: '',
-  cond: '', // 现在天气
-  air: '', // 空气状况
-  sugcomf: '',// 舒适度指数
-  suggestion: '' // 建议
-})
+  city: "",
+  cond: "", // 现在天气
+  air: "", // 空气状况
+  sugcomf: "", // 舒适度指数
+  suggestion: "", // 建议
+});
 const getWeather = () => {
   let params = {
-    city: returnCitySN["cip"]
-  }
+    city: position.value.ip,
+  };
   getWeatherData(params).then((res: any) => {
     if (res.code == 200) {
-      weatherState.data = JSON.parse(res.data).result.HeWeather5[0]
-      weatherState.city = weatherState.data.basic.city
-      weatherState.cond = weatherState.data.now.cond.txt
-      weatherState.air = weatherState.data.aqi.city.qlty
-      weatherState.sugcomf = weatherState.data.suggestion.drsg.brf
-      weatherState.suggestion = weatherState.data.suggestion.drsg.txt
-      weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3)
-      weatherState.now = weatherState.data.now
-      todayImgbg.value = MapLoader(weatherState.now.cond.txt)
-      tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].cond.txt_d)
-      aTomorrowImgbg.value = MapLoader(weatherState.dailyForecast[2].cond.txt_d)
-      dialogFormVisible.value = true
+      weatherState.data = JSON.parse(res.data).result.HeWeather5[0];
+      weatherState.city = weatherState.data.basic.city;
+      weatherState.cond = weatherState.data.now.cond.txt;
+      weatherState.air = weatherState.data.aqi.city.qlty;
+      weatherState.sugcomf = weatherState.data.suggestion.drsg.brf;
+      weatherState.suggestion = weatherState.data.suggestion.drsg.txt;
+      weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3);
+      weatherState.now = weatherState.data.now;
+      todayImgbg.value = MapLoader(weatherState.now.cond.txt);
+      tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].cond.txt_d);
+      aTomorrowImgbg.value = MapLoader(
+        weatherState.dailyForecast[2].cond.txt_d
+      );
+      dialogFormVisible.value = true;
     } else {
-        dialogFormVisible.value = false
+      dialogFormVisible.value = false;
     }
-  })
-
-}
-const isMobile = ref(false)
+  });
+};
+const isMobile = ref(false);
 // const hMobile = () => {
 //  return /(iPhone|iPad|iPod|iOS|Android|Linux armv8l|Linux armv7l|Linux aarch64)/i.test(navigator.platform);
 // }
@@ -162,46 +188,54 @@ const hMobile = () => {
   var bIsAndroid = sUserAgent.match(/android/i) == "android";
   var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
   var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-  if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+  if (
+    bIsIpad ||
+    bIsIphoneOs ||
+    bIsMidp ||
+    bIsUc7 ||
+    bIsUc ||
+    bIsAndroid ||
+    bIsCE ||
+    bIsWM
+  ) {
     // 移动端页面
-    isMobile.value = false
-
+    isMobile.value = false;
   } else {
     // pc端页面
-    isMobile.value = true
+    isMobile.value = true;
   }
-}
+};
 // 点击其他位置隐藏
-const target = ref(null)
+const target = ref(null);
 // 鼠标在目标之外点击
 onClickOutside(target, () => {
-  closeMusicBox()
-})
+  closeMusicBox();
+});
 const closeMusicBox = () => {
   if (emitBoxShow.value) {
-    emitBoxShow.value = false
+    emitBoxShow.value = false;
   } else {
-    emitBoxShow.value = true
+    emitBoxShow.value = true;
   }
-}
-let emitBoxShow = ref(false)
+};
+let emitBoxShow = ref(false);
 const boxShow = (show) => {
-  emitBoxShow.value = show
-}
-watch(() => dialogFormVisible.value, (nw) => {
-  if (!nw) {
-    // console.log(route.name)
+  emitBoxShow.value = show;
+};
+watch(
+  () => dialogFormVisible.value,
+  (nw) => {
+    if (!nw) {
+      // console.log(route.name)
+    }
   }
-})
+);
 onMounted(() => {
-  hMobile()
-  getWeather()
-
-
-})
+  hMobile();
+  getWeather();
+});
 </script>
-<style lang='scss' scoped>
-
+<style lang="scss" scoped>
 .el-container {
   display: block;
 }
@@ -236,20 +270,17 @@ onMounted(() => {
 <style>
 @media not screen and (min-width: 60em) {
   .el-dialog {
-    --el-dialog-width: '40%' !important;
+    --el-dialog-width: "40%" !important;
   }
-
 }
 
 @media not screen and (min-width: 50em) {
   .el-dialog {
-    --el-dialog-width: '100%' !important;
+    --el-dialog-width: "100%" !important;
   }
-
-
 }
 </style>
-<style  scoped>
+<style scoped>
 .weather {
   width: 100%;
   display: flex;
@@ -281,7 +312,8 @@ onMounted(() => {
   width: 100%;
 }
 
-.weather-today {}
+.weather-today {
+}
 
 .weather-today .city {
   font-size: 12px;
@@ -350,7 +382,8 @@ onMounted(() => {
   font-size: 12px;
 }
 
-.weather-forecast .day-img {}
+.weather-forecast .day-img {
+}
 
 .weather-forecast .day-tmp {
   font-size: 12px;

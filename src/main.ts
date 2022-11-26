@@ -6,9 +6,10 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
-import { createPinia } from "pinia";
-import "../src/styles/index.scss";
+import { createPinia, storeToRefs } from "pinia";
+import { useMainStore } from "./store/index";
 
+import "../src/styles/index.scss";
 import elementPlus from "./utils/element";
 import lazyPlugin from "vue3-lazy";
 import "viewerjs/dist/viewer.css";
@@ -27,14 +28,14 @@ import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import loadingpic from "./assets/other/load.gif";
 import errorpic from "./assets/other/404.png";
 import { getCurStyle } from "./apis/style";
-import { addVist } from "./apis/user";
+import { addVist, getVistPosition } from "./apis/user";
 import { getOsInfo, getBrowser } from "./utils/getInfo";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 
-const addUserVist = () => {
+const addUserVist = (ip, city) => {
   addVist({
-    ip: returnCitySN["cip"],
-    city: returnCitySN["cname"],
+    ip,
+    city,
     device: getOsInfo().name,
     browser: getBrowser().type + "(v" + getBrowser().versions + ")",
   });
@@ -96,8 +97,17 @@ const getStyle = async () => {
       loading: loadingpic, // 加载时默认图片
       error: errorpic, // 图片失败时默认图片
     });
-    app.mount("#app");
+    const mainStore = useMainStore();
+    // 获取定位，记录访问
+    getVistPosition().then((res: any) => {
+      mainStore.savePosition({
+        ip: res.data.ip,
+        city: res.data.position.city,
+      });
+      const { position } = storeToRefs(mainStore);
+      addUserVist(position.value?.ip, position.value?.city);
+      app.mount("#app");
+    });
   });
 };
 getStyle();
-addUserVist();

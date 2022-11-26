@@ -84,6 +84,7 @@ let componentDidMount = () => {
   let str = "逃避永远无法解决问题";
   let i = 0;
   let divTyping = document.getElementById("mymotto");
+  console.log(divTyping);
   function reduce() {
     if (i > 0) {
       divTyping.innerHTML = str.slice(0, i--);
@@ -146,7 +147,9 @@ let mouseEnterAvatar = () => {
 const toAdmin = () => {
   window.open("https://www.liuzepeng.com/admin", "_blank");
 };
-onMounted(() => [componentDidMount()]);
+onMounted(() => {
+  // componentDidMount();
+});
 </script>
 
 <style lang="scss" scoped>

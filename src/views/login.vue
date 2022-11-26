@@ -68,10 +68,11 @@ import { onMounted, ref, watch } from "vue";
 import { Calendar, Promotion } from "@element-plus/icons-vue";
 import ElMessage from "../utils/resetMessage";
 import { register, login } from "../apis/user";
+import { storeToRefs } from "pinia";
 import { useMainStore } from "../store/index";
 
 const mainStore = useMainStore();
-
+const { position } = storeToRefs(mainStore);
 const props = defineProps({
   show: {
     type: Boolean,
@@ -137,8 +138,8 @@ const hRegister = async () => {
     username: account.value,
     email: email.value,
     password: password.value,
-    loginip: returnCitySN["cip"],
-    logincity: returnCitySN["cname"],
+    loginip: position.value.ip,
+    logincity: position.value.city,
   };
   await register(params).then((res: any) => {
     if (res.code == 200) {

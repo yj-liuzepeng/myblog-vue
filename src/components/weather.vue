@@ -1,9 +1,14 @@
 <template>
   <div
     class="weather"
-    :style="[{ 'width': width },
-    // { 'height': height },
-    { 'background': background.charAt(0) == '#' ? background : 'url(' + background + ')' }]"
+    :style="[
+      { width: width },
+      // { 'height': height },
+      {
+        background:
+          background.charAt(0) == '#' ? background : 'url(' + background + ')',
+      },
+    ]"
   >
     <div class="weather-today">
       <div class="city">{{ weatherState.city }}</div>
@@ -20,7 +25,9 @@
           </div>
         </div>
         <div class="wind">
-          <div class="wind-txt">{{ weatherState.now?.wind?.dir }}{{ weatherState.now?.wind?.sc }}级</div>
+          <div class="wind-txt">
+            {{ weatherState.now?.wind?.dir }}{{ weatherState.now?.wind?.sc }}级
+          </div>
           <div class="sug">舒适度：{{ weatherState.sugcomf }}</div>
         </div>
       </div>
@@ -31,18 +38,24 @@
         <div class="day-img">
           <img v-if="todayImgbg" :src="todayImgbg" />
         </div>
-        <div
-          class="day-tmp"
-        >{{ weatherState.dailyForecast[0]?.tmp.min }}-{{ weatherState.dailyForecast[0]?.tmp.max }} ℃</div>
+        <div class="day-tmp">
+          {{ weatherState.dailyForecast[0]?.tmp.min }}-{{
+            weatherState.dailyForecast[0]?.tmp.max
+          }}
+          ℃
+        </div>
       </div>
       <div class="tomorrow">
         <div class="day-txt">明天</div>
         <div class="day-img">
           <img v-if="tomorrowImgbg" :src="tomorrowImgbg" />
         </div>
-        <div
-          class="day-tmp"
-        >{{ weatherState.dailyForecast[1]?.tmp.min }}-{{ weatherState.dailyForecast[1]?.tmp.max }} ℃</div>
+        <div class="day-tmp">
+          {{ weatherState.dailyForecast[1]?.tmp.min }}-{{
+            weatherState.dailyForecast[1]?.tmp.max
+          }}
+          ℃
+        </div>
       </div>
       <div class="after-tomorrow">
         <div class="day-txt">后天</div>
@@ -50,7 +63,9 @@
           <img v-if="aTomorrowImgbg" :src="aTomorrowImgbg" />
         </div>
         <div class="day-tmp">
-          {{ weatherState.dailyForecast[2]?.tmp.min }}-{{ weatherState.dailyForecast[2]?.tmp.max }}
+          {{ weatherState.dailyForecast[2]?.tmp.min }}-{{
+            weatherState.dailyForecast[2]?.tmp.max
+          }}
           ℃
         </div>
       </div>
@@ -58,81 +73,87 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import { ref, onMounted, reactive } from 'vue';
-import axios from 'axios'
+<script lang="ts" setup>
+import { ref, onMounted, reactive } from "vue";
+import axios from "axios";
 
-import MapLoader from '../utils/mapimg'
+import MapLoader from "../utils/mapimg";
+import { storeToRefs } from "pinia";
+import { useMainStore } from "../store/index";
+const mainStore = useMainStore();
+
+const { position } = storeToRefs(mainStore);
 const props = defineProps({
   width: {
     type: String,
-    default: '300px'
+    default: "300px",
   },
   height: {
     type: String,
-    default: '100px'
+    default: "100px",
   },
   background: {
     type: String,
-    default: '#fcf7ec'
+    default: "#fcf7ec",
   },
   forecast: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-let todayImgbg = ref()
-let tomorrowImgbg = ref()
-let aTomorrowImgbg = ref()
+let todayImgbg = ref();
+let tomorrowImgbg = ref();
+let aTomorrowImgbg = ref();
 const weatherState = reactive({
   data: {} as any, // 保存全部天气信息
   dailyForecast: [], // 天气预测
   now: {} as any, // 现在天气信息总
-  city: '',
-  cond: '', // 现在天气
-  air: '', // 空气状况
-  sugcomf: '',// 舒适度指数
+  city: "",
+  cond: "", // 现在天气
+  air: "", // 空气状况
+  sugcomf: "", // 舒适度指数
   getWeatherData: async () => {
-
-
-    // let fetchurl = 'https://way.jd.com/he/freeweather/?city=' + returnCitySN["cip"] +'&appkey=da39dce4f8aa52155677ed8cd23a6470'
-
-
-    await axios.get('getweather/he/freeweather', {
-      params: {
-        city: returnCitySN["cip"],
-        appkey: 'da39dce4f8aa52155677ed8cd23a6470'
-      }
-    })
+    await axios
+      .get("getweather/he/freeweather", {
+        params: {
+          city: position.value.ip,
+          appkey: "da39dce4f8aa52155677ed8cd23a6470",
+        },
+      })
       .then((res: any) => {
-
         if (res.data.code == 10000) {
-          weatherState.data = res.data.result.HeWeather5[0]
-          weatherState.city = weatherState.data.basic.city
-          weatherState.cond = weatherState.data.now.cond.txt
-          weatherState.air = weatherState.data.aqi.city.qlty
-          weatherState.sugcomf = weatherState.data.suggestion.comf.brf
-          weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3)
-          weatherState.now = weatherState.data.now
+          weatherState.data = res.data.result.HeWeather5[0];
+          weatherState.city = weatherState.data.basic.city;
+          weatherState.cond = weatherState.data.now.cond.txt;
+          weatherState.air = weatherState.data.aqi.city.qlty;
+          weatherState.sugcomf = weatherState.data.suggestion.comf.brf;
+          weatherState.dailyForecast = weatherState.data.daily_forecast.slice(
+            0,
+            3
+          );
+          weatherState.now = weatherState.data.now;
           // console.log('天气信息总', weatherState.data)
           // console.log('天气信息预测', weatherState.dailyForecast)
           // console.log('天气信息当前', weatherState.now)
-          todayImgbg.value = MapLoader(weatherState.now.cond.txt)
-          tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].cond.txt_d)
-          aTomorrowImgbg.value = MapLoader(weatherState.dailyForecast[2].cond.txt_d)
+          todayImgbg.value = MapLoader(weatherState.now.cond.txt);
+          tomorrowImgbg.value = MapLoader(
+            weatherState.dailyForecast[1].cond.txt_d
+          );
+          aTomorrowImgbg.value = MapLoader(
+            weatherState.dailyForecast[2].cond.txt_d
+          );
         }
-      })
-  }
-})
+      });
+  },
+});
 
 onMounted(() => {
-  weatherState.getWeatherData()
-})
-
+  weatherState.getWeatherData();
+});
 </script>
 
-<style  scoped>
+<style scoped>
 .weather {
   padding: 15px;
   border: 1px solid #ccc;

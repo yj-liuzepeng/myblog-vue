@@ -18,7 +18,10 @@ export const login = (params) => {
 export const qqLogin = (params) => {
   return axios.post("/api/qqLogin", params);
 };
-
+// 获取ip
+export const getVistPosition = () => {
+  return axios.get("/api/getVistPosition", {});
+};
 // 用户访问
 export const addVist = (params: any) => {
   return axios.post("/api/addVist", params);
