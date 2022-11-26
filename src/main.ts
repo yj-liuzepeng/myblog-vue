@@ -98,7 +98,7 @@ const getStyle = async () => {
       error: errorpic, // 图片失败时默认图片
     });
     const mainStore = useMainStore();
-    // 获取定位，记录访问
+    // 获取定位信息，记录访问
     getVistPosition().then((res: any) => {
       mainStore.savePosition({
         ip: res.data.ip,
