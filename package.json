@@ -27,6 +27,6 @@
     "sass-loader": "^12.4.0",
     "unplugin-auto-import": "^0.5.5",
     "unplugin-vue-components": "^0.17.11",
-    "vite": "^1.0.0-rc.13"
+    "vite": "^2.9.15"
   }
 }

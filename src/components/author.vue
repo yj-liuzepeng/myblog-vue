@@ -24,7 +24,6 @@
       <span>liuzepeng0200@163.com</span>
     </div>
     <div id="mymotto"></div>
-    <!-- <el-divider>社交账号</el-divider> -->
     <el-divider content-position="center">
       <span class="divider-span">社交账号</span>
     </el-divider>
