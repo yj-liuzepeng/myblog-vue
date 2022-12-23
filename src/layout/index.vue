@@ -155,6 +155,9 @@ const getWeather = () => {
   };
   getWeatherData(params).then((res: any) => {
     if (res.code == 200) {
+      if (JSON.parse(res.data)?.code == "10040") {
+        return;
+      }
       weatherState.data = JSON.parse(res.data).result.HeWeather5[0];
       weatherState.city = weatherState.data.basic.city;
       weatherState.cond = weatherState.data.now.cond.txt;

@@ -130,7 +130,7 @@ import { addLink, queryLinkList } from "../apis/friendlink";
 import { queryCommentList } from "../apis/comment";
 import ElMessage from "../utils/resetMessage";
 import { goTop } from "../utils/pageEffect";
-import { randomColor } from "../utils/index";
+import { randomColor, shuffle } from "../utils/index";
 const mainStore = useMainStore();
 
 const { authorstyle } = storeToRefs(mainStore);
@@ -207,7 +207,8 @@ const getCommentData = async () => {
     type: 0,
   }).then((res: any) => {
     if (res.code == 200) {
-      danmus.value = res.data.data.map((item) => item.content);
+      let data = res.data.data.map((item) => item.content);
+      danmus.value = shuffle(data);
     }
   });
 };
