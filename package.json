@@ -19,6 +19,7 @@
     "v-viewer": "^3.0.10",
     "vue": "^3.2.4",
     "vue-router": "^4.0.12",
+    "vue3-danmaku": "^1.2.0",
     "vue3-lazy": "^1.0.0-alpha.1"
   },
   "devDependencies": {

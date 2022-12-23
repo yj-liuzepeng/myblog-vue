@@ -85,6 +85,24 @@
             >
             <hr class="parting-line" />
           </div>
+          <vue-danmaku
+            ref="danmaku"
+            loop
+            useSlot
+            isSuspend
+            randomChannel
+            :debounce="100"
+            :speeds="100"
+            :danmus="danmus"
+            style="width: 100%; height: 140px"
+          >
+            <template v-slot:dm="{ danmu }">
+              <p :style="{ color: randomColor() as string }">
+                {{ danmu }}
+              </p>
+            </template>
+          </vue-danmaku>
+
           <comment-box type="3" targetId="0" targetName="互动页" />
         </div>
       </el-col>
@@ -100,7 +118,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive } from "vue";
+import { ref, onMounted, reactive } from "vue";
+import VueDanmaku from "vue3-danmaku";
 import Author from "../components/author.vue";
 import yourInfo from "../components/your-info.vue";
 import commentBox from "../components/comment/index.vue";
@@ -108,8 +127,10 @@ import hotComments from "../components/hot-comments.vue";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../store";
 import { addLink, queryLinkList } from "../apis/friendlink";
+import { queryCommentList } from "../apis/comment";
 import ElMessage from "../utils/resetMessage";
 import { goTop } from "../utils/pageEffect";
+import { randomColor } from "../utils/index";
 const mainStore = useMainStore();
 
 const { authorstyle } = storeToRefs(mainStore);
@@ -177,6 +198,21 @@ const linkState = reactive({
     window.open(url);
   },
 });
+const danmus = ref([]);
+const getCommentData = async () => {
+  await queryCommentList({
+    pageNo: 1,
+    pageSize: 9999,
+    page_id: 0,
+    type: 0,
+  }).then((res: any) => {
+    if (res.code == 200) {
+      danmus.value = res.data.data.map((item) => item.content);
+    }
+  });
+};
+getCommentData();
+
 onMounted(() => {
   linkState.getList();
   goTop();
