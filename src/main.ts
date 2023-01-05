@@ -22,7 +22,8 @@ import "ant-design-vue/lib/timeline/style/index.css";
 // 预览组件以及样式
 import VMdPreviewHtml from "@kangc/v-md-editor/lib/preview-html";
 import "@kangc/v-md-editor/lib/style/preview-html.css";
-
+import createCopyCodePreview from "@kangc/v-md-editor/lib/plugins/copy-code/preview";
+import "@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css";
 // 主题样式
 import "@kangc/v-md-editor/lib/theme/style/vuepress.css";
 import loadingpic from "./assets/other/load.gif";
@@ -31,7 +32,8 @@ import { getCurStyle } from "./apis/style";
 import { addVist, getVistPosition } from "./apis/user";
 import { getOsInfo, getBrowser } from "./utils/getInfo";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
-
+// 复制代码
+VMdPreviewHtml.use(createCopyCodePreview());
 const addUserVist = (ip, city) => {
   addVist({
     ip,
