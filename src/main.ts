@@ -69,6 +69,11 @@ const getStyle = async () => {
       if (res.ishb == 1) {
         import("../src/styles/hb.scss");
       }
+      if (res.denglong == 1) {
+        localStorage.setItem("HASDL", res.denglong);
+      } else {
+        localStorage.setItem("HASDL", "2");
+      }
     } else {
       styleone.headerstyle = {
         bgc: "#2b3645",
