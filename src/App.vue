@@ -1,5 +1,5 @@
 <template>
-  <router-view />
+  <router-view></router-view>
   <denglong v-if="hasdenglong"></denglong>
 </template>
 

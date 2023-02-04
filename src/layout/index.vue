@@ -3,7 +3,11 @@
     <my-header></my-header>
     <el-main>
       <div class="content">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <KeepAlive :include="keepAliveList">
+            <component :is="Component"></component>
+          </KeepAlive>
+        </router-view>
       </div>
     </el-main>
     <my-footer></my-footer>
@@ -128,11 +132,25 @@ import Player from "../components/zw-player/player.vue";
 import { onClickOutside } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../store/index";
+import { useRoute } from "vue-router";
 const mainStore = useMainStore();
 const { position } = storeToRefs(mainStore);
-// import { useRoute } from 'vue-router'
 
-// const route = useRoute()
+const route = useRoute();
+const keepAliveList = ref([]);
+
+watch(
+  () => route,
+  (newVal) => {
+    if (
+      newVal.meta.keepAlive &&
+      keepAliveList.value.indexOf(newVal.name) === -1
+    ) {
+      keepAliveList.value.push(newVal.name);
+    }
+  },
+  { deep: true }
+);
 const dialogFormVisible = ref(false);
 
 let todayImgbg = ref();

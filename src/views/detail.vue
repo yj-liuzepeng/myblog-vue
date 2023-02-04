@@ -189,9 +189,24 @@ const handleScroll = () => {
       : (fixedCatalog.value = true);
   }
 };
-// onActivated(() => {
-//   console.log("读取缓存");
-// });
+onActivated(() => {
+  if (articleId.value != route.query.id) {
+    getTagList();
+    goTop();
+    window.addEventListener("scroll", handleScroll);
+    startOffsetTop.value = document.querySelector("#catalogBox")?.offsetTop;
+    setTimeout(() => {
+      let allImgs = Array.from(
+        window.document
+          .getElementById("preview-box")
+          ?.getElementsByTagName("img")
+      );
+      allImgs.forEach((element) => {
+        element.style.cursor = "pointer";
+      });
+    }, 500);
+  }
+});
 onMounted(() => {
   getTagList();
   goTop();
@@ -207,7 +222,11 @@ onMounted(() => {
   }, 500);
 });
 </script>
-
+<script lang="ts">
+export default {
+  name: "detail",
+};
+</script>
 <style lang="scss" scoped>
 .detail {
   padding-top: 3.2rem;

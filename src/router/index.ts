@@ -42,7 +42,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/work.vue"),
         meta: {
           title: "实战页",
-          keepAlive: false,
+          keepAlive: true,
         },
       },
       {
@@ -78,7 +78,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/about.vue"),
         meta: {
           title: "关于作者",
-          keepAlive: true,
+          keepAlive: false,
         },
       },
       {
@@ -87,7 +87,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/detail.vue"),
         meta: {
           title: "文章详情",
-          keepAlive: false,
+          keepAlive: true,
         },
       },
     ],
