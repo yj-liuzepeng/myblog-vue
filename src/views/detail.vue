@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, reactive, ref } from "vue";
+import { onBeforeMount, onMounted, reactive, ref, onActivated } from "vue";
 import Author from "../components/author.vue";
 import yourInfo from "../components/your-info.vue";
 import commentBox from "../components/comment/index.vue";
@@ -189,6 +189,9 @@ const handleScroll = () => {
       : (fixedCatalog.value = true);
   }
 };
+// onActivated(() => {
+//   console.log("读取缓存");
+// });
 onMounted(() => {
   getTagList();
   goTop();
@@ -277,7 +280,7 @@ onMounted(() => {
 
     .tag-box {
       background-color: rgba(230, 234, 240, 0.4);
-      width: 100%;
+      width: 97%;
       padding: 10px;
 
       .tag-list {
