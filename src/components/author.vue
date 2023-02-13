@@ -10,7 +10,7 @@
       Liuzepeng
     </div>
 
-    <div class="myintroduction">软件工程</div>
+    <div class="myintroduction">前端开发</div>
     <div class="myintroduction">2015-2019级</div>
     <div class="myintroduction">
       <span class="iconfont icon-didian"></span>中国-北京
