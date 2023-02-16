@@ -11,7 +11,7 @@ import { autoComplete, Plugin as importToCDN } from "vite-plugin-cdn-import";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import viteCompression from "vite-plugin-compression";
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "path";
+// import { resolve } from "path";
 
 // function pathResolve(dir) {
 //   return resolve(__dirname, ".", dir);
@@ -71,7 +71,7 @@ export default {
     // CDN方式引入包
     importToCDN({
       modules: [
-        autoComplete("vue"),
+        // autoComplete("vue"),
         autoComplete("axios"),
         {
           name: "jquery",
