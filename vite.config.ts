@@ -6,7 +6,7 @@
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import { autoComplete, Plugin as importToCDN } from "vite-plugin-cdn-import";
+import { Plugin as importToCDN } from "vite-plugin-cdn-import";
 // import viteImagemin from 'vite-plugin-imagemin'
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import viteCompression from "vite-plugin-compression";
@@ -71,19 +71,10 @@ export default {
     // CDN方式引入包
     importToCDN({
       modules: [
-        // autoComplete("vue"),
-        // autoComplete("axios"),
         {
           name: "jquery",
           var: "jquery", //根据main.js中定义的来
           path: "dist/jquery.js",
-        },
-        {
-          name: "element-plus",
-          var: "elementPlus", //根据main.js中定义的来
-          version: "1.3.0-beta.1",
-          path: "dist/index.full.js",
-          css: "dist/index.css",
         },
       ],
     }),
