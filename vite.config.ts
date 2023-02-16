@@ -72,7 +72,7 @@ export default {
     importToCDN({
       modules: [
         // autoComplete("vue"),
-        autoComplete("axios"),
+        // autoComplete("axios"),
         {
           name: "jquery",
           var: "jquery", //根据main.js中定义的来
