@@ -7,7 +7,6 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { Plugin as importToCDN } from "vite-plugin-cdn-import";
-// import viteImagemin from 'vite-plugin-imagemin'
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import viteCompression from "vite-plugin-compression";
 import vue from "@vitejs/plugin-vue";
@@ -27,33 +26,6 @@ export default {
   // },
   plugins: [
     vue(),
-    // viteImagemin({
-    //   gifsicle: {
-    //     optimizationLevel: 7,
-    //     interlaced: false
-    //   },
-    //   optipng: {
-    //     optimizationLevel: 7
-    //   },
-    //   mozjpeg: {
-    //     quality: 20
-    //   },
-    //   pngquant: {
-    //     quality: [0.8, 0.9],
-    //     speed: 4
-    //   },
-    //   svgo: {
-    //     plugins: [
-    //       {
-    //         name: 'removeViewBox'
-    //       },
-    //       {
-    //         name: 'removeEmptyAttrs',
-    //         active: false
-    //       }
-    //     ]
-    //   }
-    // }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
@@ -85,15 +57,6 @@ export default {
       open: true, // 如果存在本地服务端口，将在打包后自动展示
     }),
   ],
-  css: {
-    // css预处理器
-    // preprocessorOptions: {
-    //   scss: {
-    //     charset: false,
-    //     additionalData: '@import "./src/styles/index.scss";',
-    //   },
-    // },
-  },
   build: {
     outDir: "dist", //输出目录名
     minify: "terser", //压缩方式
