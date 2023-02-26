@@ -413,7 +413,6 @@ const getMusicType = (id) => {
 const musicPlay = (id) => {
   if (thisMusicIndex.value !== id) {
     thisMusicIndex.value = id > allMusicState.musicList.length - 1 ? 0 : id;
-
     getInfo();
     top.value = 0;
     o.value = 0;
