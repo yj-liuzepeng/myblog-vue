@@ -41,15 +41,15 @@ export default {
       ext: ".gz", //文件后缀
     }),
     // CDN方式引入包
-    importToCDN({
-      modules: [
-        {
-          name: "jquery",
-          var: "jquery", //根据main.js中定义的来
-          path: "dist/jquery.js",
-        },
-      ],
-    }),
+    // importToCDN({
+    //   modules: [
+    //     {
+    //       name: "jquery",
+    //       var: "jquery", //根据main.js中定义的来
+    //       path: "dist/jquery.js",
+    //     },
+    //   ],
+    // }),
     // 打包分析
     visualizer({
       emitFile: false,

@@ -627,7 +627,6 @@ const Player = () => {
   });
   // 播放暂停按钮控制
   $(".control_icon").on("click", () => {
-    alert(123);
     if (curPlayMusic.playState) {
       player.pause();
       curPlayMusic.playState = false;
