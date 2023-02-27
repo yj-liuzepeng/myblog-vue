@@ -524,9 +524,9 @@ const Player = () => {
   let player = $("#music")[0];
   let playerTimer = setInterval(timer, 1000);
   // $(".control_icon").click();
-  // 定时器函数
+  // // 定时器函数
   // $("body").on("click", () => {
-  // player.play();
+  //   player.play();
   //   $("body").unbind("click");
   // });
 
@@ -627,6 +627,7 @@ const Player = () => {
   });
   // 播放暂停按钮控制
   $(".control_icon").on("click", () => {
+    alert(123);
     if (curPlayMusic.playState) {
       player.pause();
       curPlayMusic.playState = false;
