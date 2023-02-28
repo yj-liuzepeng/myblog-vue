@@ -34,9 +34,16 @@ axios.interceptors.response.use(
   },
   (error) => {
     console.log(error);
-    ElMessageBox.alert(JSON.stringify(error), "请求异常", {
-      confirmButtonText: "确定",
-    });
+    ElMessageBox.alert(
+      "<div style='color: #4f4fa9'>请联系：liuzepeng0200@163.com</div><div>" +
+        JSON.stringify(error) +
+        "</div>",
+      "请求异常",
+      {
+        dangerouslyUseHTMLString: true,
+        confirmButtonText: "确定",
+      }
+    );
   }
 );
 export default {
