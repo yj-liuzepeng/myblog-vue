@@ -151,7 +151,7 @@ const getArticle = async (id) => {
 let tagLists = ref([]);
 const getTagList = async () => {
   let params = {
-    pageSize: 999,
+    pageSize: 998,
     pageNo: 1,
   };
   await queryTagList(params).then((res: any) => {
