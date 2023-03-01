@@ -191,6 +191,7 @@ const handleScroll = () => {
 };
 onActivated(() => {
   if (articleId.value != route.query.id) {
+    articleId.value = route.query.id;
     getTagList();
     goTop();
     window.addEventListener("scroll", handleScroll);
