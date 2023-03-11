@@ -59,6 +59,7 @@
             type="1"
             :targetId="articleId"
             :targetName="articleState.title"
+            :key="refreshKey"
           />
         </div>
       </el-col>
@@ -189,10 +190,12 @@ const handleScroll = () => {
       : (fixedCatalog.value = true);
   }
 };
+let refreshKey = ref(0);
 onActivated(() => {
   if (articleId.value != route.query.id) {
     articleId.value = route.query.id;
     getTagList();
+    refreshKey.value++;
     goTop();
     window.addEventListener("scroll", handleScroll);
     startOffsetTop.value = document.querySelector("#catalogBox")?.offsetTop;
