@@ -158,6 +158,7 @@ const getTagList = async () => {
   await queryTagList(params).then((res: any) => {
     getArticle(route.query.id);
     if (res.code === 200) {
+      tagLists.value = [];
       tagLists.value.push(...res.data.data);
     }
   });
