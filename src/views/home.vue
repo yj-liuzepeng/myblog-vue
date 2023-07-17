@@ -153,7 +153,6 @@ const toDetail = (item) => {
 };
 let searchIpt = ref("");
 const pageNo = ref(1);
-
 const pageSize = ref(6);
 let total = ref();
 const background = ref(false);

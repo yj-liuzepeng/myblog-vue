@@ -3,42 +3,43 @@
   padding: 0.3rem;
   border: 1px solid #eee;
   border-radius: 0.3rem;
+  // box-shadow: 0px 0px 5px 2px #f4f0f0;
 }
 .right-content {
   padding: 0.3rem;
   border: 1px solid #eee;
   border-radius: 0.3rem;
+  // box-shadow: 0px 0px 5px 2px #f4f0f0;
 }
-.itemhover{
-  transition: all linear .7s;
+.itemhover {
+  transition: all linear 0.7s;
 }
-.itemhover:hover{
-  box-shadow: 0 15px 30px rgba(0,0,0,.1);
-  transform: translate3d(0,-2px,0);
+.itemhover:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translate3d(0, -2px, 0);
   background-color: rgba(250, 244, 244, 0.979);
 }
 .bg-fff {
   background-color: #fff;
 }
 .bg-none {
-	background-color: transparent !important;
+  background-color: transparent !important;
 }
 .bg-primary {
-	background: #409eff !important;
+  background: #409eff !important;
 }
 .bg-warning {
-	background: #fa9200 !important;
+  background: #fa9200 !important;
 }
 .bg-success {
-	background: #67c23a !important;
+  background: #67c23a !important;
 }
 .bg-info {
-	background: #909399 !important;
+  background: #909399 !important;
 }
 .bg-danger {
-	background: #f56c6c !important;
+  background: #f56c6c !important;
 }
-
 
 .color-fff {
   color: #fff !important;
