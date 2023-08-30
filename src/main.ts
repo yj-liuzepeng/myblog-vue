@@ -33,7 +33,7 @@ import { getOsInfo, getBrowser } from "./utils/getInfo";
 import { styleone, styletwo } from "./styles/skinstyles/styles";
 // 复制代码
 VMdPreviewHtml.use(createCopyCodePreview());
-const addUserVist = (ip, city) => {
+const addUserVist = (ip, city = "其他网络") => {
   addVist({
     ip,
     city,
