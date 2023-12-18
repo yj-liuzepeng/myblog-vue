@@ -8,7 +8,7 @@ import qs from "qs";
 import { ElMessageBox } from "element-plus";
 
 axios.defaults.baseURL = "https://www.liuzepeng.com/api"; // 线上
-// axios.defaults.baseURL = 'http://localhost:8088' // 本地
+// axios.defaults.baseURL = "http://localhost:8088"; // 本地
 
 // post请求头  formdata 方式
 axios.defaults.headers.post["Content-Type"] =

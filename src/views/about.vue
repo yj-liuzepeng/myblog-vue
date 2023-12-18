@@ -22,7 +22,7 @@
                   :style="{ color: authorstyle.textcolor }"
                 >
                   <span>
-                    <span class="iconfont icon-didian"></span> 衡水 |
+                    <span class="iconfont icon-didian"></span> 北京 |
                   </span>
                   <span> <span class="iconfont icon-icon2"></span> 男 </span>
                 </div>

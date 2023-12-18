@@ -28,59 +28,75 @@
             <img v-if="todayImgbg" v-lazy="todayImgbg" />
             <div class="info">
               <div class="info-tmp">
-                <span>{{ weatherState.now.tmp }}</span>
-                <span class="tmp-sign">℃</span>
-                <span style="font-size: 12px"> （实时）</span>
-              </div>
-              <div class="info-cond-air">
-                {{ weatherState.cond }} |
-                <span>{{ weatherState.air }}</span>
+                <div>
+                  白天温度{{ weatherState.dailyForecast[0].daytemp }}
+                  <span class="tmp-sign">℃</span>
+                </div>
+                <div>
+                  夜间温度{{ weatherState.dailyForecast[0].nighttemp }}
+                  <span class="tmp-sign">℃</span>
+                </div>
               </div>
             </div>
             <div class="wind">
               <div class="wind-txt">
-                {{ weatherState.now?.wind?.dir
-                }}{{ weatherState.now?.wind?.sc }}级
+                {{ weatherState.dailyForecast[0].daywind }}风{{
+                  weatherState.dailyForecast[0].daypower
+                }}级
               </div>
-              <div class="sug">舒适度：{{ weatherState.sugcomf }}</div>
             </div>
           </div>
-        </div>
-        <div class="weather-forecast">
-          <div class="today">
-            <div class="day-txt">今天</div>
-            <div class="day-img">
-              <img v-if="todayImgbg" v-lazy="todayImgbg" />
+          <div class="weather-forecast">
+            <div class="today">
+              <div class="day-txt">今天</div>
+              <div class="day-img">
+                <img v-if="todayImgbg" v-lazy="todayImgbg" />
+              </div>
+              <div class="day-tmp">
+                {{ weatherState.dailyForecast[0]?.nighttemp }}～{{
+                  weatherState.dailyForecast[0]?.daytemp
+                }}
+                ℃
+              </div>
+              <div class="day-wind">
+                {{ weatherState.dailyForecast[0].daywind }}风{{
+                  weatherState.dailyForecast[0].daypower
+                }}级
+              </div>
             </div>
-            <div class="day-tmp">
-              {{ weatherState.dailyForecast[0]?.tmp.min }}-{{
-                weatherState.dailyForecast[0]?.tmp.max
-              }}
-              ℃
+            <div class="tomorrow">
+              <div class="day-txt">明天</div>
+              <div class="day-img">
+                <img v-if="tomorrowImgbg" v-lazy="tomorrowImgbg" />
+              </div>
+              <div class="day-tmp">
+                {{ weatherState.dailyForecast[1]?.nighttemp }}～{{
+                  weatherState.dailyForecast[1]?.daytemp
+                }}
+                ℃
+              </div>
+              <div class="day-wind">
+                {{ weatherState.dailyForecast[1].daywind }}风{{
+                  weatherState.dailyForecast[1].daypower
+                }}级
+              </div>
             </div>
-          </div>
-          <div class="tomorrow">
-            <div class="day-txt">明天</div>
-            <div class="day-img">
-              <img v-if="tomorrowImgbg" v-lazy="tomorrowImgbg" />
-            </div>
-            <div class="day-tmp">
-              {{ weatherState.dailyForecast[1]?.tmp.min }}-{{
-                weatherState.dailyForecast[1]?.tmp.max
-              }}
-              ℃
-            </div>
-          </div>
-          <div class="after-tomorrow">
-            <div class="day-txt">后天</div>
-            <div class="day-img">
-              <img v-if="aTomorrowImgbg" v-lazy="aTomorrowImgbg" />
-            </div>
-            <div class="day-tmp">
-              {{ weatherState.dailyForecast[2]?.tmp.min }}-{{
-                weatherState.dailyForecast[2]?.tmp.max
-              }}
-              ℃
+            <div class="after-tomorrow">
+              <div class="day-txt">后天</div>
+              <div class="day-img">
+                <img v-if="aTomorrowImgbg" v-lazy="aTomorrowImgbg" />
+              </div>
+              <div class="day-tmp">
+                {{ weatherState.dailyForecast[2]?.nighttemp }}～{{
+                  weatherState.dailyForecast[2]?.daytemp
+                }}
+                ℃
+              </div>
+              <div class="day-wind">
+                {{ weatherState.dailyForecast[2].daywind }}风{{
+                  weatherState.dailyForecast[2].daypower
+                }}级
+              </div>
             </div>
           </div>
         </div>
@@ -89,7 +105,7 @@
         <span
           class="iconfont icon-jindianzijianyifabushenqingliucheng-03"
         ></span>
-        {{ weatherState.suggestion }}
+        朋友，不管天气如何，请心情美好一些，心态决定着我们的人生！
       </div>
     </div>
 
@@ -158,36 +174,22 @@ let tomorrowImgbg = ref();
 let aTomorrowImgbg = ref();
 
 const weatherState = reactive({
-  data: {} as any, // 保存全部天气信息
-  dailyForecast: [], // 天气预测
-  now: {} as any, // 现在天气信息总
+  dailyForecast: [], // 天气信息
   city: "",
-  cond: "", // 现在天气
-  air: "", // 空气状况
-  sugcomf: "", // 舒适度指数
-  suggestion: "", // 建议
 });
 const getWeather = () => {
   let params = {
-    city: position.value.ip,
+    city: position.value.city,
+    ip: position.value.ip,
   };
   getWeatherData(params).then((res: any) => {
     if (res.code == 200) {
-      if (JSON.parse(res.data)?.code == "10040") {
-        return;
-      }
-      weatherState.data = JSON.parse(res.data).result.HeWeather5[0];
-      weatherState.city = weatherState.data.basic.city;
-      weatherState.cond = weatherState.data.now.cond.txt;
-      weatherState.air = weatherState.data.aqi.city.qlty;
-      weatherState.sugcomf = weatherState.data.suggestion.drsg.brf;
-      weatherState.suggestion = weatherState.data.suggestion.drsg.txt;
-      weatherState.dailyForecast = weatherState.data.daily_forecast.slice(0, 3);
-      weatherState.now = weatherState.data.now;
-      todayImgbg.value = MapLoader(weatherState.now.cond.txt);
-      tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].cond.txt_d);
+      weatherState.dailyForecast = res.data.forecasts[0].casts;
+      weatherState.city = res.data.forecasts[0].city;
+      todayImgbg.value = MapLoader(weatherState.dailyForecast[0].dayweather);
+      tomorrowImgbg.value = MapLoader(weatherState.dailyForecast[1].dayweather);
       aTomorrowImgbg.value = MapLoader(
-        weatherState.dailyForecast[2].cond.txt_d
+        weatherState.dailyForecast[2].dayweather
       );
       dialogFormVisible.value = true;
     } else {
@@ -247,7 +249,6 @@ watch(
   () => dialogFormVisible.value,
   (nw) => {
     if (!nw) {
-      // console.log(route.name)
     }
   }
 );
@@ -333,9 +334,6 @@ onMounted(() => {
   width: 100%;
 }
 
-.weather-today {
-}
-
 .weather-today .city {
   font-size: 12px;
   margin-left: 5px;
@@ -348,18 +346,14 @@ onMounted(() => {
 
 .weather-now .wind {
   font-size: 14px;
-  margin-left: 20%;
+  margin-left: 16%;
+  padding-top: 12px;
 }
 
 .weather-now .wind-txt {
   font-size: 12px;
   margin-bottom: 10%;
   color: rgb(88, 94, 99);
-}
-
-.weather-now .sug {
-  font-size: 12px;
-  color: rgb(104, 173, 233);
 }
 
 .weather-now img {
@@ -372,15 +366,15 @@ onMounted(() => {
 }
 
 .weather-now .info .info-tmp {
-  font-size: 20px;
+  font-size: 12px;
+  padding-top: 8px;
 }
-
-.weather-now .info .info-cond-air {
-  font-size: 10px;
+.day-wind {
+  font-size: 12px;
 }
 
 .weather-now .info .tmp-sign {
-  font-size: 6px;
+  font-size: 8px;
   margin-left: 2px;
   vertical-align: top;
 }
@@ -418,11 +412,5 @@ onMounted(() => {
 <style>
 .el-dialog {
   border-radius: 10px !important;
-}
-
-.el-backtop {
-  /* opacity: 0.8;
-  background-color: #51555d !important;
-  color: rgb(145, 49, 49); */
 }
 </style>
